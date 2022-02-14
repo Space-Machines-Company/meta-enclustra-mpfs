@@ -22,15 +22,6 @@ SRC_URI:append:me-mp1-250-sipp-d3en := "${ENCLUSTRA_UBOOT_DTS_LIST}"
 SRC_URI:append:me-mp1-460-1si-d4e := "${ENCLUSTRA_UBOOT_PATCH_LIST}"
 SRC_URI:append:me-mp1-460-1si-d4e := "${ENCLUSTRA_UBOOT_DTS_LIST}"
 
-do_configure:prepend() {
-    if [ ${MACHINE} = "me-mp1-250-ees-d3e" ] || \
-       [ ${MACHINE} = "me-mp1-250-si-d3en" ] || \
-       [ ${MACHINE} = "me-mp1-250-sipp-d3en" ] || \
-       [ ${MACHINE} = "me-mp1-460-1si-d4e" ]; then
-        sed -i -e 's,@SERVERIP@,${TFTP_SERVER_IP},g' ${WORKDIR}/${UBOOT_ENV}.txt
-    fi
-}
-
 do_create_boot_script[nostamp] = "1"
 do_create_boot_script() {
     if [ ${MACHINE} = "me-mp1-250-ees-d3e" ] || \
