@@ -21,13 +21,17 @@ SRC_URI:append:me-mp1-250-si-d3en = " file://defconfig"
 SRC_URI:append:me-mp1-460-1si-d4e = "${ENCLUSTRA_KERNEL_PATCH_LIST}"
 SRC_URI:append:me-mp1-460-1si-d4e = "${ENCLUSTRA_KERNEL_DTS_LIST}"
 SRC_URI:append:me-mp1-460-1si-d4e = " file://defconfig"
+SRC_URI:append:me-mp1-250-sipp-d3en = "${ENCLUSTRA_KERNEL_PATCH_LIST}"
+SRC_URI:append:me-mp1-250-sipp-d3en = "${ENCLUSTRA_KERNEL_DTS_LIST}"
+SRC_URI:append:me-mp1-250-sipp-d3en = " file://defconfig"
 
 COMPATIBLE_MACHINE:append = \
-    "|me-mp1-250-ees-d3e|me-mp1-250-si-d3en|me-mp1-460-1si-d4e"
+    "|me-mp1-250-ees-d3e|me-mp1-250-si-d3en|me-mp1-250-sipp-d3en|me-mp1-460-1si-d4e"
 
 do_add_enclustra_devicetree() {
     if [ ${MACHINE} = "me-mp1-250-ees-d3e" ] || \
        [ ${MACHINE} = "me-mp1-250-si-d3en" ] || \
+       [ ${MACHINE} = "me-mp1-250-sipp-d3en" ] || \
        [ ${MACHINE} = "me-mp1-460-1si-d4e" ]; then
 
         if [ ${ENCLUSTRA_BASEBOARD} = "PE1" ]; then
