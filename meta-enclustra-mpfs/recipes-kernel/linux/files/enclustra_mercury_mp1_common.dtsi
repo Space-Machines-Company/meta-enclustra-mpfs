@@ -1,0 +1,137 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright (C) 2022 Enclustra GmbH
+ * <info@enclustra.com>
+ */
+
+#include "microchip-mpfs.dtsi"
+
+/* Clock frequency (in Hz) of the rtcclk */
+#define RTCCLK_FREQ		1000000
+
+/ {
+	model = "Enclustra Mercury+ MP1";
+	compatible = "microchip,mpfs";
+
+	aliases {
+		mmuart1 = &mmuart1;
+		ethernet0 = &mac1;
+		ethernet1 = &mac0;
+		i2c0 = &i2c0;
+		i2c1 = &i2c1;
+		spi0 = &qspi;
+	};
+
+	chosen {
+		stdout-path = "mmuart1:115200n8";
+	};
+
+	cpus {
+		timebase-frequency = <RTCCLK_FREQ>;
+	};
+
+	/* Not that reference is called uart1 in U-Boot devicetree
+	   but mmuart1 in kernel devicetree */
+	soc {
+		mmuart1: serial@20100000 {
+			status = "okay";
+		};
+	};
+};
+
+&qspi {
+	status = "okay";
+	flash@0 {
+		#address-cells = <0x1>;
+		#size-cells = <0x1>;
+		compatible = "s25fl512s";
+		reg = <0x0>;
+	};
+};
+
+&mmc {
+	status = "okay";
+
+	bus-width = <4>;
+	disable-wp;
+	cap-mmc-highspeed;
+	cap-sd-highspeed;
+	card-detect-delay = <200>;
+	sd-uhs-sdr12;
+	sd-uhs-sdr25;
+	sd-uhs-sdr50;
+	sd-uhs-sdr104;
+};
+
+/* FPGA Fabric I2C */
+&i2c0 {
+	status = "okay";
+	clock-frequency = <400000>;
+	/* This I2C bus is connected to the MSS I2C bus on hardware */
+};
+
+/* MSS I2C */
+&i2c1 {
+	status = "okay";
+	clock-frequency = <100000>;
+
+	atsha204a@64 {
+		status = "okay";
+		compatible = "atmel,atsha204a", "atmel,atsha204-i2c";
+		reg = <0x64>;
+	};
+
+	isl12022@6f {
+		status = "okay";
+		compatible = "isil,isl12022";
+		reg = <0x6f>;
+	};
+
+        irps5401@47 {
+                status = "okay";
+                compatible = "infineon,irps5401";
+                reg = <0x47>; /* 0x47 for PMBUS, 0x17 for I2C */
+        };
+
+	ir38063@41 {
+		status = "okay";
+		compatible = "infineon,ir38064";
+		reg = <41>; /* 0x41 for PMBUS, 0x11 for I2C */
+	};
+};
+
+&mac0 {
+	status = "okay";
+	/delete-property/ mac-address;
+        /delete-property/ local-mac-address;
+	phy-mode = "sgmii";
+	phy-handle = <&phy0>;
+};
+
+&mac1 {
+	status = "okay";
+	/delete-property/ mac-address;
+	/delete-property/ local-mac-address;
+	phy-mode = "sgmii";
+	phy-handle = <&phy3>;
+
+	phy0: ethernet-phy@0 {
+		reg = <0>;
+	};
+	phy3: ethernet-phy@3 {
+		reg = <3>;
+	};
+};
+
+&usb {
+	dr_mode = "host";
+	status = "okay";
+};
+
+&gpio0 {
+        status = "okay";
+};
+
+&gpio1 {
+        status = "okay";
+};

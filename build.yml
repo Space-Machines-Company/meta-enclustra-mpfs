@@ -1,0 +1,57 @@
+header:
+    version: 8
+
+machine: me-mp1-250-si-d3en
+
+distro: nodistro
+
+target: core-image-minimal-dev
+
+repos:
+   
+    bitbake:
+        url: "https://git.openembedded.org/bitbake"
+        refspec: 2021-10.1-honister
+        layers:
+            .: excluded
+    
+    openembedded-core:
+        url: "https://git.openembedded.org/openembedded-core"
+        refspec: 2021-10.1-honister
+        layers:
+            meta:
+    
+    meta-riscv:
+        url: "https://github.com/riscv/meta-riscv"
+        refspec: 9561639c61663a10d8c9c23d26173db499f4c39b
+
+    meta-polarfire-soc-yocto-bsp:
+        url: "https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp"
+        refspec: v2021.11
+
+    meta-enclustra-mpfs:
+        layers:
+            meta-enclustra-mpfs:
+
+    meta-openembedded:
+        url: http://git.openembedded.org/meta-openembedded
+        refspec: c05ae80ba680887ac924c21536091be7a1173427
+        layers:
+            meta-oe:
+            meta-python:
+            meta-networking:
+            meta-multimedia:
+            
+local_conf_header:
+    meta-polarfire-soc-yocto-bsp: |
+        SSTATE_DIR  ?= "${HOME}/Desktop/riscv-sstate-cache"
+        PACKAGE_CLASSES ?= "package_ipk"
+        PATCHRESOLVE = "noop"
+        BBMASK += "opensbi_0.9.bb"
+        EXTRA_IMAGE_FEATURES:append = " ssh-server-dropbear"
+        require conf/distro/include/no-static-libs.inc
+        require conf/distro/include/yocto-uninative.inc
+        require conf/distro/include/security_flags.inc
+        INHERIT += "uninative"
+        DISTRO_FEATURES:append = " largefile systemd "
+        VIRTUAL-RUNTIME_init_manager = "systemd"

@@ -1,0 +1,305 @@
+From 53d36b49e56f7f9ca44e347f810d56ec6d3260ae Mon Sep 17 00:00:00 2001
+From: Andreas Buerkler <andreas.buerkler@enclustra.com>
+Date: Wed, 5 Jan 2022 18:47:16 +0100
+Subject: [PATCH] Board files for Mercury MP1 added
+
+---
+ board/enclustra/mercury_mp1/Kconfig                |  54 +++++++++
+ board/enclustra/mercury_mp1/MAINTAINERS            |   6 +
+ board/enclustra/mercury_mp1/Makefile               |   7 ++
+ .../enclustra/mercury_mp1/enclustra_mercury_mp1.c  | 123 +++++++++++++++++++++
+ configs/enclustra_mercury_mp1_defconfig            |  18 +++
+ include/configs/enclustra_mercury_mp1.h            |  40 +++++++
+ arch/riscv/Kconfig                                 |   4 ++++
+ 8 files changed, 252 insertions(+)
+ create mode 100644 board/enclustra/mercury_mp1/Kconfig
+ create mode 100644 board/enclustra/mercury_mp1/MAINTAINERS
+ create mode 100644 board/enclustra/mercury_mp1/Makefile
+ create mode 100644 board/enclustra/mercury_mp1/enclustra_mercury_mp1.c
+ create mode 100644 include/configs/enclustra_mercury_mp1.h
+
+diff --git a/board/enclustra/mercury_mp1/Kconfig b/board/enclustra/mercury_mp1/Kconfig
+new file mode 100644
+index 0000000..9318d93
+--- /dev/null
++++ b/board/enclustra/mercury_mp1/Kconfig
+@@ -0,0 +1,54 @@
++if TARGET_ENCLUSTRA_MERCURY_MP1
++ 
++config SYS_BOARD
++	default "mercury_mp1"
++
++config SYS_VENDOR
++	default "enclustra"
++
++config SYS_CPU
++	default "generic"
++
++config SYS_CONFIG_NAME
++	default "enclustra_mercury_mp1"
++
++config SYS_TEXT_BASE
++	default 0x80000000 if !RISCV_SMODE
++	default 0x80200000 if RISCV_SMODE
++
++config BOARD_SPECIFIC_OPTIONS
++	def_bool y
++	select GENERIC_RISCV
++	select BOARD_EARLY_INIT_F
++	select BOARD_LATE_INIT
++	imply SMP
++	imply CLK_CCF
++	imply CLK_MPFS
++	imply SYS_NS16550
++	imply CMD_DHCP
++	imply CMD_EXT2
++	imply CMD_EXT4
++	imply CMD_FAT
++	imply CMD_FS_GENERIC
++	imply CMD_NET
++	imply CMD_PING
++	imply CMD_MMC
++	imply DOS_PARTITION
++	imply EFI_PARTITION
++	imply IP_DYN
++	imply ISO_PARTITION
++	imply MACB
++	imply MII
++	imply PHY_LIB
++	imply PHY_VITESSE
++	imply MMC
++	imply MMC_WRITE
++	imply MMC_SDHCI
++	imply MMC_SDHCI_CADENCE
++	imply MMC_SDHCI_ADMA
++	imply MMC_HS200_SUPPORT
++	imply CMD_I2C
++	imply DM_I2C
++	imply SYS_I2C_MICROCHIP
++
++endif
+diff --git a/board/enclustra/mercury_mp1/MAINTAINERS b/board/enclustra/mercury_mp1/MAINTAINERS
+new file mode 100644
+index 0000000..5bd7ca1
+--- /dev/null
++++ b/board/enclustra/mercury_mp1/MAINTAINERS
+@@ -0,0 +1,6 @@
++Enclustra Mercury+ MP1
++M:	<info@enclustra.com>
++S:	Maintained
++F:	board/enclustra/mp1/
++F:	include/configs/enclustra_mercury_mp1.h
++F:	configs/enclustra_mercury_mp1_defconfig
+diff --git a/board/enclustra/mercury_mp1/Makefile b/board/enclustra/mercury_mp1/Makefile
+new file mode 100644
+index 0000000..7fa3011
+--- /dev/null
++++ b/board/enclustra/mercury_mp1/Makefile
+@@ -0,0 +1,7 @@
++# SPDX-License-Identifier: GPL-2.0+
++#
++# Copyright (C) 2021 Enclustra GmbH
++# info@enclustra.com
++#
++
++obj-y	+= enclustra_mercury_mp1.o
+diff --git a/board/enclustra/mercury_mp1/enclustra_mercury_mp1.c b/board/enclustra/mercury_mp1/enclustra_mercury_mp1.c
+new file mode 100644
+index 0000000..7ddba65
+--- /dev/null
++++ b/board/enclustra/mercury_mp1/enclustra_mercury_mp1.c
+@@ -0,0 +1,123 @@
++// SPDX-License-Identifier: GPL-2.0+
++/*
++ * Copyright (C) 2021 Enclustra GmbH
++ * <info@enclustra.com>
++ */
++
++#include <common.h>
++#include <env.h>
++#include <init.h>
++#include <asm/io.h>
++#include <enclustra/eeprom-mac.h>
++
++#define MPFS_SYSREG_SOFT_RESET		((unsigned int *)0x20002088)
++#define PERIPH_RESET_VALUE              0x1e8
++
++/* Enclustra vendor ID */
++#define ENCLUSTRA_MAC               0xF7B020
++
++/* Default MAC address */
++#define ENCLUSTRA_ETHADDR_DEFAULT "20:B0:F7:01:02:03"
++#define ENCLUSTRA_ETH1ADDR_DEFAULT "20:B0:F7:01:02:04"
++
++static struct eeprom_mem eeproms[] = {
++	{ .mac_reader = atsha204_get_mac },
++};
++
++int configure_mac(void)
++{
++	int i;
++	u8 hwaddr[6] = {0, 0, 0, 0, 0, 0};
++	u32 hwaddr_h;
++	char hwaddr_str[18];
++	bool hwaddr_set = false;
++
++#ifdef CONFIG_ENCLUSTRA_EEPROM_MAC
++
++	if (env_get("ethaddr")) {
++		/* Address is already set */
++		return 0;
++	}
++
++	for (i = 0; i < ARRAY_SIZE(eeproms); i++) {
++		if (eeproms[i].mac_reader(hwaddr))
++			continue;
++
++		/* Check if the value is a valid mac registered for
++		 * Enclustra  GmbH
++		 */
++		hwaddr_h = hwaddr[0] | hwaddr[1] << 8 | hwaddr[2] << 16;
++		if ((hwaddr_h & 0xFFFFFF) != ENCLUSTRA_MAC)
++			continue;
++
++		/* Format the address using a string */
++		sprintf(hwaddr_str,
++			"%02X:%02X:%02X:%02X:%02X:%02X",
++			hwaddr[0],
++			hwaddr[1],
++			hwaddr[2],
++			hwaddr[3],
++			hwaddr[4],
++			hwaddr[5]);
++
++		/* Set the actual env variable */
++		env_set("ethaddr", hwaddr_str);
++
++		/* increment MAC addr */
++		hwaddr_h = (hwaddr[3] << 16) | (hwaddr[4] << 8) | hwaddr[5];
++		hwaddr_h = (hwaddr_h + 1) & 0xFFFFFF;
++		hwaddr[3] = (hwaddr_h >> 16) & 0xFF;
++		hwaddr[4] = (hwaddr_h >> 8) & 0xFF;
++		hwaddr[5] = hwaddr_h & 0xFF;
++
++		/* Format the address using a string */
++		sprintf(hwaddr_str,
++			"%02X:%02X:%02X:%02X:%02X:%02X",
++			hwaddr[0],
++			hwaddr[1],
++			hwaddr[2],
++			hwaddr[3],
++			hwaddr[4],
++			hwaddr[5]);
++
++		/* Set the actual env variable */
++		env_set("eth1addr", hwaddr_str);
++
++		hwaddr_set = true;
++		break;
++	}
++
++	if (!hwaddr_set) {
++		env_set("ethaddr", ENCLUSTRA_ETHADDR_DEFAULT);
++		env_set("eth1addr", ENCLUSTRA_ETH1ADDR_DEFAULT);
++	}
++
++#endif
++	return 0;
++}
++
++int board_init(void)
++{
++	/* For now nothing to do here. */
++
++	return 0;
++}
++
++int board_early_init_f(void)
++{
++	unsigned int val;
++
++	/* Reset uart, mmc peripheral */
++	val = readl(MPFS_SYSREG_SOFT_RESET);
++	val = (val & ~(PERIPH_RESET_VALUE));
++	writel(val, MPFS_SYSREG_SOFT_RESET);
++
++	return 0;
++}
++
++int board_late_init(void)
++{
++	int ret;
++	ret = configure_mac();
++	return ret;
++}
+diff --git a/include/configs/enclustra_mercury_mp1.h b/include/configs/enclustra_mercury_mp1.h
+new file mode 100644
+index 0000000..2f73f82
+--- /dev/null
++++ b/include/configs/enclustra_mercury_mp1.h
+@@ -0,0 +1,40 @@
++/* SPDX-License-Identifier: GPL-2.0+ */
++/*
++ * Copyright (C) 2021 Enclustra GmbH
++ * <info@enclustra.com>
++ */
++
++#ifndef __CONFIG_H
++#define __CONFIG_H
++
++#include <linux/sizes.h>
++
++#define CONFIG_SYS_SDRAM_BASE       0x80000000
++#define CONFIG_SYS_INIT_SP_ADDR     (CONFIG_SYS_SDRAM_BASE + SZ_2M)
++
++#define CONFIG_SYS_LOAD_ADDR        (CONFIG_SYS_SDRAM_BASE + SZ_2M)
++
++#define CONFIG_SYS_MALLOC_LEN       SZ_8M
++
++#define CONFIG_SYS_BOOTM_LEN        SZ_64M
++
++#define CONFIG_STANDALONE_LOAD_ADDR 0x80200000
++
++/* Environment options */
++
++#define BOOT_TARGET_DEVICES(func) \
++	func(MMC, mmc, 0) \
++	func(DHCP, dhcp, na)
++
++#include <config_distro_bootcmd.h>
++
++#define CONFIG_EXTRA_ENV_SETTINGS \
++	"bootm_size=0x10000000\0" \
++	"kernel_addr_r=0x84000000\0" \
++	"fdt_addr_r=0x88000000\0" \
++	"scriptaddr=0x88100000\0" \
++	"pxefile_addr_r=0x88200000\0" \
++	"ramdisk_addr_r=0x88300000\0" \
++	BOOTENV
++
++#endif /* __CONFIG_H */
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index b3d7fd8..fb1a2fa 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -14,6 +14,9 @@ config TARGET_AX25_AE350
+ config TARGET_MICROCHIP_ICICLE
+ 	bool "Support Microchip PolarFire-SoC Icicle Board"
+ 
++config TARGET_ENCLUSTRA_MERCURY_MP1
++        bool "Support Enclustra Mercury+ MP1 Board"
++
+ config TARGET_QEMU_VIRT
+ 	bool "Support QEMU Virt Board"
+ 
+@@ -58,6 +61,7 @@ config SPL_SYS_DCACHE_OFF
+ source "board/AndesTech/ax25-ae350/Kconfig"
+ source "board/emulation/qemu-riscv/Kconfig"
+ source "board/microchip/mpfs_icicle/Kconfig"
++source "board/enclustra/mercury_mp1/Kconfig"
+ source "board/sifive/unleashed/Kconfig"
+ source "board/sifive/unmatched/Kconfig"
+ source "board/sipeed/maix/Kconfig"
+-- 
+2.7.4
+

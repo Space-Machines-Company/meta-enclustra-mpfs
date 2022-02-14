@@ -1,0 +1,25 @@
+From 0690fe02297270a901833ce1f64d3c1770234c47 Mon Sep 17 00:00:00 2001
+From: Andreas Buerkler <andreas.buerkler@enclustra.com>
+Date: Wed, 5 Jan 2022 18:52:37 +0100
+Subject: [PATCH] Devicetree for Mercury MP1 added
+
+---
+ arch/riscv/dts/Makefile                            |   1 +
+ 1 files changed, 1 insertions(+)
+
+
+diff --git a/arch/riscv/dts/Makefile b/arch/riscv/dts/Makefile
+index 7778874..1684dbd 100644
+--- a/arch/riscv/dts/Makefile
++++ b/arch/riscv/dts/Makefile
+@@ -2,6 +2,7 @@
+ 
+ dtb-$(CONFIG_TARGET_AX25_AE350) += ae350_32.dtb ae350_64.dtb
+ dtb-$(CONFIG_TARGET_MICROCHIP_ICICLE) += microchip-mpfs-icicle-kit.dtb
++dtb-$(CONFIG_TARGET_ENCLUSTRA_MERCURY_MP1) += enclustra_mercury_mp1.dtb
+ dtb-$(CONFIG_TARGET_QEMU_VIRT) += qemu-virt.dtb
+ dtb-$(CONFIG_TARGET_SIFIVE_UNLEASHED) += hifive-unleashed-a00.dtb
+ dtb-$(CONFIG_TARGET_SIFIVE_UNMATCHED) += hifive-unmatched-a00.dtb
+-- 
+2.7.4
+
