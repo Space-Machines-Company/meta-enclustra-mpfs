@@ -10,7 +10,6 @@
 #define RTCCLK_FREQ		1000000
 
 / {
-	model = "Enclustra Mercury+ MP1";
 	compatible = "microchip,mpfs";
 
 	aliases {
