@@ -40,9 +40,11 @@ or
 
 ## Build HSS
 
-#### Download Toolchain
+#### Prepare Toolchain
 
-    wget https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubun
+Download RISC-V GNU Newlib Toolchain from [SiFive](https://github.com/sifive/freedom-tools/releases)
+
+    wget https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
     tar xzvf riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
     export CROSS_COMPILE=$(pwd)/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin/riscv64-unknown-elf-
 
