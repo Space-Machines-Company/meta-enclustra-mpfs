@@ -62,11 +62,10 @@
 	sd-uhs-sdr104;
 };
 
-/* FPGA Fabric I2C */
+/* FPGA Fabric I2C - this I2C bus is connected to the MSS I2C bus on hardware */
 &i2c0 {
 	status = "okay";
 	clock-frequency = <400000>;
-	/* This I2C bus is connected to the MSS I2C bus on hardware */
 };
 
 /* MSS I2C */
@@ -86,23 +85,23 @@
 		reg = <0x6f>;
 	};
 
-        irps5401@47 {
-                status = "okay";
-                compatible = "infineon,irps5401";
-                reg = <0x47>; /* 0x47 for PMBUS, 0x17 for I2C */
-        };
+	irps5401@47 {
+		status = "okay";
+		compatible = "infineon,irps5401";
+		reg = <0x47>; /* 0x47 for PMBUS, 0x17 for I2C */
+	};
 
 	ir38063@41 {
 		status = "okay";
 		compatible = "infineon,ir38064";
-		reg = <41>; /* 0x41 for PMBUS, 0x11 for I2C */
+		reg = <0x41>; /* 0x41 for PMBUS, 0x11 for I2C */
 	};
 };
 
 &mac0 {
 	status = "okay";
 	/delete-property/ mac-address;
-        /delete-property/ local-mac-address;
+	/delete-property/ local-mac-address;
 	phy-mode = "sgmii";
 	phy-handle = <&phy0>;
 };
@@ -128,9 +127,9 @@
 };
 
 &gpio0 {
-        status = "okay";
+	status = "okay";
 };
 
 &gpio1 {
-        status = "okay";
+	status = "okay";
 };
