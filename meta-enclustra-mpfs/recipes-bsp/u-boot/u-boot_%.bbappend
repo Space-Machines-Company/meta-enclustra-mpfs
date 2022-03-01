@@ -4,6 +4,8 @@ ENCLUSTRA_UBOOT_PATCH_LIST = " \
     file://0008-Enclustra-MAC-address-readout-from-EEPROM.patch \
     file://0009-Board-files-for-Mercury-MP1-added.patch \
     file://0010-Devicetree-for-Mercury-MP1-added.patch \
+    file://0011-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch \
+    file://0012-Bugfix-for-atsha204a-driver.patch \
     "
 
 ENCLUSTRA_UBOOT_DTS_LIST = " \
