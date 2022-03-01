@@ -41,17 +41,17 @@ repos:
             meta-python:
             meta-networking:
             meta-multimedia:
-            
+
 local_conf_header:
-    meta-polarfire-soc-yocto-bsp: |
-        SSTATE_DIR  ?= "${HOME}/Desktop/riscv-sstate-cache"
+    meta-enclustra-mpfs: |
         PACKAGE_CLASSES ?= "package_ipk"
         PATCHRESOLVE = "noop"
-        BBMASK += "opensbi_0.9.bb"
+        BBMASK:append = " opensbi_0.9.bb"
         EXTRA_IMAGE_FEATURES:append = " ssh-server-dropbear"
+        EXTRA_IMAGE_FEATURES:append = " debug-tweaks"
         require conf/distro/include/no-static-libs.inc
         require conf/distro/include/yocto-uninative.inc
         require conf/distro/include/security_flags.inc
-        INHERIT += "uninative"
+        INHERIT:append = " uninative"
         DISTRO_FEATURES:append = " largefile systemd "
         VIRTUAL-RUNTIME_init_manager = "systemd"
