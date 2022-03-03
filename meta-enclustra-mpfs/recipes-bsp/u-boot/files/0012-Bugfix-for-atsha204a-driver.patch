@@ -56,7 +56,7 @@ index af65c559dc..b515e797a9 100644
  		if (res) {
 -			debug("failed on receiving response, ending\n");
 -			return res;
-+			printf("failed on receiving response\n");
++			debug("failed on receiving response\n");
 +			continue;
  		}
  
