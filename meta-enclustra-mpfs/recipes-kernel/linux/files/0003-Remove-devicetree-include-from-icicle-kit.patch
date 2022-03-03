@@ -1,0 +1,24 @@
+From 1b2a1f9995ef2a0208c2d3d0ac9f9f7286019849 Mon Sep 17 00:00:00 2001
+From: Andreas Buerkler <andreas.buerkler@enclustra.com>
+Date: Thu, 3 Mar 2022 17:01:58 +0100
+Subject: [PATCH] Remove devicetree include from icicle-kit FPGA fabric
+
+---
+ arch/riscv/boot/dts/microchip/microchip-mpfs.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/riscv/boot/dts/microchip/microchip-mpfs.dtsi b/arch/riscv/boot/dts/microchip/microchip-mpfs.dtsi
+index a4f357b956a4..a65aadf5636d 100644
+--- a/arch/riscv/boot/dts/microchip/microchip-mpfs.dtsi
++++ b/arch/riscv/boot/dts/microchip/microchip-mpfs.dtsi
+@@ -5,7 +5,6 @@
+ #include "dt-bindings/interrupt-controller/microchip,mpfs-plic.h"
+ #include "dt-bindings/interrupt-controller/riscv-hart.h"
+ #include "dt-bindings/mailbox/miv-ihc.h"
+-#include "microchip-mpfs-fabric.dtsi"
+ 
+ / {
+ 	#address-cells = <2>;
+-- 
+2.30.2
+
