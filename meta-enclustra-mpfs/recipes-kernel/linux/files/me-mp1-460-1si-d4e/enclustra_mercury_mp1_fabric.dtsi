@@ -6,15 +6,15 @@
 
 / {
 	/* FIC0 (AXI) at address 0x6000_0000 - 0x7FFF_FFFF */
-	fic0_512m@0x60000000 {
+	fic0-512m@60000000 {
 		#address-cells = <1>;
 		#size-cells = <1>;
 		compatible = "simple-bus";
-		ranges = <0x0 0x60000000 0x20000000>;
+		ranges = <0x0 0x0 0x60000000 0x20000000>;
 	};
 
 	/* FIC0 (AXI) at address 0x20_0000_0000 - 0x2F_FFFF_FFFF */
-	fic0_64g@2000000000 {
+	fic0-64g@2000000000 {
 		#address-cells = <2>;
 		#size-cells = <2>;
 		compatible = "simple-bus";
@@ -29,15 +29,15 @@
 	};
 
 	/* FIC1 (AXI) at address 0xE000_0000 - 0xFFFF_FFFF */
-	fic1_512m@e0000000 {
+	fic1-512m@e0000000 {
 		#address-cells = <1>;
 		#size-cells = <1>;
 		compatible = "simple-bus";
-		ranges = <0x0 0xe0000000 0x20000000>;
+		ranges = <0x0 0x0 0xe0000000 0x20000000>;
 	};
 
 	/* FIC1 (AXI) at address 0x30_0000_0000 - 0x3F_FFFF_FFFF */
-	fic1_64g@3000000000 {
+	fic1-64g@3000000000 {
 		#address-cells = <2>;
 		#size-cells = <2>;
 		compatible = "simple-bus";
@@ -45,10 +45,10 @@
 	};
 
 	/* FIC3 (APB) at address 0x40000000 - 0x5FFFFFFF */
-	fic3_512m@40000000 {
+	fic3-512m@40000000 {
 		#address-cells = <1>;
 		#size-cells = <1>;
 		compatible = "simple-bus";
-		ranges = <0x0 0x40000000 0x20000000>;
+		ranges = <0x0 0x0 0x40000000 0x20000000>;
 	};
 };
