@@ -52,13 +52,13 @@ The recommended build flow is to use kas, which is a tool that provides an easy 
 
 or
 
-    kas shell build.yml -c 'MACHINE=me-mp1-250-si-d3en BASEBOARD=PE3 bitbake core-image-minimal-dev'
+    kas shell build.yml -c 'MACHINE=me-mp1-250-ees-d3e ENCLUSTRA_BASEBOARD=PE3 bitbake core-image-minimal-dev'
 
 kas can be used to only checkout the repositories and setup the build directory. The build process can be started with bitbake.
 
     kas checkout kas-project.yml
     source openembedded-core/oe-init-script
-    MACHINE=me-mp1-250-si-d3en BASEBOARD=PE3 bitbake core-image-minimal-dev
+    MACHINE=me-mp1-250-ees-d3e ENCLUSTRA_BASEBOARD=PE3 bitbake core-image-minimal-dev
 
 See [kas documentation](https://kas.readthedocs.io/en/latest/command-line.html) for more details.
 
