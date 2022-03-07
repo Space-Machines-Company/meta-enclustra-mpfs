@@ -73,7 +73,7 @@ Use following command to build the target specified in the build.yml file. All b
 
 Use following command to specify the bitbake command to be executed. **MACHINE** and **ENCLUSTRA_BASEBOARD** variable can be overridden according to sections [Supported Machine Targets](#supported-machine-targets) and [Supported Enclustra Base Boards](#supported-enclustra-base-boards).
 
-    kas shell build.yml -c 'MACHINE=me-mp1-250-ees-d3e ENCLUSTRA_BASEBOARD=PE3 bitbake core-image-minimal'
+    kas shell build.yml -c 'MACHINE=me-mp1-250-ees-d3e ENCLUSTRA_BASEBOARD=pe3 bitbake core-image-minimal'
 
 Note that the image **core-image-minimal** can be replaced by any available image. Following are a few examples, provided by openembedded-core layer:
 - core-image-base
@@ -86,8 +86,9 @@ Note that the image **core-image-minimal** can be replaced by any available imag
 The tool kas can be used to checkout the repositories and setup the build directory. The build process can be started independently with bitbake as shown in following example.
 
     kas checkout kas-project.yml
-    source openembedded-core/oe-init-script
-    MACHINE=me-mp1-250-ees-d3e ENCLUSTRA_BASEBOARD=PE3 bitbake core-image-minimal
+    source openembedded-core/oe-init-build-env 
+    export BB_ENV_EXTRAWHITE="ENCLUSTRA_BASEBOARD"
+    MACHINE=me-mp1-250-ees-d3e ENCLUSTRA_BASEBOARD=pe3 bitbake core-image-minimal
 
 ## Deployment
 
