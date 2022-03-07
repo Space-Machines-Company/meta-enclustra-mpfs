@@ -10,17 +10,17 @@ https://www.enclustra.com/en/products/system-on-chip-modules/
 
 This Yocto layer depends on:
 
-URI: https://git.openembedded.org/openembedded-core
-layers: meta
-tag: 2021-10.1-honister
+URI: https://git.openembedded.org/openembedded-core<br/>
+layers: meta<br/>
+tag: 2021-10.1-honister<br/>
 revision: 70384dd958c57d1da924a66cffa35f80eb60d4b0
 
-URI: https://github.com/riscv/meta-riscv
-branch: honister
+URI: https://github.com/riscv/meta-riscv<br/>
+branch: honister<br/>
 revision: 9561639c61663a10d8c9c23d26173db499f4c39b
 
-URI: https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp
-tag: v2021.11
+URI: https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp<br/>
+tag: v2021.11<br/>
 revision: 02cb81741a5e1b37f89318d04ebc6b2854bfe736
 
 # Submit Patches / Reporting Bugs
@@ -31,7 +31,7 @@ support@enclustra.com
 
 # Building Instructions
 
-See [README](https://gitlab.enclustra.com/Enclustra/BU-SP/OS/MPFS/meta-enclustra-mpfs/-/blob/main/README.md)
+See [README](..//README.md)
 
 # License
 
