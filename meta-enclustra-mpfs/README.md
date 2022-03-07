@@ -31,7 +31,7 @@ support@enclustra.com
 
 # Building Instructions
 
-See [README](..//README.md)
+See [README](README.md)
 
 # License
 
