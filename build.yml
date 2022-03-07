@@ -5,7 +5,7 @@ machine: me-mp1-250-si-d3en
 
 distro: nodistro
 
-target: core-image-minimal-dev
+target: core-image-minimal
 
 repos:
    
