@@ -29,7 +29,7 @@ See [Yocto System Requirements](https://docs.yoctoproject.org/3.4.2/ref-manual/s
 
 ## Build 
 
-### Supported Machine Targets for Mercury+ MP1 module
+### Supported Machine Targets
 
 The Enclustra Module can be specified as target device (variable: **MACHINE**). Following modules are supported:
 
@@ -46,7 +46,7 @@ The Enclustra Base Board can be specified with **ENCLUSTRA_BASEBOARD** variable.
 - pe3
 - st1
 
-### Speed-Up Build
+### Accelerate Build
 
 To reuse the downloaded files and built packages for further builds, the **DL_DIR** and **SSTATE_DIR** variable can be set to a local directory. If this project is built for the first time, these directories must be created manually. If the variables are not set, the default directories in the build directory are used.
 
@@ -71,7 +71,7 @@ Use following command to build the target specified in the build.yml file. All b
 
 #### Usage \#2
 
-Use following command to specify the bitbake command to be executed. **MACHINE** and **ENCLUSTRA_BASEBOARD** variable can be overridden according to sections #Supported-Machine-Targets-for-Mercury+-MP1-module and #Supported-Enclustra-Base-Boards.
+Use following command to specify the bitbake command to be executed. **MACHINE** and **ENCLUSTRA_BASEBOARD** variable can be overridden according to sections [Supported Machine Targets](#supported-machine-targets) and [Supported Enclustra Base Boards](#supported-enclustra-base-boards).
 
     kas shell build.yml -c 'MACHINE=me-mp1-250-ees-d3e ENCLUSTRA_BASEBOARD=PE3 bitbake core-image-minimal'
 
@@ -88,6 +88,26 @@ The tool kas can be used to checkout the repositories and setup the build direct
     kas checkout kas-project.yml
     source openembedded-core/oe-init-script
     MACHINE=me-mp1-250-ees-d3e ENCLUSTRA_BASEBOARD=PE3 bitbake core-image-minimal
+
+## Deployment
+
+The OpenEmbedded Image Creator (wic) creates a partitioned image file for SD Card/eMMC boot. The partitions are configured in an OpenEmbedded kickstart file ([mpfs-icicle-kit.wks](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/blob/master/wic/mpfs-icicle-kit.wks)) that is located in the [meta-polarfire-soc-yocto-bsp](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp) layer. The image file to be deployed on SD Card/eMMC can be found in **build/tmp-glibc/deploy/images/\<MACHINE\>** directory, e.g. **core-image-minimal-me-mp1-250-ees-d3e.wic**.
+
+### Creating a Bootable SD Card
+
+Copy the image file to a SD card e.g.
+
+    dd if=core-image-minimal-me-mp1-250-ees-d3e.wic of=<device> && sync
+
+Note that the device of the SD card (\<device\>) need to be replaced with the SD Card device on your host (e.g. /dev/sdd).
+
+### eMMC Memory
+
+***TODO:***
+
+## Login on Target
+
+Login with **root** account, no password is set.
 
 ## Base Board Dependent Peripherals
 
@@ -110,7 +130,7 @@ It is recommended to use a pre-compiled toolchain as provided by [SiFive](https:
 
 ### Generate Binary
 
-To build the HSS binary, use following commands. The **BOARD** variable needs to be set to the corresponding Enclustra module (see #Supported-Machine-Targets-for-Mercury+-MP1-module)
+To build the HSS binary, use following commands. The **BOARD** variable needs to be set to the corresponding Enclustra module ([Supported Machine Targets](#supported-machine-targets))
 
     git clone git@gitlab.enclustra.com:Enclustra/BU-SP/OS/MPFS/hart-software-services.git
     cd hart-software-services
@@ -123,12 +143,11 @@ The generated file to be used as eNVM initialization data for boot mode 1 in Lib
 
 #### Minimal I2C Frequency
 
-The clock frequency of the I2C bus is derived from the MSS AHB/APB bus clock. This clock is set to 150MHz by default. Because the biggest possible divider value is 960, the slowest possible I2C frequency is 150MHz/960=156.25kHz.
-With this 156.25MHz I2C clock frequency, the wake-up pulse duration of the Atmel ATSHA204a device is violated (52us instead of 60us). Measurements has shown that the device wakes up reliable when the wake-up pulse is bigger than 30us.
+The clock frequency of the I2C bus is derived from the MSS AHB/APB bus clock. This clock is set to 150MHz by default.  Because the biggest possible divider value is 960, the slowest possible I2C frequency is 150MHz/960=156.25kHz. With this 156.25MHz I2C clock frequency, the wake-up pulse duration of the Atmel ATSHA204a device is violated (52us instead of 60us). Measurements has shown that the device wakes up reliable when the wake-up pulse is bigger than 30us.
 
 ## License
 
-See [MIT License](meta-enclustra-mpfs/COPYING.MIT)
+See [License](meta-enclustra-mpfs/COPYING.MIT)
 
 ## Changelog
 
