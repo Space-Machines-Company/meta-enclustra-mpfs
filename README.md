@@ -36,11 +36,11 @@ The Enclustra Module can be specified as target device (variable: **MACHINE**). 
 - me-mp1-250-ees-d3e
 - me-mp1-250-si-d3en
 - me-mp1-250-sipp-d3en
-- me-mp1-460-1si-d4en
+- me-mp1-460-1si-d4e
 
 ### Supported Enclustra Base Boards
 
-The Enclustra Base Board can be specified with **ENCLUSTRA_BASEBOARD** variable. Following baseboards are supported:
+The Enclustra Base Board can be specified with **ENCLUSTRA_BASEBOARD** variable. Following base boards are supported:
 
 - pe1
 - pe3

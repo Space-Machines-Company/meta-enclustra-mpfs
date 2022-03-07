@@ -85,11 +85,11 @@
 		reg = <0x6f>;
 	};
 
-        u2000: irps5401@47 {
-                status = "okay";
-                compatible = "infineon,irps5401";
-                reg = <0x47>; /* 0x47 for PMBUS, 0x17 for I2C */
-        };
+	u2000: irps5401@47 {
+		status = "okay";
+		compatible = "infineon,irps5401";
+		reg = <0x47>; /* 0x47 for PMBUS, 0x17 for I2C */
+	};
 
 	u1900: ir38063@41 {
 		status = "okay";
@@ -101,7 +101,7 @@
 &mac0 {
 	status = "okay";
 	/delete-property/ mac-address;
-        /delete-property/ local-mac-address;
+	/delete-property/ local-mac-address;
 	phy-mode = "sgmii";
 	phy-handle = <&phy0>;
 };
@@ -127,9 +127,9 @@
 };
 
 &gpio0 {
-        status = "okay";
+	status = "okay";
 };
 
 &gpio1 {
-        status = "okay";
+	status = "okay";
 };
