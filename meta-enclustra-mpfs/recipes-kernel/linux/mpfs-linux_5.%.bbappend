@@ -61,7 +61,6 @@ do_add_enclustra_devicetree() {
         echo "#include \"enclustra_mercury_mp1_fabric.dtsi\"" \
             >> ${WORKDIR}/enclustra_mercury_mp1_temp.dts
 
-        
         cp ${WORKDIR}/enclustra_mercury_mp1_common.dtsi ${S}/arch/riscv/boot/dts/microchip/
         cp ${WORKDIR}/enclustra_mercury_mp1_fabric.dtsi ${S}/arch/riscv/boot/dts/microchip/
         cp ${WORKDIR}/enclustra_mercury_mp1_temp.dts ${S}/arch/riscv/boot/dts/microchip/enclustra_mercury_mp1.dts
@@ -69,4 +68,3 @@ do_add_enclustra_devicetree() {
 }
 
 addtask do_add_enclustra_devicetree after do_patch before do_configure
-
