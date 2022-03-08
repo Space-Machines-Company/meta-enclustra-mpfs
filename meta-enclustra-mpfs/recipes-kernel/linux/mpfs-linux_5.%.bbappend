@@ -38,30 +38,33 @@ do_add_enclustra_devicetree() {
        [ ${MACHINE} = "me-mp1-250-sipp-d3en" ] || \
        [ ${MACHINE} = "me-mp1-460-1si-d4e" ]; then
 
+        cp ${WORKDIR}/enclustra_mercury_mp1.dts ${WORKDIR}/enclustra_mercury_mp1_temp.dts
+
         if [ ${ENCLUSTRA_BASEBOARD} = "pe1" ]; then
             echo "#include \"enclustra_mercury_pe1.dtsi\"" \
-                >> ${WORKDIR}/enclustra_mercury_mp1.dts
+                >> ${WORKDIR}/enclustra_mercury_mp1_temp.dts
             cp ${WORKDIR}/enclustra_mercury_pe1.dtsi ${S}/arch/riscv/boot/dts/microchip/
         fi
 
         if [ ${ENCLUSTRA_BASEBOARD} = "pe3" ]; then
             echo "#include \"enclustra_mercury_pe3.dtsi\"" \
-                >> ${WORKDIR}/enclustra_mercury_mp1.dts
+                >> ${WORKDIR}/enclustra_mercury_mp1_temp.dts
             cp ${WORKDIR}/enclustra_mercury_pe3.dtsi ${S}/arch/riscv/boot/dts/microchip/
         fi
 
         if [ ${ENCLUSTRA_BASEBOARD} = "st1" ]; then
             echo "#include \"enclustra_mercury_st1.dtsi\"" \
-                >> ${WORKDIR}/enclustra_mercury_mp1.dts
+                >> ${WORKDIR}/enclustra_mercury_mp1_temp.dts
             cp ${WORKDIR}/enclustra_mercury_st1.dtsi ${S}/arch/riscv/boot/dts/microchip/
         fi
 
         echo "#include \"enclustra_mercury_mp1_fabric.dtsi\"" \
-            >> ${WORKDIR}/enclustra_mercury_mp1.dts
+            >> ${WORKDIR}/enclustra_mercury_mp1_temp.dts
 
+        
         cp ${WORKDIR}/enclustra_mercury_mp1_common.dtsi ${S}/arch/riscv/boot/dts/microchip/
         cp ${WORKDIR}/enclustra_mercury_mp1_fabric.dtsi ${S}/arch/riscv/boot/dts/microchip/
-        cp ${WORKDIR}/enclustra_mercury_mp1.dts ${S}/arch/riscv/boot/dts/microchip/
+        cp ${WORKDIR}/enclustra_mercury_mp1_temp.dts ${S}/arch/riscv/boot/dts/microchip/enclustra_mercury_mp1.dts
     fi
 }
 
