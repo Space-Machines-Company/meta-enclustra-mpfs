@@ -21,7 +21,7 @@
 		ranges = <0x0 0x0 0x20 0x00 0x10 0x00>;
 
 		/* 4 Gbyte DDR4 memory */
-			fabric-memory: memory@0 {
+		fabric_memory: memory@0 {
 			device_type = "memory";
 			reg = <0x0 0x0 0x1 0x0>;
 			status = "okay";

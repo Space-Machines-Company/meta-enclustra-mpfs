@@ -29,7 +29,7 @@
 		timebase-frequency = <RTCCLK_FREQ>;
 	};
 
-	/* Not that reference is called uart1 in U-Boot devicetree
+	/* Not that label is called uart1 in U-Boot devicetree
 	   but mmuart1 in kernel devicetree */
 	soc {
 		mmuart1: serial@20100000 {
