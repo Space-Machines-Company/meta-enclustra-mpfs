@@ -24,14 +24,14 @@ SRC_URI:append:me-mp1-250-sipp-d3en := "${ENCLUSTRA_UBOOT_DTS_LIST}"
 SRC_URI:append:me-mp1-460-1si-d4e := "${ENCLUSTRA_UBOOT_PATCH_LIST}"
 SRC_URI:append:me-mp1-460-1si-d4e := "${ENCLUSTRA_UBOOT_DTS_LIST}"
 
-UBOOT_ENV = "boot"
-UBOOT_ENV_SUFFIX = "scr"
-
 do_create_boot_script() {
     if [ ${MACHINE} = "me-mp1-250-ees-d3e" ] || \
        [ ${MACHINE} = "me-mp1-250-si-d3en" ] || \
        [ ${MACHINE} = "me-mp1-250-sipp-d3en" ] || \
        [ ${MACHINE} = "me-mp1-460-1si-d4e" ]; then
+
+	 bbwarn "Building boot script ${UBOOT_ENV}.txt > ${WORKDIR}/${UBOOT_ENV_BINARY}  " 
+
         mkimage -O linux -T script -C none -n "U-Boot boot script" \
             -d ${WORKDIR}/${UBOOT_ENV}.txt ${WORKDIR}/${UBOOT_ENV_BINARY}
     fi
