@@ -16,6 +16,7 @@ The generated binaries are compatible with the FPGA and MSS configuration of fol
 
 This reference design was tested on following operating systems:
 
+- Ubuntu 20.04
 - Ubuntu 21.04
 
 ### Required Packages
@@ -61,7 +62,8 @@ The recommended build flow is to use kas, which is a Python based tool that prov
 
 #### Installation
 
-    python pip install kas
+    pip install kas
+    export PATH=$PATH:${HOME}/.local/bin
 
 #### Usage \#1
 
@@ -144,7 +146,8 @@ The generated file to be used as eNVM initialization data for boot mode 1 in Lib
 
 #### Minimal I2C Frequency
 
-The clock frequency of the I2C bus is derived from the MSS AHB/APB bus clock. This clock is set to 150MHz by default.  Because the biggest possible divider value is 960, the slowest possible I2C frequency is 150MHz/960=156.25kHz. With this 156.25MHz I2C clock frequency, the wake-up pulse duration of the Atmel ATSHA204a device is violated (52us instead of 60us). Measurements has shown that the device wakes up reliable when the wake-up pulse is bigger than 30us.
+The clock frequency of the I2C bus is derived from the MSS AHB/APB bus clock. This clock is set to 150MHz by default.  Because the biggest possible divider value is 960, the slowest possible I2C frequency is 150MHz/960=156.25kHz. With this
+156.25kHz I2C clock frequency, the wake-up pulse duration of the Atmel ATSHA204a device is violated (52us instead of 60us). Measurements has shown that the device wakes up reliable when the wake-up pulse is bigger than 30us.
 
 ## License
 
