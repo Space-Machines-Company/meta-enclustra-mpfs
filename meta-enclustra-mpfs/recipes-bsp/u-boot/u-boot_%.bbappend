@@ -49,5 +49,5 @@ do_add_enclustra_devicetree() {
     fi
 }
 
-addtask do_create_boot_script after do_compile before do_install
+addtask do_create_boot_script after do_compile before do_deploy
 addtask do_add_enclustra_devicetree after do_patch before do_configure
