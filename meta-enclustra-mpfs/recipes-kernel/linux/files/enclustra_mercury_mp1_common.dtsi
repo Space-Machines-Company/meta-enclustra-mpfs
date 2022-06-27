@@ -53,13 +53,10 @@
 
 	bus-width = <4>;
 	disable-wp;
+	no-1-8-v;
 	cap-mmc-highspeed;
 	cap-sd-highspeed;
 	card-detect-delay = <200>;
-	sd-uhs-sdr12;
-	sd-uhs-sdr25;
-	sd-uhs-sdr50;
-	sd-uhs-sdr104;
 };
 
 /* FPGA Fabric I2C - this I2C bus is connected to the MSS I2C bus on hardware */
