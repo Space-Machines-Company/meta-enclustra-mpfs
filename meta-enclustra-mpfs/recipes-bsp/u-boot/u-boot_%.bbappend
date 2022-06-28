@@ -29,9 +29,6 @@ do_create_boot_script() {
        [ ${MACHINE} = "me-mp1-250-si-d3en" ] || \
        [ ${MACHINE} = "me-mp1-250-sipp-d3en" ] || \
        [ ${MACHINE} = "me-mp1-460-1si-d4e" ]; then
-
-	 bbwarn "Building boot script ${UBOOT_ENV}.txt > ${WORKDIR}/${UBOOT_ENV_BINARY}  " 
-
         mkimage -O linux -T script -C none -n "U-Boot boot script" \
             -d ${WORKDIR}/${UBOOT_ENV}.txt ${WORKDIR}/${UBOOT_ENV_BINARY}
     fi
