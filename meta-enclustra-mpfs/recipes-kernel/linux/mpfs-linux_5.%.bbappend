@@ -6,6 +6,7 @@ ENCLUSTRA_KERNEL_PATCH_LIST = " \
     file://0001-Driver-for-SI5338-added.patch \
     file://0002-Devicetree-for-Mercury-MP1-added.patch \
     file://0003-Remove-devicetree-include-from-icicle-kit.patch \
+    file://0004-gpio-microsemi-gpio-get-base-dynamically.patch \
     "
 ENCLUSTRA_KERNEL_DTS_LIST = " \
     file://enclustra_mercury_mp1.dts \
