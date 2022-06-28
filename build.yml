@@ -5,7 +5,7 @@ machine: me-mp1-250-ees-d3e
 
 distro: nodistro
 
-target: core-image-minimal
+target: image-minimal-hwtest
 
 env:
     ENCLUSTRA_BASEBOARD: $ENCLUSTRA_BASEBOARD
