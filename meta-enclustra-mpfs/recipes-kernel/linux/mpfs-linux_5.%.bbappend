@@ -7,7 +7,10 @@ ENCLUSTRA_KERNEL_PATCH_LIST = " \
     file://0002-Devicetree-for-Mercury-MP1-added.patch \
     file://0003-Remove-devicetree-include-from-icicle-kit.patch \
     file://0004-gpio-microsemi-gpio-get-base-dynamically.patch \
+    file://0005-Remove-USB-host-dependency.patch \
+    file://0006-Add-atsha204a-driver-with-support-to-read-OTP-region.patch \
     "
+
 ENCLUSTRA_KERNEL_DTS_LIST = " \
     file://enclustra_mercury_mp1.dts \
     file://enclustra_mercury_mp1_common.dtsi \
