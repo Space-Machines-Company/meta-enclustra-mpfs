@@ -85,18 +85,6 @@
 		compatible = "isil,isl12022";
 		reg = <0x6f>;
 	};
-
-	u2000: irps5401@47 {
-		status = "okay";
-		compatible = "infineon,irps5401";
-		reg = <0x47>; /* 0x47 for PMBUS, 0x17 for I2C */
-	};
-
-	u1900: ir38063@41 {
-		status = "okay";
-		compatible = "infineon,ir38064";
-		reg = <0x41>; /* 0x41 for PMBUS, 0x11 for I2C */
-	};
 };
 
 &mac0 {
