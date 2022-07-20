@@ -9,6 +9,8 @@ ENCLUSTRA_KERNEL_PATCH_LIST = " \
     file://0004-gpio-microsemi-gpio-get-base-dynamically.patch \
     file://0005-Remove-USB-host-dependency.patch \
     file://0006-Add-atsha204a-driver-with-support-to-read-OTP-region.patch \
+    file://0007-replace-microchip-i2c-driver-with-newer-version.patch \
+    file://0008-Fix-I2C-driver-read-extra-byte.patch \
     "
 
 ENCLUSTRA_KERNEL_DTS_LIST = " \

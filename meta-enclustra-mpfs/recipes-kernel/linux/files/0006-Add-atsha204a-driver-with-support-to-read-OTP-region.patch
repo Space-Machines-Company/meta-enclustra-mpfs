@@ -137,7 +137,7 @@ index 000000000000..7c511361449e
 +};
 +
 +static const struct i2c_device_id atsha204_i2c_id[] = {
-+	{"atsha204-i2c", 0},
++	{"atsha204a", 0},
 +	{ }
 +};
 +

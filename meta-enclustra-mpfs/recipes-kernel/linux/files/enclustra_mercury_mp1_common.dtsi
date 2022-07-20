@@ -76,7 +76,7 @@
 
 	u1800: atsha204a@64 {
 		status = "okay";
-		compatible = "atmel,atsha204a", "atmel,atsha204-i2c";
+		compatible = "atmel,atsha204a";
 		reg = <0x64>;
 	};
 

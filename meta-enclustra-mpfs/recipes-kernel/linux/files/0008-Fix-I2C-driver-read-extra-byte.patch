@@ -1,0 +1,26 @@
+From 855ea121cf820f13ffa55987fe300fd1c46f1722 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20B=C3=BCrkler?= <andreas.buerkler@enclustra.com>
+Date: Wed, 20 Jul 2022 13:20:08 +0200
+Subject: [PATCH] Fix I2C driver: Read more that one byte resulted that one
+ extra byte was read
+
+---
+ drivers/i2c/busses/i2c-microchip.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/i2c/busses/i2c-microchip.c b/drivers/i2c/busses/i2c-microchip.c
+index 3eeda8403b0b..0c7ff5bf35d8 100755
+--- a/drivers/i2c/busses/i2c-microchip.c
++++ b/drivers/i2c/busses/i2c-microchip.c
+@@ -207,7 +207,7 @@ static void mchp_corei2c_empty_rx(struct mchp_corei2c_dev *idev)
+ 		idev->msg_len--;
+ 	}
+ 
+-	if (idev->msg_len == 0) {
++	if (idev->msg_len <= 1) {
+ 		ctrl = readb(idev->base + CORE_I2C_CTRL);
+ 		ctrl &= ~CTRL_AA;
+ 		writeb(ctrl, idev->base + CORE_I2C_CTRL);
+-- 
+2.25.1
+
