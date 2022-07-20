@@ -54,13 +54,22 @@
 
 &mmc {
 	status = "okay";
-
-	bus-width = <4>;
 	disable-wp;
+
+	/* SD card */
+	bus-width = <4>;
 	no-1-8-v;
-	cap-mmc-highspeed;
 	cap-sd-highspeed;
 	card-detect-delay = <200>;
+
+	/* eMMC */
+/*
+	bus-width = <8>;
+	non-removable;
+	cap-mmc-highspeed;
+	mmc-ddr-1_8v;
+	mmc-hs200-1_8v;
+*/
 };
 
 /* FPGA Fabric I2C - this I2C bus is connected to the MSS I2C bus on hardware */
