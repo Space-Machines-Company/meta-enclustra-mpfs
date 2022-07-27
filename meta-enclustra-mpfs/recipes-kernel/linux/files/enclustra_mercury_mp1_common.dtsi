@@ -51,11 +51,15 @@
 
 &qspi {
 	status = "okay";
-	flash@0 {
+	num-cs = <1>;
+	flash0: spi-nand@0 {
 		#address-cells = <0x1>;
 		#size-cells = <0x1>;
 		compatible = "s25fl512s";
 		reg = <0x0>;
+		spi-tx-bus-width = <4>;
+		spi-rx-bus-width = <4>;
+		spi-max-frequency = <20000000>;
 		partition@full {
 			label = "full";
 			reg = <0x0 0x4000000>;
@@ -78,8 +82,7 @@
 	bus-width = <8>;
 	non-removable;
 	cap-mmc-highspeed;
-	mmc-ddr-1_8v;
-	mmc-hs200-1_8v;
+	no-1-8-v;
 */
 };
 
