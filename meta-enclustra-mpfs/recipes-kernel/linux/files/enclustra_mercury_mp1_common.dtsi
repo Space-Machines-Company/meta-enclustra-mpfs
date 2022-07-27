@@ -38,6 +38,17 @@
 	};
 };
 
+&spi0 {
+	status = "okay";
+	num-chipselects = <1>;
+
+	sli9670: sli9670@0 {
+		compatible = "infineon,slb9670", "tcg,tpm_tis-spi";
+		reg = <0>;
+		spi-max-frequency = <1000000>;
+	};
+};
+
 &qspi {
 	status = "okay";
 	flash@0 {

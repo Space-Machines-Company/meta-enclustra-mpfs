@@ -45,6 +45,12 @@ repos:
             meta-networking:
             meta-multimedia:
 
+    meta-security:
+        url: git://git.yoctoproject.org/meta-security
+        refspec: honister
+        layers:
+            meta-tpm:
+
 local_conf_header:
     meta-enclustra-mpfs: |
         PACKAGE_CLASSES ?= "package_ipk"
@@ -56,5 +62,5 @@ local_conf_header:
         require conf/distro/include/yocto-uninative.inc
         require conf/distro/include/security_flags.inc
         INHERIT:append = " uninative"
-        DISTRO_FEATURES:append = " largefile systemd "
+        DISTRO_FEATURES:append = " largefile systemd tpm "
         VIRTUAL-RUNTIME_init_manager = "systemd"

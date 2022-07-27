@@ -12,6 +12,7 @@ ENCLUSTRA_KERNEL_PATCH_LIST = " \
     file://0007-replace-microchip-i2c-driver-with-newer-version.patch \
     file://0008-Fix-I2C-driver-read-extra-byte.patch \
     file://0009-musb-glue-layer-update.patch \
+    file://0010-SPI-driver-update.patch \
     "
 
 ENCLUSTRA_KERNEL_DTS_LIST = " \
