@@ -120,28 +120,6 @@ If the **ENCLUSTRA_BASEBOARD** variable is set to an Enclustra Base Board, a dev
 - ENCLUSTRA_BASEBOARD=pe3: [enclustra_mercury_pe3.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe3.dtsi)
 - ENCLUSTRA_BASEBOARD=st1: [enclustra_mercury_st1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_st1.dtsi)
 
-## Build HSS (Hart Software Services)
-This Linux reference design requires that the MSS is configured by the HSS with the reference design. Enclustra provides a fork of the [Microchip hart-software-services](https://github.com/polarfire-soc/hart-software-services) repository with added build targets for the supported Enclustra modules. The xml files generated with the Microchip MSS Configurator tool are already available in the Enclustra hart-software-services fork.
-
-### Prepare Toolchain
-
-It is recommended to use a pre-compiled toolchain as provided by [SiFive](https://github.com/sifive/freedom-tools/releases). Use following commands to download the RISC-V GNU Newlib Toolchain and setup the cross-compiler.
-
-    wget https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
-    tar xzvf riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
-    export CROSS_COMPILE=$(pwd)/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin/riscv64-unknown-elf-
-
-### Generate Binary
-
-To build the HSS binary, use following commands. The **BOARD** variable needs to be set to the corresponding Enclustra module ([Supported Machine Targets](#supported-machine-targets))
-
-    git clone git@gitlab.enclustra.com:Enclustra/BU-SP/OS/MPFS/hart-software-services.git
-    cd hart-software-services
-    make BOARD=me-mp1-250-ees-d3e defconfig
-    make BOARD=me-mp1-250-ees-d3e
-
-The generated file to be used as eNVM initialization data for boot mode 1 in Libero can be found in **hart-software-services/Default/**  directory and is named **hss-envm-wrapper-header.hex**.
-
 ## Known Issues:
 
 #### Minimal I2C Frequency
