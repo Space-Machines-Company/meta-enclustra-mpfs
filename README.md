@@ -106,7 +106,11 @@ Note that the device of the SD card (\<device\>) need to be replaced with the SD
 
 ### eMMC Memory
 
-***TODO:***
+Connect the USB device port of the base board to a host PC and configure the DIP switches of the base board for USB device operation.
+When the boot process is stopped in the HSS (by pressing any key), an USB service can be started by typing **usbdmsc**.
+This service attaches the eMMC memory as a pen drive to the host PC and the wic image can be copied to the eMMC as described in section [Creating a Bootable SD Card](### Creating a Bootable SD Card)
+
+Note: No SD card must be inserted in the SD card slot of the base board to be able to access the eMMC memory. If a SD card is inserted, the pen drive shows the SD card and not the eMMC memory.
 
 ## Login on Target
 
