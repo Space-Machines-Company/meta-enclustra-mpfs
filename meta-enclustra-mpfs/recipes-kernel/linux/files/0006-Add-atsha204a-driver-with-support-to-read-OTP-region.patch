@@ -1,6 +1,6 @@
-From 7278a6161235ef4b2c0803152518733a3f2427fa Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Andreas=20B=C3=BCrkler?= <andreas.buerkler@enclustra.com>
-Date: Mon, 11 Jul 2022 16:08:12 +0200
+From 5e86148b5cf8b5783e720009604500bbdaf25713 Mon Sep 17 00:00:00 2001
+From: Andreas Buerkler <andreas.buerkler@enclustra.com>
+Date: Fri, 23 Sep 2022 15:10:58 +0200
 Subject: [PATCH] Add atsha204a driver with support to read OTP region
 
 ---
@@ -8,8 +8,8 @@ Subject: [PATCH] Add atsha204a driver with support to read OTP region
  drivers/staging/Makefile                    |   1 +
  drivers/staging/atsha204-i2c/Kconfig        |  12 +
  drivers/staging/atsha204-i2c/Makefile       |   1 +
- drivers/staging/atsha204-i2c/atsha204-i2c.c | 880 ++++++++++++++++++++
- 5 files changed, 896 insertions(+)
+ drivers/staging/atsha204-i2c/atsha204-i2c.c | 696 ++++++++++++++++++++
+ 5 files changed, 712 insertions(+)
  create mode 100644 drivers/staging/atsha204-i2c/Kconfig
  create mode 100644 drivers/staging/atsha204-i2c/Makefile
  create mode 100644 drivers/staging/atsha204-i2c/atsha204-i2c.c
@@ -63,10 +63,10 @@ index 000000000000..609a6580141a
 +obj-$(CONFIG_ATSHA204_I2C) += atsha204-i2c.o
 diff --git a/drivers/staging/atsha204-i2c/atsha204-i2c.c b/drivers/staging/atsha204-i2c/atsha204-i2c.c
 new file mode 100644
-index 000000000000..7c511361449e
+index 000000000000..51cf5b7657c1
 --- /dev/null
 +++ b/drivers/staging/atsha204-i2c/atsha204-i2c.c
-@@ -0,0 +1,880 @@
+@@ -0,0 +1,696 @@
 +/* -*- mode: c; c-file-style: "linux" -*- */
 +/*
 +* I2C Driver for Atmel ATSHA204 over I2C
@@ -94,12 +94,10 @@ index 000000000000..7c511361449e
 +#include <linux/miscdevice.h>
 +#include <linux/i2c.h>
 +#include <linux/device.h>
-+#include <linux/hw_random.h>
 +#include <linux/mutex.h>
 +
 +#define ATSHA204_I2C_VERSION "0.2"
 +#define ATSHA204_SLEEP 0x01
-+#define ATSHA204_RNG_NAME "atsha-rng"
 +
 +/* 500us for ATECC108A */
 +#define ATECC108_W_HI (500)
@@ -148,8 +146,6 @@ index 000000000000..7c511361449e
 +	cmd->expected_rec_len = expected_rec_len;
 +	cmd->usleep = usleep;
 +}
-+
-+
 +
 +struct atsha204_chip *global_chip = NULL;
 +static atomic_t atsha204_avail = ATOMIC_INIT(1);
@@ -246,7 +242,6 @@ index 000000000000..7c511361449e
 +	return retval;
 +}
 +
-+
 +int atsha204_i2c_idle(const struct i2c_client *client)
 +{
 +	const struct device *dev = &client->dev;
@@ -258,9 +253,7 @@ index 000000000000..7c511361449e
 +	rc = i2c_master_send(client, idle_cmd, 1);
 +
 +	return rc;
-+
 +}
-+
 +
 +int atsha204_i2c_transaction(struct atsha204_chip *chip,
 +			     const u8 *to_send, size_t to_send_len,
@@ -322,49 +315,6 @@ index 000000000000..7c511361449e
 +
 +}
 +
-+
-+int atsha204_i2c_get_random(u8 *to_fill, const size_t max)
-+{
-+	int rc;
-+	struct atsha204_buffer recv = {0, 0};
-+	int rnd_len;
-+
-+	const u8 rand_cmd[] = {0x03, 0x07, 0x1b, 0x01, 0x00, 0x00, 0x27, 0x47};
-+
-+	rc = atsha204_i2c_transaction(global_chip, rand_cmd, sizeof(rand_cmd),
-+				      &recv);
-+	if (sizeof(rand_cmd) == rc) {
-+
-+		if (!atsha204_check_rsp_crc16(recv.ptr, recv.len)) {
-+			rc = -EBADMSG;
-+			dev_err(global_chip->dev, "%s\n", "Bad CRC on Random");
-+		} else {
-+			rnd_len = (max > recv.len - 3) ? recv.len - 3 : max;
-+			memcpy(to_fill, &recv.ptr[1], rnd_len);
-+			rc = rnd_len;
-+			dev_info(global_chip->dev, "%s: %d\n",
-+				 "Returning random bytes", rc);
-+		}
-+
-+	}
-+
-+	return rc;
-+
-+
-+}
-+
-+static int atsha204_i2c_rng_read(struct hwrng *rng, void *data,
-+				 size_t max, bool wait)
-+{
-+	return atsha204_i2c_get_random(data, max);
-+}
-+
-+static struct hwrng atsha204_i2c_rng = {
-+	.name = ATSHA204_RNG_NAME,
-+	.read = atsha204_i2c_rng_read,
-+};
-+
-+
 +int atsha204_i2c_validate_rsp(const struct atsha204_buffer *packet,
 +			      struct atsha204_buffer *rsp)
 +{
@@ -387,7 +337,6 @@ index 000000000000..7c511361449e
 +	return rc;
 +}
 +
-+
 +int atsha204_i2c_sleep(const struct i2c_client *client)
 +{
 +	const struct device *dev = &client->dev;
@@ -404,7 +353,6 @@ index 000000000000..7c511361449e
 +	return retval;
 +
 +}
-+
 +
 +void atsha204_i2c_crc_command(u8 *cmd, int len)
 +{
@@ -435,6 +383,7 @@ index 000000000000..7c511361449e
 +	return rc;
 +
 +}
++
 +ssize_t atsha204_i2c_write(struct file *filep, const char __user *buf,
 +			   size_t count, loff_t *f_pos)
 +{
@@ -525,7 +474,6 @@ index 000000000000..7c511361449e
 +	return rc;
 +}
 +
-+
 +int atsha204_i2c_open(struct inode *inode, struct file *filep)
 +{
 +	struct miscdevice *misc = filep->private_data;
@@ -549,9 +497,7 @@ index 000000000000..7c511361449e
 +	filep->f_pos = 0;
 +
 +	return 0;
-+
 +}
-+
 +
 +int atsha204_i2c_release(struct inode *inode, struct file *filep)
 +{
@@ -591,8 +537,6 @@ index 000000000000..7c511361449e
 +		misc_deregister(&chip->miscdev);
 +		atsha204_sysfs_del_device(chip);
 +	}
-+
-+	hwrng_unregister(&atsha204_i2c_rng);
 +
 +	kfree(chip);
 +
@@ -634,7 +578,6 @@ index 000000000000..7c511361449e
 +	.write = atsha204_i2c_write,
 +	.release = atsha204_i2c_release,
 +};
-+
 +
 +int atsha204_i2c_add_device(struct atsha204_chip *chip)
 +{
@@ -688,9 +631,6 @@ index 000000000000..7c511361449e
 +
 +	global_chip = chip;
 +
-+	rc = hwrng_register(&atsha204_i2c_rng);
-+	dev_dbg(dev, "%s%d\n", "HWRNG result: ", rc);
-+
 +	return chip;
 +
 +put_device:
@@ -728,7 +668,6 @@ index 000000000000..7c511361449e
 +	return result;
 +}
 +
-+
 +int atsha204_i2c_read4(struct atsha204_chip *chip, u8 *read_buf,
 +		       const u16 addr, const u8 param1)
 +{
@@ -765,44 +704,7 @@ index 000000000000..7c511361449e
 +	}
 +
 +	return rc;
-+
-+
-+
 +}
-+
-+
-+static ssize_t configzone_show(struct device *dev,
-+			       struct device_attribute *attr,
-+			       char *buf)
-+{
-+	struct atsha204_chip *chip = dev_get_drvdata(dev);
-+	int i;
-+	u16 bytes, word_addr;
-+	bool keep_going = true;
-+	u8 param1 = 0; /* indicates configzone region */
-+	char *str = buf;
-+
-+	u8 configzone[128] = {0};
-+
-+	for (bytes = 0; bytes < sizeof(configzone) && keep_going; bytes += 4) {
-+		word_addr = bytes / 4;
-+		if (4 != atsha204_i2c_read4(chip,
-+					    &configzone[bytes],
-+					    word_addr, param1)){
-+			keep_going = false;
-+		}
-+	}
-+
-+	for (i = 0; i < bytes; i++) {
-+		str += sprintf(str, "%02X ", configzone[i]);
-+		if ((i + 1) % 4 == 0)
-+			str += sprintf(str, "\n");
-+	}
-+
-+	return str - buf;
-+}
-+/*static DEVICE_ATTR_RO(configzone);*/
-+struct device_attribute dev_attr_configzone = __ATTR_RO(configzone);
 +
 +static ssize_t otp_show(struct device *dev,
 +			struct device_attribute *attr,
@@ -838,92 +740,7 @@ index 000000000000..7c511361449e
 +/*static DEVICE_ATTR_RO(otp);*/
 +struct device_attribute dev_attr_otp = __ATTR_RO(otp);
 +
-+static ssize_t serialnum_show(struct device *dev,
-+			      struct device_attribute *attr,
-+			      char *buf)
-+{
-+	struct atsha204_chip *chip = dev_get_drvdata(dev);
-+	int i;
-+	u16 bytes, word_addr;
-+	bool keep_going = true;
-+	u8 param1 = 0; /* indicates configzone region */
-+	char *str = buf;
-+
-+	u8 serial[12] = {0};
-+
-+	for (bytes = 0; bytes < sizeof(serial) && keep_going; bytes += 4) {
-+		word_addr = bytes / 4;
-+		if (4 != atsha204_i2c_read4(chip,
-+					    &serial[bytes],
-+					    word_addr, param1)){
-+			keep_going = false;
-+		}
-+	}
-+
-+	for (i = 0; i < bytes; i++) {
-+		str += sprintf(str, "%02X", serial[i]);
-+		if ((i + 1) % sizeof(serial) == 0)
-+			str += sprintf(str, "\n");
-+	}
-+
-+	return str - buf;
-+}
-+/*static DEVICE_ATTR_RO(configzone);*/
-+struct device_attribute dev_attr_serialnum = __ATTR_RO(serialnum);
-+
-+static ssize_t is_locked(struct device *dev,
-+			 struct device_attribute *attr,
-+			 char *buf,
-+			 const int offset)
-+{
-+	struct atsha204_chip *chip = dev_get_drvdata(dev);
-+	const u16 LOCK_ADDR = 0x15;
-+	u8 param1 = 0; /* indicates configzone region */
-+	char *str = buf;
-+	u8 lock_buf[4];
-+	const u8 UNLOCKED = 0x55;
-+
-+	if (sizeof(lock_buf) == atsha204_i2c_read4(chip,
-+						   lock_buf,
-+						   LOCK_ADDR, param1)){
-+
-+		if (UNLOCKED == lock_buf[offset])
-+			str += sprintf(str, "0");
-+		else
-+			str += sprintf(str, "1");
-+
-+		str += sprintf(str, "\n");
-+
-+	}
-+
-+	return str - buf;
-+}
-+
-+static ssize_t configlocked_show(struct device *dev,
-+				 struct device_attribute *attr,
-+				 char *buf)
-+{
-+	const int CONFIG_ZONE_LOCK_OFFSET = 3;
-+
-+	return is_locked(dev, attr, buf, CONFIG_ZONE_LOCK_OFFSET);
-+}
-+struct device_attribute dev_attr_configlocked = __ATTR_RO(configlocked);
-+
-+static ssize_t datalocked_show(struct device *dev,
-+			       struct device_attribute *attr,
-+			       char *buf)
-+{
-+	const int DATA_ZONE_LOCK_OFFSET = 2;
-+
-+	return is_locked(dev, attr, buf, DATA_ZONE_LOCK_OFFSET);
-+}
-+struct device_attribute dev_attr_datalocked = __ATTR_RO(datalocked);
-+
 +static struct attribute *atsha204_dev_attrs[] = {
-+	&dev_attr_configzone.attr,
-+	&dev_attr_serialnum.attr,
-+	&dev_attr_configlocked.attr,
-+	&dev_attr_datalocked.attr,
 +	&dev_attr_otp.attr,
 +	NULL,
 +};
@@ -941,7 +758,6 @@ index 000000000000..7c511361449e
 +	.remove = atsha204_i2c_remove,
 +	.id_table = atsha204_i2c_id,
 +};
-+
 +
 +MODULE_AUTHOR("Josh Datko <jbd@cryptotronix.com");
 +MODULE_DESCRIPTION("Atmel ATSHA204 driver");
