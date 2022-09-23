@@ -16,7 +16,7 @@ CONFIG_KALLSYMS_ALL=y
 CONFIG_BPF_SYSCALL=y
 CONFIG_SOC_MICROCHIP_POLARFIRE=y
 CONFIG_SMP=y
-CONFIG_CMDLINE="earlycon root=/dev/mmcblk0p3 rootwait console=ttyS0,115200n8 systemd.show_status=0"
+CONFIG_CMDLINE="earlycon root=/dev/mmcblk0p3 rootwait console=ttyS0,115200n8 uio_pdrv_genirq.of_id=generic-uio systemd.show_status=0"
 CONFIG_JUMP_LABEL=y
 CONFIG_MODULES=y
 CONFIG_MODULE_UNLOAD=y
