@@ -10,6 +10,12 @@ The generated binaries are compatible with the FPGA and MSS configuration of fol
 
 - ***TODO***: add link to all Libero reference designs
 
+## Hart Software Services
+
+The HSS software with support for Mercury+ MP1 module can be found in following repository:
+
+- ***TODO***: add link to public HSS repository
+
 ## Host Requirements
 
 ### Host Operating System
@@ -116,13 +122,81 @@ Note: No SD card must be inserted in the SD card slot of the base board to be ab
 
 Login with **root** account, no password is set.
 
-## Base Board Dependent Peripherals
+## Devicetree
+
+Linux and U-Boot use the same devicetree source files to prevent from maintaining two separate devicetree sources.
+This is achieved by linking the kernel devicetree sources to U-Boot in the meta-enclustra-mpfs layer.
+
+Following list show all files added by meta-enclustra-mpfs:
+
+| File name                            | Directory                                                 | Description |
+|--------------------------------------|-----------------------------------------------------------|-------------|
+| enclustra_mercury_mp1_common.dtsi    | meta-enclustra-mpfs/recipes-kernel/linux/files            | Common definitions that are valid for all Mercury+ product models |
+| enclustra_mercury_mp1_fabric.dtsi    | meta-enclustra-mpfs/recipes-kernel/linux/files/me-mp1-XXX | Devicetree nodes in FPGA fabric |
+| enclustra_mercury_mp1.dts            | meta-enclustra-mpfs/recipes-kernel/linux/files/me-mp1-XXX | Top level devicetree. Contains nodes and properties that are specific to that product model as DDR4 memory size |
+| enclustra_mercury_baseboard_XXX.dtsi | meta-enclustra-mpfs/recipes-kernel/linux/files            | Base board specific devicetree properties |
+
+### Modification for eMMC boot
+
+On the Mercury MP1 module, the MSS MMC controller is connected through a multiplexer to a eMMC memory located on the module and to a SD card slot located on the base board. During the boot process, the HSS selects one of the two devices depending on if a SD card is inserted in the SD card slot. If a SD Card is inserted, the system boots from SD card, otherwise it boots from eMMC.
+
+The default devicetree works for both SD Card and eMMC memory, but the eMMC performance is limited. The devicetree needs to be modified for full eMMC support (8 data lanes instead of 4) with the disadvantage that SD Card is not supported anymore.
+
+In file meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_mp1_common.dtsi in 'mmc' node, following needs to be removed or commented out:
+
+	/* SD card */
+	bus-width = <4>;
+	no-1-8-v;
+	cap-sd-highspeed;
+	card-detect-delay = <200>;
+
+And following needs to be added or the comment removed:
+
+	/* eMMC */
+	bus-width = <8>;
+	non-removable;
+	cap-mmc-highspeed;
+	no-1-8-v;
+
+### Base Board Dependent Peripherals
 
 If the **ENCLUSTRA_BASEBOARD** variable is set to an Enclustra Base Board, a devicetree include file is added for the Linux kernel which contains base-board specific configuration settings:
  
 - ENCLUSTRA_BASEBOARD=pe1: [enclustra_mercury_pe1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe1.dtsi)
 - ENCLUSTRA_BASEBOARD=pe3: [enclustra_mercury_pe3.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe3.dtsi)
 - ENCLUSTRA_BASEBOARD=st1: [enclustra_mercury_st1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_st1.dtsi)
+
+## Patches
+
+### U-Boot
+
+Following U-Boot patches are added.
+
+| Patch Name                                                      | Description |
+|-----------------------------------------------------------------|-------------|
+| 0008-Enclustra-MAC-address-readout-from-EEPROM.patch            | Add a feature to read and configure the MAC address from atsha204a EEPROM |
+| 0009-Board-files-for-Mercury-MP1-added.patch                    | Add support for MP1 module |
+| 0010-Devicetree-for-Mercury-MP1-added.patch                     | Add MP1 devicetree to Makefile |
+| 0011-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch | Remove check in Microchip I2C driver to allow wakeup of atsha204a by transmitting only 1 byte |
+| 0012-Bugfix-for-atsha204a-driver.patch                          | Fix wakeup sequence in atsha204a driver |
+| 0013-Add-Microchip-Polarfire-SoC-QSPI-driver.patch              | Add driver for QSPI flash |
+
+### Linux Kernel
+
+Following Linux kernel patches are added.
+
+| Patch Name                                                      | Description |
+|-----------------------------------------------------------------|-------------|
+| 0001-Driver-for-SI5338-added.patch                              | Add driver for clock generator on Enclustra base boards |
+| 0002-Devicetree-for-Mercury-MP1-added.patch                     | Add MP1 devicetree to Makefile |
+| 0003-Remove-devicetree-include-from-icicle-kit.patch            | Remove icicle-kit specific settings from microchip-mpfs.dtsi |
+| 0004-gpio-microsemi-gpio-get-base-dynamically.patch             | Bugfix to allow more than one GPIO |
+| 0005-Remove-USB-host-dependency.patch                           | Allow USB device mode configuration |
+| 0006-Add-atsha204a-driver-with-support-to-read-OTP-region.patch | Add driver to read serial number from EEPROM |
+| 0007-replace-microchip-i2c-driver-with-newer-version.patch      | Update I2C driver to newer version |
+| 0008-Fix-I2C-driver-read-extra-byte.patch                       | Bugfix in I2C driver to fix issue with reading one byte more than requested |
+| 0009-musb-glue-layer-update.patch                               | Update USB driver to newer version |
+| 0010-SPI-driver-update.patch                                    | Update SPI driver to newer version |
 
 ## Known Issues:
 
@@ -137,4 +211,6 @@ See [License](meta-enclustra-mpfs/COPYING.MIT)
 
 ## Changelog
 
-***TODO*** First release
+| Date       | Version | Comment             |
+|------------|---------|---------------------|
+| 29.09.2022 | 0.1     | Used for validation |
