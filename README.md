@@ -73,17 +73,18 @@ The recommended build flow is to use kas, which is a Python based tool that prov
 
 #### Usage \#1
 
-Use following command to build the target specified in the build.yml file. All base board dependent peripherals are disabled.
+Use following command to build the target specified in the build.yml file. A base board can be specified optionally. If ENCLUSTRA_BASEBOARD variable is set, base board dependent devicetree settings are added to the kernel devicetree.
 
+    export ENCLUSTRA_BASEBOARD=pe3
     kas build build.yml
 
 #### Usage \#2
 
 Use following command to specify the bitbake command to be executed. **MACHINE** and **ENCLUSTRA_BASEBOARD** variable can be overridden according to sections [Supported Machine Targets](#supported-machine-targets) and [Supported Enclustra Base Boards](#supported-enclustra-base-boards).
 
-    kas shell build.yml -c 'MACHINE=me-mp1-250-ees-d3e ENCLUSTRA_BASEBOARD=pe3 bitbake core-image-minimal'
+    kas shell build.yml -c 'MACHINE=me-mp1-250-ees-d3e ENCLUSTRA_BASEBOARD=pe3 bitbake image-minimal-hwtest'
 
-Note that the image **core-image-minimal** can be replaced by any available image. Following are a few examples, provided by openembedded-core layer:
+Note that the image [image-minimal-hwtest](meta-enclustra-mpfs/recipes-core/images/image-minimal-hwtest.bb) can be replaced by any available image recipe. Following are a few examples, provided by openembedded-core layer:
 - core-image-base
 - core-image-minimal
 - core-image-minimal-dev
@@ -96,7 +97,7 @@ The tool kas can be used to checkout the repositories and setup the build direct
     kas checkout kas-project.yml
     source openembedded-core/oe-init-build-env 
     export BB_ENV_EXTRAWHITE="ENCLUSTRA_BASEBOARD"
-    MACHINE=me-mp1-250-ees-d3e ENCLUSTRA_BASEBOARD=pe3 bitbake core-image-minimal
+    MACHINE=me-mp1-250-ees-d3e ENCLUSTRA_BASEBOARD=pe3 bitbake image-minimal-hwtest
 
 ## Deployment
 
@@ -106,7 +107,7 @@ The OpenEmbedded Image Creator (wic) creates a partitioned image file for SD Car
 
 Copy the image file to a SD card e.g.
 
-    dd if=core-image-minimal-me-mp1-250-ees-d3e.wic of=<device> && sync
+    dd if=image-minimal-hwtest-me-mp1-250-ees-d3e.wic of=<device> && sync
 
 Note that the device of the SD card (\<device\>) need to be replaced with the SD Card device on your host (e.g. /dev/sdd).
 
@@ -142,9 +143,9 @@ Following list show all devicetree include files added by meta-enclustra-mpfs:
 
 On the Mercury MP1 module, the MSS MMC controller is connected through a multiplexer to a eMMC memory located on the module and to a SD card slot located on the base board. During the boot process, the HSS selects one of the two devices depending on if a SD card is inserted in the SD card slot. If a SD Card is inserted, the system boots from SD card, otherwise it boots from eMMC.
 
-The default devicetree works for both SD Card and eMMC memory, but the eMMC performance is limited. The devicetree needs to be modified for full eMMC support (8 data lanes instead of 4) with the disadvantage that SD Card is not supported anymore.
+The default devicetree works for both SD Card and eMMC memory, but the eMMC performance is limited. The devicetree needs to be modified for full eMMC support (use of 8 data lanes instead of only 4) with the disadvantage that SD Card is not supported anymore.
 
-In file meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_mp1_common.dtsi in 'mmc' node, following needs to be removed or commented out:
+In file [meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_mp1_common.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_mp1_common.dtsi) in 'mmc' node, following settings needs to be removed or commented out:
 
 	/* SD card */
 	bus-width = <4>;
@@ -152,7 +153,7 @@ In file meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_mp1_com
 	cap-sd-highspeed;
 	card-detect-delay = <200>;
 
-And following needs to be added or the comment removed:
+And following settings need to be added or the existing comments removed:
 
 	/* eMMC */
 	bus-width = <8>;

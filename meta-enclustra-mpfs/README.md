@@ -25,7 +25,7 @@ revision: 02cb81741a5e1b37f89318d04ebc6b2854bfe736
 
 # Submit Patches / Reporting Bugs
 
-Please report bugs or submit patches against the meta-enclustra-msoc layer to following address:
+Please report bugs or submit patches against the meta-enclustra-mpfs layer to following address:
 
 support@enclustra.com
 
