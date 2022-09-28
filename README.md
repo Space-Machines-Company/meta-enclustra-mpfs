@@ -127,14 +127,16 @@ Login with **root** account, no password is set.
 Linux and U-Boot use the same devicetree source files to prevent from maintaining two separate devicetree sources.
 This is achieved by linking the kernel devicetree sources to U-Boot in the meta-enclustra-mpfs layer.
 
-Following list show all files added by meta-enclustra-mpfs:
+Following list show all devicetree include files added by meta-enclustra-mpfs:
 
-| File name                            | Directory                                                 | Description |
-|--------------------------------------|-----------------------------------------------------------|-------------|
-| enclustra_mercury_mp1_common.dtsi    | meta-enclustra-mpfs/recipes-kernel/linux/files            | Common definitions that are valid for all Mercury+ product models |
-| enclustra_mercury_mp1_fabric.dtsi    | meta-enclustra-mpfs/recipes-kernel/linux/files/me-mp1-XXX | Devicetree nodes in FPGA fabric |
-| enclustra_mercury_mp1.dts            | meta-enclustra-mpfs/recipes-kernel/linux/files/me-mp1-XXX | Top level devicetree. Contains nodes and properties that are specific to that product model as DDR4 memory size |
-| enclustra_mercury_baseboard_XXX.dtsi | meta-enclustra-mpfs/recipes-kernel/linux/files            | Base board specific devicetree properties |
+| File name                                                                                                                                | Description |
+|------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| [enclustra_mercury_mp1_common.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_mp1_common.dtsi)                    | Common definitions that are valid for all Mercury+ product models |
+| [enclustra_mercury_mp1_fabric.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/me-mp1-250-ees-d3e/enclustra_mercury_mp1_fabric.dtsi) | Devicetree nodes in FPGA fabric |
+| [enclustra_mercury_mp1.dts](meta-enclustra-mpfs/recipes-kernel/linux/files/me-mp1-250-ees-d3e/enclustra_mercury_mp1.dts)                 | Top level devicetree. Contains nodes and properties that are specific to that product model as DDR4 memory size |
+| [enclustra_mercury_baseboard_pe1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_baseboard_pe1.dtsi)              | Mercurty PE1 base board specific devicetree properties |
+| [enclustra_mercury_baseboard_pe3.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_baseboard_pe3.dtsi)              | Mercury PE3 base board specific devicetree properties |
+| [enclustra_mercury_baseboard_st1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_baseboard_st1.dtsi)              | Mercury ST1 base board specific devicetree properties |
 
 ### Modification for eMMC boot
 
@@ -172,31 +174,31 @@ If the **ENCLUSTRA_BASEBOARD** variable is set to an Enclustra Base Board, a dev
 
 Following U-Boot patches are added.
 
-| Patch Name                                                      | Description |
-|-----------------------------------------------------------------|-------------|
-| 0008-Enclustra-MAC-address-readout-from-EEPROM.patch            | Add a feature to read and configure the MAC address from atsha204a EEPROM |
-| 0009-Board-files-for-Mercury-MP1-added.patch                    | Add support for MP1 module |
-| 0010-Devicetree-for-Mercury-MP1-added.patch                     | Add MP1 devicetree to Makefile |
-| 0011-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch | Remove check in Microchip I2C driver to allow wakeup of atsha204a by transmitting only 1 byte |
-| 0012-Bugfix-for-atsha204a-driver.patch                          | Fix wakeup sequence in atsha204a driver |
-| 0013-Add-Microchip-Polarfire-SoC-QSPI-driver.patch              | Add driver for QSPI flash |
+| Patch Name                                                                                                                                                                      | Description |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| [0008-Enclustra-MAC-address-readout-from-EEPROM.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0008-Enclustra-MAC-address-readout-from-EEPROM.patch)                       | Add a feature to read and configure the MAC address from atsha204a EEPROM |
+| [0009-Board-files-for-Mercury-MP1-added.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0009-Board-files-for-Mercury-MP1-added.patch)                                       | Add support for MP1 module |
+| [0010-Devicetree-for-Mercury-MP1-added.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0010-Devicetree-for-Mercury-MP1-added.patch)                                         | Add MP1 devicetree to Makefile |
+| [0011-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0011-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch) | Remove check in Microchip I2C driver to allow wakeup of atsha204a by transmitting only 1 byte |
+| [0012-Bugfix-for-atsha204a-driver.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0012-Bugfix-for-atsha204a-driver.patch)                                                   | Fix wakeup sequence in atsha204a driver |
+| [0013-Add-Microchip-Polarfire-SoC-QSPI-driver.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0013-Add-Microchip-Polarfire-SoC-QSPI-driver.patch)                           | Add driver for QSPI flash |
 
 ### Linux Kernel
 
 Following Linux kernel patches are added.
 
-| Patch Name                                                      | Description |
-|-----------------------------------------------------------------|-------------|
-| 0001-Driver-for-SI5338-added.patch                              | Add driver for clock generator on Enclustra base boards |
-| 0002-Devicetree-for-Mercury-MP1-added.patch                     | Add MP1 devicetree to Makefile |
-| 0003-Remove-devicetree-include-from-icicle-kit.patch            | Remove icicle-kit specific settings from microchip-mpfs.dtsi |
-| 0004-gpio-microsemi-gpio-get-base-dynamically.patch             | Bugfix to allow more than one GPIO |
-| 0005-Remove-USB-host-dependency.patch                           | Allow USB device mode configuration |
-| 0006-Add-atsha204a-driver-with-support-to-read-OTP-region.patch | Add driver to read serial number from EEPROM |
-| 0007-replace-microchip-i2c-driver-with-newer-version.patch      | Update I2C driver to newer version |
-| 0008-Fix-I2C-driver-read-extra-byte.patch                       | Bugfix in I2C driver to fix issue with reading one byte more than requested |
-| 0009-musb-glue-layer-update.patch                               | Update USB driver to newer version |
-| 0010-SPI-driver-update.patch                                    | Update SPI driver to newer version |
+| Patch Name                                                                                                                                                                        | Description |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| [0001-Driver-for-SI5338-added.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0001-Driver-for-SI5338-added.patch)                                                           | Add driver for clock generator on Enclustra base boards |
+| [0002-Devicetree-for-Mercury-MP1-added.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0002-Devicetree-for-Mercury-MP1-added.patch)                                         | Add MP1 devicetree to Makefile |
+| [0003-Remove-devicetree-include-from-icicle-kit.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0003-Remove-devicetree-include-from-icicle-kit.patch)                       | Remove icicle-kit specific settings from microchip-mpfs.dtsi |
+| [0004-gpio-microsemi-gpio-get-base-dynamically.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0004-gpio-microsemi-gpio-get-base-dynamically.patch)                         | Bugfix to allow more than one GPIO |
+| [0005-Remove-USB-host-dependency.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0005-Remove-USB-host-dependency.patch)                                                     | Allow USB device mode configuration |
+| [0006-Add-atsha204a-driver-with-support-to-read-OTP-region.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0006-Add-atsha204a-driver-with-support-to-read-OTP-region.patch) | Add driver to read serial number from EEPROM |
+| [0007-replace-microchip-i2c-driver-with-newer-version.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0007-replace-microchip-i2c-driver-with-newer-version.patch)           | Update I2C driver to newer version |
+| [0008-Fix-I2C-driver-read-extra-byte.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0008-Fix-I2C-driver-read-extra-byte.patch)                                             | Bugfix in I2C driver to fix issue with reading one byte more than requested |
+| [0009-musb-glue-layer-update.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0009-musb-glue-layer-update.patch)                                                             | Update USB driver to newer version |
+| [0010-SPI-driver-update.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0010-SPI-driver-update.patch)                                                                       | Update SPI driver to newer version |
 
 ## Known Issues:
 
