@@ -19,6 +19,13 @@
 		#size-cells = <2>;
 		compatible = "simple-bus";
 		ranges = <0x0 0x0 0x20 0x00 0x10 0x00>;
+
+		/* 2 Gbyte DDR4 memory */
+		fabric_memory: memory@0 {
+			device_type = "memory";
+			reg = <0x0 0x0 0x0 0x80000000>;
+			status = "okay";
+		};
 	};
 
 	/* FIC1 (AXI) at address 0xE000_0000 - 0xFFFF_FFFF */
