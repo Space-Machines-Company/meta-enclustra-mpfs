@@ -205,8 +205,12 @@ Following Linux kernel patches are added.
 
 #### Minimal I2C Frequency
 
-The clock frequency of the I2C bus is derived from the MSS AHB/APB bus clock. This clock is set to 150MHz by default.  Because the biggest possible divider value is 960, the slowest possible I2C frequency is 150MHz/960=156.25kHz. With this
+The clock frequency of the I2C bus is derived from the MSS AHB/APB bus clock. This clock is set to 150MHz by default. Because the biggest possible divider value is 960, the slowest possible I2C frequency is 150MHz/960=156.25kHz. With this
 156.25kHz I2C clock frequency, the wake-up pulse duration of the Atmel ATSHA204a device is violated (52us instead of 60us). Measurements has shown that the device wakes up reliable when the wake-up pulse is bigger than 30us.
+
+#### QSPI Flash not accessible in Linux
+
+Currently no Linux driver for the MSS QSPI flash controller is available. The QSPI flash can only be used in U-Boot.
 
 ## License
 
