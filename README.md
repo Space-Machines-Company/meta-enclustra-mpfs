@@ -101,7 +101,7 @@ The tool kas can be used to checkout the repositories and setup the build direct
 
 ## Deployment
 
-The OpenEmbedded Image Creator (wic) creates a partitioned image file for SD Card/eMMC boot. The partitions are configured in an OpenEmbedded kickstart file ([mpfs-icicle-kit.wks](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/blob/master/wic/mpfs-icicle-kit.wks)) that is located in the [meta-polarfire-soc-yocto-bsp](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp) layer. The image file to be deployed on SD Card/eMMC can be found in **build/tmp-glibc/deploy/images/\<MACHINE\>** directory, e.g. **core-image-minimal-me-mp1-250-ees-d3e.wic**.
+The OpenEmbedded Image Creator (wic) creates a partitioned image file for SD Card/eMMC boot. The partitions are configured in an OpenEmbedded kickstart file ([mpfs-icicle-kit.wks](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/blob/2021.11/wic/mpfs-icicle-kit.wks)) that is located in the [meta-polarfire-soc-yocto-bsp](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/tree/2021.11) layer. The image file to be deployed on SD Card/eMMC can be found in **build/tmp-glibc/deploy/images/\<MACHINE\>** directory, e.g. **core-image-minimal-me-mp1-250-ees-d3e.wic**.
 
 ### Creating a Bootable SD Card
 
