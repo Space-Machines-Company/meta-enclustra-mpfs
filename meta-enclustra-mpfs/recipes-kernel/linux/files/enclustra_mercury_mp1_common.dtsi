@@ -110,14 +110,6 @@
 	};
 };
 
-&mac0 {
-	status = "okay";
-	/delete-property/ mac-address;
-	/delete-property/ local-mac-address;
-	phy-mode = "sgmii";
-	phy-handle = <&phy0>;
-};
-
 &mac1 {
 	status = "okay";
 	/delete-property/ mac-address;
@@ -125,9 +117,6 @@
 	phy-mode = "sgmii";
 	phy-handle = <&phy3>;
 
-	phy0: ethernet-phy@0 {
-		reg = <0>;
-	};
 	phy3: ethernet-phy@3 {
 		reg = <3>;
 	};
