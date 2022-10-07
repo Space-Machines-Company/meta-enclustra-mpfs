@@ -17,7 +17,7 @@ See [License](meta-enclustra-mpfs/COPYING.MIT)
 ## Description
 
 This repository contains a Yocto layer to generate Linux reference designs for the [Enclustra Mercury+ MP1 product series](https://www.enclustra.com/en/products/system-on-chip-modules/mercury-mp1/).
-The Yocto layer can be included into an own project or the provided [build.yml](build.yml) can be used to build a design using KAS tool.
+The Yocto layer can be included into an own project or the provided [build.yml](build.yml) can be used to build a design using [kas](https://kas.readthedocs.io/en/latest/#) tool.
 The reference design is based on [meta-polarfire-soc-yocto-bsp](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp) release 2021.11 that uses following versions.
 
 - Yocto: honister
@@ -51,7 +51,7 @@ Following packages are required for building this reference design on Ubuntu:
 
     gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit mesa-common-dev zstd liblz4-tool libyaml-dev libelf-dev python3-distutils
 
-The packages can be installed on with **sudo apt install \<package\>** command.
+The packages can be installed with **sudo apt install \<package\>** command.
 See [Yocto System Requirements](https://docs.yoctoproject.org/3.4.2/ref-manual/system-requirements.html?highlight=host) for more details about requirements for Linux distributions other than Ubuntu.
 
 ## Build 
@@ -73,9 +73,9 @@ The product model can be specified as target device (variable: **MACHINE**). Fol
 
 The Enclustra Base Board can be specified with **ENCLUSTRA_BASEBOARD** variable. Following base boards are supported:
 
-- pe1
-- pe3
-- st1
+- [pe1](https://www.enclustra.com/en/products/base-boards/mercury-pe1-200-300-400)
+- [pe3](https://www.enclustra.com/en/products/base-boards/mercury-pe3)
+- [st1](https://www.enclustra.com/en/products/base-boards/mercury-st1)
 
 ### Accelerate Build
 
@@ -125,7 +125,7 @@ The tool kas can be used to checkout the repositories and setup the build direct
 
 ## Deployment
 
-The OpenEmbedded Image Creator (wic) creates a partitioned image file for SD Card/eMMC boot. The partitions are configured in an OpenEmbedded kickstart file ([mpfs-icicle-kit.wks](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/blob/2021.11/wic/mpfs-icicle-kit.wks)) that is located in the [meta-polarfire-soc-yocto-bsp](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/tree/2021.11) layer. The image file to be deployed on SD Card/eMMC can be found in **build/tmp-glibc/deploy/images/\<MACHINE\>** directory, e.g. **core-image-minimal-me-mp1-250-ees-d3e.wic**.
+The OpenEmbedded Image Creator (wic) creates a partitioned image file for SD Card/eMMC. The partitions are configured in an OpenEmbedded kickstart file ([mpfs-icicle-kit.wks](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/blob/2021.11/wic/mpfs-icicle-kit.wks)) that is located in the [meta-polarfire-soc-yocto-bsp](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/tree/2021.11) layer. The image file to be deployed on SD Card/eMMC can be found in **build/tmp-glibc/deploy/images/\<MACHINE\>** directory, e.g. **image-minimal-hwtest-me-mp1-250-ees-d3e.wic**.
 
 ### Creating a Bootable SD Card
 
@@ -133,15 +133,17 @@ Copy the image file to a SD card e.g.
 
     dd if=image-minimal-hwtest-me-mp1-250-ees-d3e.wic of=<device> && sync
 
-Note that the device of the SD card (\<device\>) need to be replaced with the SD Card device on your host (e.g. /dev/sdd).
+Note that the device of the SD card (\<device\>) needs to be replaced with the SD Card device on your host (e.g. /dev/sdd).
 
 ### eMMC Memory
 
 Connect the USB device port of the base board to a host PC and configure the DIP switches of the base board for USB device operation.
 When the boot process is stopped in the HSS (by pressing any key), an USB service can be started by typing **usbdmsc**.
-This service attaches the eMMC memory as a pen drive to the host PC and the wic image can be copied to the eMMC as described in section [Creating a Bootable SD Card](### Creating a Bootable SD Card)
+This service attaches the eMMC memory as a pen drive to the host PC and the wic image can be copied to the eMMC as described in section [Creating a Bootable SD Card](#Creating-a-Bootable-SD-Card)
 
-Note: No SD card must be inserted in the SD card slot of the base board to be able to access the eMMC memory. If a SD card is inserted, the pen drive shows the SD card and not the eMMC memory.
+**Note** No SD card must be inserted in the SD card slot of the base board. If a SD card is inserted, the pen drive shows the SD card and not the eMMC memory.
+
+**Warning** Make sure to disconnect the USB cable of the base board before booting Linux. Linux is configured to use USB in host mode by default.
 
 ## Login on Target
 
@@ -192,7 +194,7 @@ If the **ENCLUSTRA_BASEBOARD** variable is set to an Enclustra Base Board, a dev
 | ENCLUSTRA_BASEBOARD | Included devicetree file | Added peripherals |
 |---------------------|--------------------------|-------------------|
 | pe1                 | [enclustra_mercury_pe1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe1.dtsi) | - 24AA128 I2C EEPROM<br>- LM96080 voltage/current monitor<br>- SI5338 clock generator | 
-| pe3                 | [enclustra_mercury_pe3.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe3.dtsi) | - 24AA128 I2C EEPROM<br>- LM96080 voltage/current monitor<br>- PCAl6416 GPIO expander |
+| pe3                 | [enclustra_mercury_pe3.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe3.dtsi) | - 24AA128 I2C EEPROM<br>- LM96080 voltage/current monitor<br>- PCAl6416 I2C IO expander |
 | st1                 | [enclustra_mercury_st1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_st1.dtsi) | - SI5338 clock generator |
 
 ## Patches
