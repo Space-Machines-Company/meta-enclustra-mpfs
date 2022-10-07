@@ -4,8 +4,6 @@ LICENSE = "MIT"
 
 inherit core-image
 
-IMAGE_ROOTFS_SIZE ?= "131072"
-
 IMAGE_INSTALL = "packagegroup-core-boot"
 IMAGE_INSTALL:append = " phytool"
 IMAGE_INSTALL:append = " ethtool"
