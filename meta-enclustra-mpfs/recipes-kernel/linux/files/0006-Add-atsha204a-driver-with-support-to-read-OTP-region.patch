@@ -1,6 +1,6 @@
-From 5e86148b5cf8b5783e720009604500bbdaf25713 Mon Sep 17 00:00:00 2001
+From 99d14ab4540b6bf9156c12b5dfe54d422f579238 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
-Date: Fri, 23 Sep 2022 15:10:58 +0200
+Date: Fri, 7 Oct 2022 15:50:25 +0200
 Subject: [PATCH] Add atsha204a driver with support to read OTP region
 
 ---
@@ -8,8 +8,8 @@ Subject: [PATCH] Add atsha204a driver with support to read OTP region
  drivers/staging/Makefile                    |   1 +
  drivers/staging/atsha204-i2c/Kconfig        |  12 +
  drivers/staging/atsha204-i2c/Makefile       |   1 +
- drivers/staging/atsha204-i2c/atsha204-i2c.c | 696 ++++++++++++++++++++
- 5 files changed, 712 insertions(+)
+ drivers/staging/atsha204-i2c/atsha204-i2c.c | 720 ++++++++++++++++++++
+ 5 files changed, 736 insertions(+)
  create mode 100644 drivers/staging/atsha204-i2c/Kconfig
  create mode 100644 drivers/staging/atsha204-i2c/Makefile
  create mode 100644 drivers/staging/atsha204-i2c/atsha204-i2c.c
@@ -63,10 +63,10 @@ index 000000000000..609a6580141a
 +obj-$(CONFIG_ATSHA204_I2C) += atsha204-i2c.o
 diff --git a/drivers/staging/atsha204-i2c/atsha204-i2c.c b/drivers/staging/atsha204-i2c/atsha204-i2c.c
 new file mode 100644
-index 000000000000..51cf5b7657c1
+index 000000000000..0bdb979f65a7
 --- /dev/null
 +++ b/drivers/staging/atsha204-i2c/atsha204-i2c.c
-@@ -0,0 +1,696 @@
+@@ -0,0 +1,720 @@
 +/* -*- mode: c; c-file-style: "linux" -*- */
 +/*
 +* I2C Driver for Atmel ATSHA204 over I2C
@@ -706,11 +706,34 @@ index 000000000000..51cf5b7657c1
 +	return rc;
 +}
 +
++static ssize_t serial_show(struct device *dev,
++                           struct device_attribute *attr,
++                           char *buf)
++{
++        struct atsha204_chip *chip = dev_get_drvdata(dev);
++        u8 param1 = 1; /* indicates otp region */
++        char *str = buf;
++
++        u8 otp[4] = {0};
++
++        if(4 != atsha204_i2c_read4(chip, &otp[0], 0, param1)){
++            str += sprintf(str, "N/A\n");
++        } else {
++            u32 serial = 0;
++            serial = ((u32)(otp[0])<<24) | ((u32)(otp[1])<<16) |
++                     ((u32)(otp[2])<<8)  | (u32)otp[3];
++            str += sprintf(str, "%i ", serial);
++        }
++
++        return str - buf;
++}
++/*static DEVICE_ATTR_RO(serial);*/
++struct device_attribute dev_attr_serial = __ATTR_RO(serial);
++
 +static ssize_t otp_show(struct device *dev,
 +			struct device_attribute *attr,
 +			char *buf)
 +{
-+	
 +	struct atsha204_chip *chip = dev_get_drvdata(dev);
 +	int i;
 +	u16 bytes, word_addr;
@@ -742,6 +765,7 @@ index 000000000000..51cf5b7657c1
 +
 +static struct attribute *atsha204_dev_attrs[] = {
 +	&dev_attr_otp.attr,
++	&dev_attr_serial.attr,
 +	NULL,
 +};
 +
