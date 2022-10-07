@@ -1,8 +1,28 @@
 # Enclustra Linux Reference Design for Microchip Polarfire SoC
 
+## Maintainer
+
+Enclustra GmbH  [support@enclustra.com]
+
+## License
+
+See [License](meta-enclustra-mpfs/COPYING.MIT)
+
+## Changelog
+
+| Date       | Version | Comment             |
+|------------|---------|---------------------|
+| 07.10.2022 | 1.0     | First release       |
+
 ## Description
 
-This repository contains a Yocto layer to generate Linux reference designs for the Enclustra Mercury+ MP1 module.
+This repository contains a Yocto layer to generate Linux reference designs for the [Enclustra Mercury+ MP1 product series](https://www.enclustra.com/en/products/system-on-chip-modules/mercury-mp1/).
+The Yocto layer can be included into an own project or the provided [build.yml](build.yml) can be used to build a design using KAS tool.
+The reference design is based on [meta-polarfire-soc-yocto-bsp](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp) release 2021.11 that uses following versions.
+
+- Yocto: honister
+- U-Boot: 2021.07
+- Linux:  kernel 5.12.19
 
 ## FPGA Reference Designs for Microchip Libero
 
@@ -12,7 +32,7 @@ The generated binaries are compatible with the FPGA and MSS configuration of fol
 
 ## Hart Software Services
 
-The HSS software with support for Mercury+ MP1 module can be found in following repository:
+The HSS software with support for Mercury+ MP1 can be found in following repository:
 
 - ***TODO***: add link to public HSS repository
 
@@ -38,7 +58,7 @@ See [Yocto System Requirements](https://docs.yoctoproject.org/3.4.2/ref-manual/s
 
 ### Supported Machine Targets
 
-The Enclustra Module can be specified as target device (variable: **MACHINE**). Following modules are supported:
+The product model can be specified as target device (variable: **MACHINE**). Following product models are supported:
 
 - me-mp1-250-ees-d3e
 - me-mp1-250-si-d3en
@@ -132,16 +152,16 @@ Following list show all devicetree include files added by meta-enclustra-mpfs:
 
 | File name                                                                                                                                | Description |
 |------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| [enclustra_mercury_mp1_common.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_mp1_common.dtsi)                    | Common definitions that are valid for all Mercury+ product models |
+| [enclustra_mercury_mp1_common.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_mp1_common.dtsi)                    | Common definitions that are valid for all Mercury+ MP1 product models |
 | [enclustra_mercury_mp1_fabric.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/me-mp1-250-ees-d3e/enclustra_mercury_mp1_fabric.dtsi) | Devicetree nodes in FPGA fabric |
 | [enclustra_mercury_mp1.dts](meta-enclustra-mpfs/recipes-kernel/linux/files/me-mp1-250-ees-d3e/enclustra_mercury_mp1.dts)                 | Top level devicetree. Contains nodes and properties that are specific to that product model as DDR4 memory size |
-| [enclustra_mercury_baseboard_pe1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_baseboard_pe1.dtsi)              | Mercurty PE1 base board specific devicetree properties |
-| [enclustra_mercury_baseboard_pe3.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_baseboard_pe3.dtsi)              | Mercury PE3 base board specific devicetree properties |
-| [enclustra_mercury_baseboard_st1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_baseboard_st1.dtsi)              | Mercury ST1 base board specific devicetree properties |
+| [enclustra_mercury_baseboard_pe1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_baseboard_pe1.dtsi)              | Mercury+ PE1 base board specific devicetree properties |
+| [enclustra_mercury_baseboard_pe3.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_baseboard_pe3.dtsi)              | Mercury+ PE3 base board specific devicetree properties |
+| [enclustra_mercury_baseboard_st1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_baseboard_st1.dtsi)              | Mercury+ ST1 base board specific devicetree properties |
 
 ### Modification for eMMC boot
 
-On the Mercury MP1 module, the MSS MMC controller is connected through a multiplexer to a eMMC memory located on the module and to a SD card slot located on the base board. During the boot process, the HSS selects one of the two devices depending on if a SD card is inserted in the SD card slot. If a SD Card is inserted, the system boots from SD card, otherwise it boots from eMMC.
+On the Mercury+ MP1 product series, the MSS MMC controller is connected through a multiplexer to a eMMC memory located on the module and to a SD card slot located on the base board. During the boot process, the HSS selects one of the two devices depending on if a SD card is inserted in the SD card slot. If a SD Card is inserted, the system boots from SD card, otherwise it boots from eMMC.
 
 The default devicetree works for both SD Card and eMMC memory, but the eMMC performance is limited. The devicetree needs to be modified for full eMMC support (use of 8 data lanes instead of only 4) with the disadvantage that SD Card is not supported anymore.
 
@@ -165,9 +185,11 @@ And following settings need to be added or the existing comments removed:
 
 If the **ENCLUSTRA_BASEBOARD** variable is set to an Enclustra Base Board, a devicetree include file is added for the Linux kernel which contains base-board specific configuration settings:
  
-- ENCLUSTRA_BASEBOARD=pe1: [enclustra_mercury_pe1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe1.dtsi)
-- ENCLUSTRA_BASEBOARD=pe3: [enclustra_mercury_pe3.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe3.dtsi)
-- ENCLUSTRA_BASEBOARD=st1: [enclustra_mercury_st1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_st1.dtsi)
+| ENCLUSTRA_BASEBOARD | Included devicetree file | Added peripherals |
+|---------------------|--------------------------|-------------------|
+| pe1                 | [enclustra_mercury_pe1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe1.dtsi) | - 24AA128 I2C EEPROM<br>- LM96080 voltage/current monitor<br>- SI5338 clock generator | 
+| pe3                 | [enclustra_mercury_pe3.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe3.dtsi) | - 24AA128 I2C EEPROM<br>- LM96080 voltage/current monitor<br>- PCAl6416 GPIO expander |
+| st1                 | [enclustra_mercury_st1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_st1.dtsi) | - SI5338 clock generator |
 
 ## Patches
 
@@ -178,7 +200,7 @@ Following U-Boot patches are added.
 | Patch Name                                                                                                                                                                      | Description |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | [0008-Enclustra-MAC-address-readout-from-EEPROM.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0008-Enclustra-MAC-address-readout-from-EEPROM.patch)                       | Add a feature to read and configure the MAC address from atsha204a EEPROM |
-| [0009-Board-files-for-Mercury-MP1-added.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0009-Board-files-for-Mercury-MP1-added.patch)                                       | Add support for MP1 module |
+| [0009-Board-files-for-Mercury-MP1-added.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0009-Board-files-for-Mercury-MP1-added.patch)                                       | Add support for Mercury+ MP1 product series |
 | [0010-Devicetree-for-Mercury-MP1-added.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0010-Devicetree-for-Mercury-MP1-added.patch)                                         | Add MP1 devicetree to Makefile |
 | [0011-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0011-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch) | Remove check in Microchip I2C driver to allow wakeup of atsha204a by transmitting only 1 byte |
 | [0012-Bugfix-for-atsha204a-driver.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0012-Bugfix-for-atsha204a-driver.patch)                                                   | Fix wakeup sequence in atsha204a driver |
@@ -212,12 +234,6 @@ The clock frequency of the I2C bus is derived from the MSS AHB/APB bus clock. Th
 
 Currently no Linux driver for the MSS QSPI flash controller is available. The QSPI flash can only be used in U-Boot.
 
-## License
+#### Software reboot
 
-See [License](meta-enclustra-mpfs/COPYING.MIT)
-
-## Changelog
-
-| Date       | Version | Comment             |
-|------------|---------|---------------------|
-| 29.09.2022 | 0.1     | Used for validation |
+Rebooting the hardware in U-Boot or Linux is currently not supported.
