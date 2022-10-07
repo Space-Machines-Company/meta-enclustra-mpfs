@@ -125,7 +125,7 @@ The tool kas can be used to checkout the repositories and setup the build direct
 
 ## Deployment
 
-The OpenEmbedded Image Creator (wic) creates a partitioned image file for SD Card/eMMC. The partitions are configured in an OpenEmbedded kickstart file ([mpfs-icicle-kit.wks](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/blob/2021.11/wic/mpfs-icicle-kit.wks)) that is located in the [meta-polarfire-soc-yocto-bsp](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/tree/2021.11) layer. The image file to be deployed on SD Card/eMMC can be found in **build/tmp-glibc/deploy/images/\<MACHINE\>** directory, e.g. **image-minimal-hwtest-me-mp1-250-ees-d3e.wic**.
+The OpenEmbedded Image Creator (wic) creates a partitioned image file for SD card/eMMC. The partitions are configured in an OpenEmbedded kickstart file ([mpfs-icicle-kit.wks](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/blob/2021.11/wic/mpfs-icicle-kit.wks)) that is located in the [meta-polarfire-soc-yocto-bsp](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/tree/2021.11) layer. The image file to be deployed on SD Card/eMMC can be found in **build/tmp-glibc/deploy/images/\<MACHINE\>** directory, e.g. **image-minimal-hwtest-me-mp1-250-ees-d3e.wic**.
 
 ### Creating a Bootable SD Card
 
@@ -133,17 +133,16 @@ Copy the image file to a SD card e.g.
 
     dd if=image-minimal-hwtest-me-mp1-250-ees-d3e.wic of=<device> && sync
 
-Note that the device of the SD card (\<device\>) needs to be replaced with the SD Card device on your host (e.g. /dev/sdd).
+Note that the device of the SD card (\<device\>) needs to be replaced with the SD card device on your host (e.g. /dev/sdd).
 
 ### eMMC Memory
 
 Connect the USB device port of the base board to a host PC and configure the DIP switches of the base board for USB device operation.
 When the boot process is stopped in the HSS (by pressing any key), an USB service can be started by typing **usbdmsc**.
-This service attaches the eMMC memory as a pen drive to the host PC and the wic image can be copied to the eMMC as described in section [Creating a Bootable SD Card](#Creating-a-Bootable-SD-Card)
+This service attaches the eMMC memory as a pen drive to the host PC and the wic image can be copied to the eMMC as described in section [Creating a Bootable SD Card](#Creating-a-Bootable-SD-Card).
+No SD card must be inserted in the SD card slot of the base board. If a SD card is inserted, the pen drive shows the SD card and not the eMMC memory.
 
-**Note** No SD card must be inserted in the SD card slot of the base board. If a SD card is inserted, the pen drive shows the SD card and not the eMMC memory.
-
-**Warning** Make sure to disconnect the USB cable of the base board before booting Linux. Linux is configured to use USB in host mode by default.
+:warning: Make sure to disconnect the USB cable of the base board before booting Linux. Linux is configured to use USB in host mode by default.
 
 ## Login on Target
 
@@ -167,9 +166,9 @@ Following list show all devicetree include files added by meta-enclustra-mpfs:
 
 ### Modification for eMMC boot
 
-On the Mercury+ MP1 product series, the MSS MMC controller is connected through a multiplexer to a eMMC memory located on the module and to a SD card slot located on the base board. During the boot process, the HSS selects one of the two devices depending on if a SD card is inserted in the SD card slot. If a SD Card is inserted, the system boots from SD card, otherwise it boots from eMMC.
+On the Mercury+ MP1 product series, the MSS MMC controller is connected through a multiplexer to a eMMC memory located on the module and to a SD card slot located on the base board. During the boot process, the HSS selects one of the two devices depending on if a SD card is inserted in the SD card slot. If a SD card is inserted, the system boots from SD card, otherwise it boots from eMMC.
 
-The default devicetree works for both SD Card and eMMC memory, but the eMMC performance is limited. The devicetree needs to be modified for full eMMC support (use of 8 data lanes instead of only 4) with the disadvantage that SD Card is not supported anymore.
+The default devicetree works for both SD card and eMMC memory, but the eMMC performance is limited. The devicetree needs to be modified for full eMMC support (use of 8 data lanes instead of only 4) with the disadvantage that SD card is not supported anymore.
 
 In file [meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_mp1_common.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_mp1_common.dtsi) in 'mmc' node, following settings needs to be removed or commented out:
 
