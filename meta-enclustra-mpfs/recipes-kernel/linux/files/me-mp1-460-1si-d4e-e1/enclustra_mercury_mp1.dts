@@ -11,6 +11,10 @@
 / {
 	model = "enclustra,me-mp1-460-1si-d4e";
 
+	aliases {
+		ethernet0 = &mac1;
+	};
+
 	/* 4 Gbyte DDR4 memory */
 	mss_memory: memory@80000000 {
 		device_type = "memory";

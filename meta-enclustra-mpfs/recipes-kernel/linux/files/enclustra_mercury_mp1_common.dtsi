@@ -14,10 +14,6 @@
 
 	aliases {
 		mmuart1 = &mmuart1;
-		ethernet0 = &mac1;
-		ethernet1 = &mac0;
-		i2c0 = &i2c0;
-		i2c1 = &i2c1;
 		spi0 = &qspi;
 	};
 

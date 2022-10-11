@@ -11,6 +11,11 @@
 / {
 	model = "enclustra,me-mp1-250-ees-d3e";
 
+	aliases {
+		ethernet0 = &mac0;
+		ethernet1 = &mac1;
+	};
+
 	/* 2 Gbyte DDR4 memory */
 	mss_memory: memory@80000000 {
 		device_type = "memory";
