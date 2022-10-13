@@ -64,8 +64,6 @@ The product model can be specified as target device (variable: **MACHINE**). Fol
 - me-mp1-250-ees-d3e-e1
 - me-mp1-250-si-d3en
 - me-mp1-250-si-d3en-e1
-- me-mp1-250-sipp-d3en
-- me-mp1-250-sipp-d3en-e1
 - me-mp1-460-1si-d4e
 - me-mp1-460-1si-d4e-e1
 

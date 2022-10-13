@@ -42,24 +42,16 @@ SRC_URI:append:me-mp1-460-1si-d4e = "${ENCLUSTRA_KERNEL_PATCH_LIST} \
 SRC_URI:append:me-mp1-460-1si-d4e-e1 = "${ENCLUSTRA_KERNEL_PATCH_LIST} \
                                         ${ENCLUSTRA_KERNEL_DTS_LIST} \
                                         file://defconfig"
-SRC_URI:append:me-mp1-250-sipp-d3en = "${ENCLUSTRA_KERNEL_PATCH_LIST} \
-                                       ${ENCLUSTRA_KERNEL_DTS_LIST} \
-                                       file://defconfig"
-SRC_URI:append:me-mp1-250-sipp-d3en-e1 = "${ENCLUSTRA_KERNEL_PATCH_LIST} \
-                                          ${ENCLUSTRA_KERNEL_DTS_LIST} \
-                                          file://defconfig"
 
 COMPATIBLE_MACHINE:append = \
-    "|me-mp1-250-ees-d3e|me-mp1-250-si-d3en|me-mp1-250-sipp-d3en|me-mp1-460-1si-d4e \
-    |me-mp1-250-ees-d3e-e1|me-mp1-250-si-d3en-e1|me-mp1-250-sipp-d3en-e1|me-mp1-460-1si-d4e-e1"
+    "|me-mp1-250-ees-d3e|me-mp1-250-si-d3en|me-mp1-460-1si-d4e \
+    |me-mp1-250-ees-d3e-e1|me-mp1-250-si-d3en-e1|me-mp1-460-1si-d4e-e1"
 
 do_add_enclustra_devicetree() {
     if [ ${MACHINE} = "me-mp1-250-ees-d3e" ] || \
        [ ${MACHINE} = "me-mp1-250-ees-d3e-e1" ] || \
        [ ${MACHINE} = "me-mp1-250-si-d3en" ] || \
        [ ${MACHINE} = "me-mp1-250-si-d3en-e1" ] || \
-       [ ${MACHINE} = "me-mp1-250-sipp-d3en" ] || \
-       [ ${MACHINE} = "me-mp1-250-sipp-d3en-e1" ] || \
        [ ${MACHINE} = "me-mp1-460-1si-d4e" ] || \
        [ ${MACHINE} = "me-mp1-460-1si-d4e-e1" ]; then
 

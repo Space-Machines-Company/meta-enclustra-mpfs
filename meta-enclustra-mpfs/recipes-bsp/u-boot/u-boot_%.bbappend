@@ -24,10 +24,6 @@ SRC_URI:append:me-mp1-250-si-d3en := "${ENCLUSTRA_UBOOT_PATCH_LIST} \
                                       ${ENCLUSTRA_UBOOT_DTS_LIST}"
 SRC_URI:append:me-mp1-250-si-d3en-e1 := "${ENCLUSTRA_UBOOT_PATCH_LIST} \
                                          ${ENCLUSTRA_UBOOT_DTS_LIST}"
-SRC_URI:append:me-mp1-250-sipp-d3en := "${ENCLUSTRA_UBOOT_PATCH_LIST} \
-                                        ${ENCLUSTRA_UBOOT_DTS_LIST}"
-SRC_URI:append:me-mp1-250-sipp-d3en-e1 := "${ENCLUSTRA_UBOOT_PATCH_LIST} \
-                                           ${ENCLUSTRA_UBOOT_DTS_LIST}"
 SRC_URI:append:me-mp1-460-1si-d4e := "${ENCLUSTRA_UBOOT_PATCH_LIST} \
                                       ${ENCLUSTRA_UBOOT_DTS_LIST}"
 SRC_URI:append:me-mp1-460-1si-d4e-e1 := "${ENCLUSTRA_UBOOT_PATCH_LIST} \
@@ -38,8 +34,6 @@ do_create_boot_script() {
        [ ${MACHINE} = "me-mp1-250-ees-d3e-e1" ] || \
        [ ${MACHINE} = "me-mp1-250-si-d3en" ] || \
        [ ${MACHINE} = "me-mp1-250-si-d3en-e1" ] || \
-       [ ${MACHINE} = "me-mp1-250-sipp-d3en" ] || \
-       [ ${MACHINE} = "me-mp1-250-sipp-d3en-e1" ] || \
        [ ${MACHINE} = "me-mp1-460-1si-d4e" ] || \
        [ ${MACHINE} = "me-mp1-460-1si-d4e-e1" ]; then
         mkimage -O linux -T script -C none -n "U-Boot boot script" \
@@ -52,8 +46,6 @@ do_add_enclustra_devicetree() {
        [ ${MACHINE} = "me-mp1-250-ees-d3e-e1" ] || \
        [ ${MACHINE} = "me-mp1-250-si-d3en" ] || \
        [ ${MACHINE} = "me-mp1-250-si-d3en-e1" ] || \
-       [ ${MACHINE} = "me-mp1-250-sipp-d3en" ] || \
-       [ ${MACHINE} = "me-mp1-250-sipp-d3en-e1" ] || \
        [ ${MACHINE} = "me-mp1-460-1si-d4e" ] || \
        [ ${MACHINE} = "me-mp1-460-1si-d4e-e1" ]; then
         cp ${WORKDIR}/enclustra_mercury_mp1_common.dtsi ${S}/arch/riscv/dts/
