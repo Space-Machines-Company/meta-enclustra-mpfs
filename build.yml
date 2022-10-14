@@ -14,23 +14,23 @@ repos:
 
     bitbake:
         url: "https://git.openembedded.org/bitbake"
-        refspec: 2021-10.1-honister
+        refspec: 73fa376d6502ab6f2cccfb25a1193d9b1c3c3bc8
         layers:
             .: excluded
     
     openembedded-core:
         url: "https://git.openembedded.org/openembedded-core"
-        refspec: 2021-10.1-honister
+        refspec: f4dbdb9774eb61a71289fe91b017b4caf9c34b16
         layers:
             meta:
     
     meta-riscv:
         url: "https://github.com/riscv/meta-riscv"
-        refspec: 9561639c61663a10d8c9c23d26173db499f4c39b
+        refspec: 18227c1de0a56327a22b94b2594fbeb45c1dfcff
 
     meta-polarfire-soc-yocto-bsp:
         url: "https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp"
-        refspec: v2021.11
+        refspec: v2022.05
 
     meta-enclustra-mpfs:
         layers:
@@ -38,7 +38,7 @@ repos:
 
     meta-openembedded:
         url: http://git.openembedded.org/meta-openembedded
-        refspec: c05ae80ba680887ac924c21536091be7a1173427
+        refspec: 3ab9736fc6bfcc7f600479fd87dff32219d789e2
         layers:
             meta-oe:
             meta-python:

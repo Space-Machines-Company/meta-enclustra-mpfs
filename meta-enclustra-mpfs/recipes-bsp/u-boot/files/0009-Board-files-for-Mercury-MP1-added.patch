@@ -1,31 +1,54 @@
-From 53d36b49e56f7f9ca44e347f810d56ec6d3260ae Mon Sep 17 00:00:00 2001
+From 4e7bd26d7d11e1189ab3d418a725b3d9f87490b6 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
-Date: Wed, 5 Jan 2022 18:47:16 +0100
+Date: Tue, 27 Sep 2022 15:55:38 +0200
 Subject: [PATCH] Board files for Mercury MP1 added
 
+/From 8e363a382f8dca41ee8f168926abb14ad1274fa1 Mon Sep 17 00:00:00 2001
+
 ---
- board/enclustra/mercury_mp1/Kconfig                |  54 +++++++++
- board/enclustra/mercury_mp1/MAINTAINERS            |   6 +
- board/enclustra/mercury_mp1/Makefile               |   7 ++
- .../enclustra/mercury_mp1/enclustra_mercury_mp1.c  | 123 +++++++++++++++++++++
- configs/enclustra_mercury_mp1_defconfig            |  18 +++
- include/configs/enclustra_mercury_mp1.h            |  40 +++++++
- arch/riscv/Kconfig                                 |   4 ++++
- 8 files changed, 252 insertions(+)
+ arch/riscv/Kconfig                            |   4 +
+ board/enclustra/mercury_mp1/Kconfig           |  54 ++++++++
+ board/enclustra/mercury_mp1/MAINTAINERS       |   6 +
+ board/enclustra/mercury_mp1/Makefile          |   7 +
+ .../mercury_mp1/enclustra_mercury_mp1.c       | 123 ++++++++++++++++++
+ include/configs/enclustra_mercury_mp1.h       |  40 ++++++
+ 6 files changed, 234 insertions(+)
  create mode 100644 board/enclustra/mercury_mp1/Kconfig
  create mode 100644 board/enclustra/mercury_mp1/MAINTAINERS
  create mode 100644 board/enclustra/mercury_mp1/Makefile
  create mode 100644 board/enclustra/mercury_mp1/enclustra_mercury_mp1.c
  create mode 100644 include/configs/enclustra_mercury_mp1.h
 
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index ba29e70acf..056d5f69ef 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -14,6 +14,9 @@ config TARGET_AX25_AE350
+ config TARGET_MICROCHIP_ICICLE
+ 	bool "Support Microchip PolarFire-SoC Icicle Board"
+ 
++config TARGET_ENCLUSTRA_MERCURY_MP1
++        bool "Support Enclustra Mercury+ MP1 Board"
++
+ config TARGET_QEMU_VIRT
+ 	bool "Support QEMU Virt Board"
+ 
+@@ -61,6 +64,7 @@ config SPL_SYS_DCACHE_OFF
+ source "board/AndesTech/ax25-ae350/Kconfig"
+ source "board/emulation/qemu-riscv/Kconfig"
+ source "board/microchip/mpfs_icicle/Kconfig"
++source "board/enclustra/mercury_mp1/Kconfig"
+ source "board/sifive/unleashed/Kconfig"
+ source "board/sifive/unmatched/Kconfig"
+ source "board/openpiton/riscv64/Kconfig"
 diff --git a/board/enclustra/mercury_mp1/Kconfig b/board/enclustra/mercury_mp1/Kconfig
 new file mode 100644
-index 0000000..9318d93
+index 0000000000..f6a01fff03
 --- /dev/null
 +++ b/board/enclustra/mercury_mp1/Kconfig
 @@ -0,0 +1,54 @@
 +if TARGET_ENCLUSTRA_MERCURY_MP1
-+ 
++
 +config SYS_BOARD
 +	default "mercury_mp1"
 +
@@ -39,8 +62,8 @@ index 0000000..9318d93
 +	default "enclustra_mercury_mp1"
 +
 +config SYS_TEXT_BASE
-+	default 0x80000000 if !RISCV_SMODE
-+	default 0x80200000 if RISCV_SMODE
++	default 0x1000000000 if !RISCV_SMODE
++	default 0x1000200000 if RISCV_SMODE
 +
 +config BOARD_SPECIFIC_OPTIONS
 +	def_bool y
@@ -80,7 +103,7 @@ index 0000000..9318d93
 +endif
 diff --git a/board/enclustra/mercury_mp1/MAINTAINERS b/board/enclustra/mercury_mp1/MAINTAINERS
 new file mode 100644
-index 0000000..5bd7ca1
+index 0000000000..5bd7ca1e78
 --- /dev/null
 +++ b/board/enclustra/mercury_mp1/MAINTAINERS
 @@ -0,0 +1,6 @@
@@ -92,7 +115,7 @@ index 0000000..5bd7ca1
 +F:	configs/enclustra_mercury_mp1_defconfig
 diff --git a/board/enclustra/mercury_mp1/Makefile b/board/enclustra/mercury_mp1/Makefile
 new file mode 100644
-index 0000000..7fa3011
+index 0000000000..7fa3011740
 --- /dev/null
 +++ b/board/enclustra/mercury_mp1/Makefile
 @@ -0,0 +1,7 @@
@@ -105,7 +128,7 @@ index 0000000..7fa3011
 +obj-y	+= enclustra_mercury_mp1.o
 diff --git a/board/enclustra/mercury_mp1/enclustra_mercury_mp1.c b/board/enclustra/mercury_mp1/enclustra_mercury_mp1.c
 new file mode 100644
-index 0000000..7ddba65
+index 0000000000..7ddba65a82
 --- /dev/null
 +++ b/board/enclustra/mercury_mp1/enclustra_mercury_mp1.c
 @@ -0,0 +1,123 @@
@@ -234,7 +257,7 @@ index 0000000..7ddba65
 +}
 diff --git a/include/configs/enclustra_mercury_mp1.h b/include/configs/enclustra_mercury_mp1.h
 new file mode 100644
-index 0000000..2f73f82
+index 0000000000..a01ba2f7df
 --- /dev/null
 +++ b/include/configs/enclustra_mercury_mp1.h
 @@ -0,0 +1,40 @@
@@ -249,7 +272,7 @@ index 0000000..2f73f82
 +
 +#include <linux/sizes.h>
 +
-+#define CONFIG_SYS_SDRAM_BASE       0x80000000
++#define CONFIG_SYS_SDRAM_BASE       0x1000000000
 +#define CONFIG_SYS_INIT_SP_ADDR     (CONFIG_SYS_SDRAM_BASE + SZ_2M)
 +
 +#define CONFIG_SYS_LOAD_ADDR        (CONFIG_SYS_SDRAM_BASE + SZ_2M)
@@ -258,7 +281,7 @@ index 0000000..2f73f82
 +
 +#define CONFIG_SYS_BOOTM_LEN        SZ_64M
 +
-+#define CONFIG_STANDALONE_LOAD_ADDR 0x80200000
++#define CONFIG_STANDALONE_LOAD_ADDR 0x1000200000
 +
 +/* Environment options */
 +
@@ -270,36 +293,11 @@ index 0000000..2f73f82
 +
 +#define CONFIG_EXTRA_ENV_SETTINGS \
 +	"bootm_size=0x10000000\0" \
-+	"kernel_addr_r=0x84000000\0" \
-+	"fdt_addr_r=0x88000000\0" \
-+	"scriptaddr=0x88100000\0" \
-+	"pxefile_addr_r=0x88200000\0" \
-+	"ramdisk_addr_r=0x88300000\0" \
++	"kernel_addr_r=0x1004000000\0" \
++	"fdt_addr_r=0x1008000000\0" \
++	"scriptaddr=0x1008100000\0" \
++	"pxefile_addr_r=0x1008200000\0" \
++	"ramdisk_addr_r=0x1008300000\0" \
 +	BOOTENV
 +
 +#endif /* __CONFIG_H */
-diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-index b3d7fd8..fb1a2fa 100644
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -14,6 +14,9 @@ config TARGET_AX25_AE350
- config TARGET_MICROCHIP_ICICLE
- 	bool "Support Microchip PolarFire-SoC Icicle Board"
- 
-+config TARGET_ENCLUSTRA_MERCURY_MP1
-+        bool "Support Enclustra Mercury+ MP1 Board"
-+
- config TARGET_QEMU_VIRT
- 	bool "Support QEMU Virt Board"
- 
-@@ -58,6 +61,7 @@ config SPL_SYS_DCACHE_OFF
- source "board/AndesTech/ax25-ae350/Kconfig"
- source "board/emulation/qemu-riscv/Kconfig"
- source "board/microchip/mpfs_icicle/Kconfig"
-+source "board/enclustra/mercury_mp1/Kconfig"
- source "board/sifive/unleashed/Kconfig"
- source "board/sifive/unmatched/Kconfig"
- source "board/sipeed/maix/Kconfig"
--- 
-2.7.4
-

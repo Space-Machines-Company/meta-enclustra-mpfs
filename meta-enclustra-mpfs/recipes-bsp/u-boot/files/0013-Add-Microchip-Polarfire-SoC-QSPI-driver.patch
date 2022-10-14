@@ -1,4 +1,4 @@
-From a82a2031d09e9b5749e390fc4e5b973d0ba08961 Mon Sep 17 00:00:00 2001
+From b7070147686fcacef5ed8cdbaf8b5eaee2cf246b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20B=C3=BCrkler?= <andreas.buerkler@enclustra.com>
 Date: Tue, 12 Jul 2022 18:55:17 +0200
 Subject: [PATCH] Add Microchip Polarfire SoC QSPI driver
@@ -12,10 +12,10 @@ Subject: [PATCH] Add Microchip Polarfire SoC QSPI driver
  create mode 100644 drivers/spi/microchip_qspi.c
 
 diff --git a/cmd/mtd.c b/cmd/mtd.c
-index 485a963bdd..74c2021c3b 100644
+index ad5cc9827d..77a07e2e46 100644
 --- a/cmd/mtd.c
 +++ b/cmd/mtd.c
-@@ -244,9 +244,9 @@ static int do_mtd_io(struct cmd_tbl *cmdtp, int flag, int argc,
+@@ -251,9 +251,9 @@ static int do_mtd_io(struct cmd_tbl *cmdtp, int flag, int argc,
  		     char *const argv[])
  {
  	bool dump, read, raw, woob, write_empty_pages, has_pages = false;
@@ -28,7 +28,7 @@ index 485a963bdd..74c2021c3b 100644
  	struct mtd_info *mtd;
  	u32 oob_len;
 diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
-index 1494c91763..252e4e7038 100644
+index d07e9a28af..5ae618dc43 100644
 --- a/drivers/spi/Kconfig
 +++ b/drivers/spi/Kconfig
 @@ -192,6 +192,12 @@ config MESON_SPIFC
@@ -45,10 +45,10 @@ index 1494c91763..252e4e7038 100644
  	bool "MPC8XX SPI Driver"
  	depends on MPC8xx
 diff --git a/drivers/spi/Makefile b/drivers/spi/Makefile
-index cfe4fae1d4..472e247173 100644
+index d2f24bccef..9198055b30 100644
 --- a/drivers/spi/Makefile
 +++ b/drivers/spi/Makefile
-@@ -34,6 +34,7 @@ obj-$(CONFIG_FSL_QSPI) += fsl_qspi.o
+@@ -35,6 +35,7 @@ obj-$(CONFIG_SYNQUACER_SPI) += spi-synquacer.o
  obj-$(CONFIG_ICH_SPI) +=  ich.o
  obj-$(CONFIG_KIRKWOOD_SPI) += kirkwood_spi.o
  obj-$(CONFIG_MESON_SPIFC) += meson_spifc.o
@@ -575,6 +575,3 @@ index 0000000000..41ce39b7bf
 +	.probe  = mpfs_qspi_probe,
 +};
 \ No newline at end of file
--- 
-2.25.1
-

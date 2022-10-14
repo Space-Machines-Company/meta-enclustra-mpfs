@@ -1,15 +1,14 @@
-From 0690fe02297270a901833ce1f64d3c1770234c47 Mon Sep 17 00:00:00 2001
+From aa68ee11a91ed8cf815f7555b7e4341f7207d683 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
-Date: Wed, 5 Jan 2022 18:52:37 +0100
+Date: Tue, 27 Sep 2022 18:47:16 +0200
 Subject: [PATCH] Devicetree for Mercury MP1 added
 
 ---
- arch/riscv/dts/Makefile                            |   1 +
- 1 files changed, 1 insertions(+)
-
+ arch/riscv/dts/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/arch/riscv/dts/Makefile b/arch/riscv/dts/Makefile
-index 7778874..1684dbd 100644
+index b6e9166767..ddbbb97d69 100644
 --- a/arch/riscv/dts/Makefile
 +++ b/arch/riscv/dts/Makefile
 @@ -2,6 +2,7 @@
@@ -18,8 +17,5 @@ index 7778874..1684dbd 100644
  dtb-$(CONFIG_TARGET_MICROCHIP_ICICLE) += microchip-mpfs-icicle-kit.dtb
 +dtb-$(CONFIG_TARGET_ENCLUSTRA_MERCURY_MP1) += enclustra_mercury_mp1.dtb
  dtb-$(CONFIG_TARGET_QEMU_VIRT) += qemu-virt.dtb
+ dtb-$(CONFIG_TARGET_OPENPITON_RISCV64) += openpiton-riscv64.dtb
  dtb-$(CONFIG_TARGET_SIFIVE_UNLEASHED) += hifive-unleashed-a00.dtb
- dtb-$(CONFIG_TARGET_SIFIVE_UNMATCHED) += hifive-unmatched-a00.dtb
--- 
-2.7.4
-

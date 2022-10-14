@@ -1,4 +1,4 @@
-From 1a423f2162411ee29795dcc3b1016750b69132c9 Mon Sep 17 00:00:00 2001
+From 077746e1457cf85806cec1a135111b53980613c5 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Mon, 28 Feb 2022 17:52:39 +0100
 Subject: [PATCH] bugfix for atsha204a driver
@@ -8,7 +8,7 @@ Subject: [PATCH] bugfix for atsha204a driver
  1 file changed, 19 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/misc/atsha204a-i2c.c b/drivers/misc/atsha204a-i2c.c
-index af65c559dc..b515e797a9 100644
+index 715dabb279..140061fa40 100644
 --- a/drivers/misc/atsha204a-i2c.c
 +++ b/drivers/misc/atsha204a-i2c.c
 @@ -20,7 +20,7 @@
@@ -100,6 +100,3 @@ index af65c559dc..b515e797a9 100644
  	if (addr == FDT_ADDR_T_NONE) {
  		debug("Can't get ATSHA204A I2C base address\n");
  		return -ENXIO;
--- 
-2.30.2
-
