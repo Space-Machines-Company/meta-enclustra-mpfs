@@ -5,6 +5,20 @@
  */
 
 / {
+	/* Clock for FIC0  */
+	fabric_clk1: fabric-clk1 {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <100000000>;
+	};
+
+	/* Clock for FIC3 */
+	fabric_clk3: fabric-clk3 {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <100000000>;
+	};
+
 	/* FIC0 (AXI) at address 0x6000_0000 - 0x7FFF_FFFF */
 	fic0-512m@60000000 {
 		#address-cells = <1>;

@@ -1,6 +1,6 @@
-From 99d14ab4540b6bf9156c12b5dfe54d422f579238 Mon Sep 17 00:00:00 2001
+From 3fa4d1db2dfb8fe6c1cb94ee096cd56c93287b6d Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
-Date: Fri, 7 Oct 2022 15:50:25 +0200
+Date: Fri, 14 Oct 2022 18:09:49 +0200
 Subject: [PATCH] Add atsha204a driver with support to read OTP region
 
 ---
@@ -15,26 +15,25 @@ Subject: [PATCH] Add atsha204a driver with support to read OTP region
  create mode 100644 drivers/staging/atsha204-i2c/atsha204-i2c.c
 
 diff --git a/drivers/staging/Kconfig b/drivers/staging/Kconfig
-index b22f73d7bfc4..54a833a5c204 100644
+index e03627ad4460..4346271bbd84 100644
 --- a/drivers/staging/Kconfig
 +++ b/drivers/staging/Kconfig
-@@ -114,4 +114,6 @@ source "drivers/staging/wfx/Kconfig"
+@@ -102,4 +102,6 @@ source "drivers/staging/qlge/Kconfig"
  
- source "drivers/staging/hikey9xx/Kconfig"
+ source "drivers/staging/wfx/Kconfig"
  
 +source "drivers/staging/atsha204-i2c/Kconfig"
 +
  endif # STAGING
 diff --git a/drivers/staging/Makefile b/drivers/staging/Makefile
-index 2245059e69c7..e45db6e63140 100644
+index c7f8d8d8dd11..855924e8d2cb 100644
 --- a/drivers/staging/Makefile
 +++ b/drivers/staging/Makefile
-@@ -46,4 +46,5 @@ obj-$(CONFIG_KPC2000)		+= kpc2000/
+@@ -41,3 +41,4 @@ obj-$(CONFIG_XIL_AXIS_FIFO)	+= axis-fifo/
+ obj-$(CONFIG_FIELDBUS_DEV)     += fieldbus/
  obj-$(CONFIG_QLGE)		+= qlge/
- obj-$(CONFIG_WIMAX)		+= wimax/
  obj-$(CONFIG_WFX)		+= wfx/
 +obj-$(CONFIG_ATSHA204_I2C)	+= atsha204-i2c/
- obj-y				+= hikey9xx/
 diff --git a/drivers/staging/atsha204-i2c/Kconfig b/drivers/staging/atsha204-i2c/Kconfig
 new file mode 100644
 index 000000000000..b0973346a3e7
@@ -63,7 +62,7 @@ index 000000000000..609a6580141a
 +obj-$(CONFIG_ATSHA204_I2C) += atsha204-i2c.o
 diff --git a/drivers/staging/atsha204-i2c/atsha204-i2c.c b/drivers/staging/atsha204-i2c/atsha204-i2c.c
 new file mode 100644
-index 000000000000..0bdb979f65a7
+index 000000000000..8305791ce03e
 --- /dev/null
 +++ b/drivers/staging/atsha204-i2c/atsha204-i2c.c
 @@ -0,0 +1,720 @@

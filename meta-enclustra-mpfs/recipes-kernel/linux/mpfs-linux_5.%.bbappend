@@ -1,18 +1,8 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRCREV = "cfb9c0faf7fcce8aae1be044a375fa1c59708ed7"
-
 ENCLUSTRA_KERNEL_PATCH_LIST = " \
-    file://0001-Driver-for-SI5338-added.patch \
     file://0002-Devicetree-for-Mercury-MP1-added.patch \
-    file://0003-Remove-devicetree-include-from-icicle-kit.patch \
-    file://0004-gpio-microsemi-gpio-get-base-dynamically.patch \
-    file://0005-Remove-USB-host-dependency.patch \
     file://0006-Add-atsha204a-driver-with-support-to-read-OTP-region.patch \
-    file://0007-replace-microchip-i2c-driver-with-newer-version.patch \
-    file://0008-Fix-I2C-driver-read-extra-byte.patch \
-    file://0009-musb-glue-layer-update.patch \
-    file://0010-SPI-driver-update.patch \
     "
 
 ENCLUSTRA_KERNEL_DTS_LIST = " \
@@ -24,28 +14,46 @@ ENCLUSTRA_KERNEL_DTS_LIST = " \
     file://enclustra_mercury_st1.dtsi \
     "
 
-SRC_URI:append:me-mp1-250-ees-d3e = "${ENCLUSTRA_KERNEL_PATCH_LIST} \
-                                     ${ENCLUSTRA_KERNEL_DTS_LIST} \
-                                     file://defconfig"
-SRC_URI:append:me-mp1-250-ees-d3e-e1 = "${ENCLUSTRA_KERNEL_PATCH_LIST} \
-                                        ${ENCLUSTRA_KERNEL_DTS_LIST} \
-                                        file://defconfig"
-SRC_URI:append:me-mp1-250-si-d3en = "${ENCLUSTRA_KERNEL_PATCH_LIST} \
-                                     ${ENCLUSTRA_KERNEL_DTS_LIST} \
-                                     file://defconfig"
-SRC_URI:append:me-mp1-250-si-d3en-e1 = "${ENCLUSTRA_KERNEL_PATCH_LIST} \
-                                        ${ENCLUSTRA_KERNEL_DTS_LIST} \
-                                        file://defconfig"
-SRC_URI:append:me-mp1-460-1si-d4e = "${ENCLUSTRA_KERNEL_PATCH_LIST} \
-                                     ${ENCLUSTRA_KERNEL_DTS_LIST} \
-                                     file://defconfig"
-SRC_URI:append:me-mp1-460-1si-d4e-e1 = "${ENCLUSTRA_KERNEL_PATCH_LIST} \
-                                        ${ENCLUSTRA_KERNEL_DTS_LIST} \
-                                        file://defconfig"
+SRC_URI:append:me-mp1-250-ees-d3e = " \
+    ${ENCLUSTRA_KERNEL_PATCH_LIST} \
+    ${ENCLUSTRA_KERNEL_DTS_LIST} \
+    file://defconfig \
+    "
 
-COMPATIBLE_MACHINE:append = \
-    "|me-mp1-250-ees-d3e|me-mp1-250-si-d3en|me-mp1-460-1si-d4e \
-    |me-mp1-250-ees-d3e-e1|me-mp1-250-si-d3en-e1|me-mp1-460-1si-d4e-e1"
+SRC_URI:append:me-mp1-250-ees-d3e-e1 = " \
+    ${ENCLUSTRA_KERNEL_PATCH_LIST} \
+    ${ENCLUSTRA_KERNEL_DTS_LIST} \
+    file://defconfig \
+    "
+
+SRC_URI:append:me-mp1-250-si-d3en = " \
+    ${ENCLUSTRA_KERNEL_PATCH_LIST} \
+    ${ENCLUSTRA_KERNEL_DTS_LIST} \
+    file://defconfig \
+    "
+
+SRC_URI:append:me-mp1-250-si-d3en-e1 = " \
+    ${ENCLUSTRA_KERNEL_PATCH_LIST} \
+    ${ENCLUSTRA_KERNEL_DTS_LIST} \
+    file://defconfig \
+    "
+
+SRC_URI:append:me-mp1-460-1si-d4e = " \
+    ${ENCLUSTRA_KERNEL_PATCH_LIST} \
+    ${ENCLUSTRA_KERNEL_DTS_LIST} \
+    file://defconfig \
+    "
+
+SRC_URI:append:me-mp1-460-1si-d4e-e1 = " \
+    ${ENCLUSTRA_KERNEL_PATCH_LIST} \
+    ${ENCLUSTRA_KERNEL_DTS_LIST} \
+    file://defconfig \
+    "
+
+COMPATIBLE_MACHINE:append = " \
+    |me-mp1-250-ees-d3e|me-mp1-250-si-d3en|me-mp1-460-1si-d4e \
+    |me-mp1-250-ees-d3e-e1|me-mp1-250-si-d3en-e1|me-mp1-460-1si-d4e-e1 \
+    "
 
 do_add_enclustra_devicetree() {
     if [ ${MACHINE} = "me-mp1-250-ees-d3e" ] || \

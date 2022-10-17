@@ -1,6 +1,6 @@
-From 5da8cd60f304f2dfe395d3403f1e70a4d60e20c9 Mon Sep 17 00:00:00 2001
+From deec467eee09aa71f1647bf8569d0aae2cfe1f9b Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
-Date: Tue, 8 Feb 2022 17:25:26 +0100
+Date: Mon, 17 Oct 2022 14:00:05 +0200
 Subject: [PATCH] Devicetree for Mercury MP1 added
 
 ---
@@ -8,15 +8,15 @@ Subject: [PATCH] Devicetree for Mercury MP1 added
  1 file changed, 1 insertion(+)
 
 diff --git a/arch/riscv/boot/dts/microchip/Makefile b/arch/riscv/boot/dts/microchip/Makefile
-index 96f43de..094484f2 100644
+index 844ae7a854ab..861b312a4b41 100644
 --- a/arch/riscv/boot/dts/microchip/Makefile
 +++ b/arch/riscv/boot/dts/microchip/Makefile
-@@ -1,4 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0
- dtb-$(CONFIG_SOC_MICROCHIP_POLARFIRE) += microchip-mpfs-icicle-kit.dtb
- dtb-$(CONFIG_SOC_MICROCHIP_POLARFIRE) += microchip-mpfs-icicle-kit-context-a.dtb
+@@ -3,4 +3,5 @@ dtb-$(CONFIG_SOC_MICROCHIP_POLARFIRE) += mpfs-icicle-kit.dtb
+ dtb-$(CONFIG_SOC_MICROCHIP_POLARFIRE) += mpfs-icicle-kit-context-a.dtb
+ dtb-$(CONFIG_SOC_MICROCHIP_POLARFIRE) += mpfs-m100pfsevp-emmc.dtb
+ dtb-$(CONFIG_SOC_MICROCHIP_POLARFIRE) += mpfs-m100pfsevp-sdcard.dtb
 +dtb-$(CONFIG_SOC_MICROCHIP_POLARFIRE) += enclustra_mercury_mp1.dtb
  obj-$(CONFIG_BUILTIN_DTB) += $(addsuffix .o, $(dtb-y))
 -- 
-2.7.4
+2.25.1
 
