@@ -12,3 +12,7 @@
 		cpu4 = &cpu4;
 	};
 };
+
+&refclk {
+	clock-frequency = <600000000>;
+};

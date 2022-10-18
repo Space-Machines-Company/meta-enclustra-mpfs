@@ -13,12 +13,12 @@
 	compatible = "microchip,mpfs";
 
 	aliases {
-		mmuart1 = &mmuart1;
+		serial1 = &mmuart1;
 		spi0 = &qspi;
 	};
 
 	chosen {
-		stdout-path = "mmuart1:115200n8";
+		stdout-path = "serial1:115200n8";
 	};
 
 	cpus {
@@ -133,4 +133,16 @@
 	status = "okay";
 	ngpios = <24>;
 	interrupts = <27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50>;
+};
+
+&refclk {
+	clock-frequency = <125000000>;
+};
+
+&syscontroller {
+	status = "okay";
+};
+
+&mbox {
+	status = "okay";
 };
