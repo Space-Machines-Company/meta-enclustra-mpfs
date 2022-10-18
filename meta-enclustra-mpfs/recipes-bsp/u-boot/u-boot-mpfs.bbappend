@@ -6,7 +6,6 @@ ENCLUSTRA_UBOOT_PATCH_LIST = " \
     file://0010-Devicetree-for-Mercury-MP1-added.patch \
     file://0011-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch \
     file://0012-Bugfix-for-atsha204a-driver.patch \
-    file://0013-Add-Microchip-Polarfire-SoC-QSPI-driver.patch \
     file://0014-Use-only-high-memory-region.patch \
     file://0015-Rename-mpfs-devicetree.patch \
     "
@@ -17,47 +16,32 @@ ENCLUSTRA_UBOOT_DTS_LIST = " \
     file://enclustra_mercury_mp1-u-boot.dtsi \
     "
 
-SRC_URI:append:me-mp1-250-ees-d3e := " \
+ENCLUSTRA_UBOOT_COMMON_FILE_LIST = " \
     file://enclustra_mercury_mp1_defconfig \
     file://${UBOOT_ENV_SRC} \
-    file://${HSS_PAYLOAD}.yaml \
     ${ENCLUSTRA_UBOOT_PATCH_LIST} \
-    ${ENCLUSTRA_UBOOT_DTS_LIST}"
+    ${ENCLUSTRA_UBOOT_DTS_LIST} \
+    "
 
-SRC_URI:append:me-mp1-250-ees-d3e-e1 := " \
-    file://enclustra_mercury_mp1_defconfig \
-    file://${UBOOT_ENV_SRC} \
-    file://${HSS_PAYLOAD}.yaml \
-    ${ENCLUSTRA_UBOOT_PATCH_LIST} \
-    ${ENCLUSTRA_UBOOT_DTS_LIST}"
+# Remove unwanted files added by meta-polarfire-soc-yocto-bsp
+SRC_URI:remove:me-mp1-250-ees-d3e := " file://${UBOOT_ENV}.txt"
+SRC_URI:remove:me-mp1-250-ees-d3e-e1 := " file://${UBOOT_ENV}.txt"
+SRC_URI:remove:me-mp1-250-si-d3en := " file://${UBOOT_ENV}.txt"
+SRC_URI:remove:me-mp1-250-si-d3en-e1 := " file://${UBOOT_ENV}.txt"
+SRC_URI:remove:me-mp1-460-1si-d4e := " file://${UBOOT_ENV}.txt"
+SRC_URI:remove:me-mp1-460-1si-d4e-e1 := " file://${UBOOT_ENV}.txt"
 
-SRC_URI:append:me-mp1-250-si-d3en := " \
-    file://enclustra_mercury_mp1_defconfig \
-    file://${UBOOT_ENV_SRC} \
-    file://${HSS_PAYLOAD}.yaml \
-    ${ENCLUSTRA_UBOOT_PATCH_LIST} \
-    ${ENCLUSTRA_UBOOT_DTS_LIST}"
+SRC_URI:append:me-mp1-250-ees-d3e := " ${ENCLUSTRA_UBOOT_COMMON_FILE_LIST}"
+SRC_URI:append:me-mp1-250-ees-d3e-e1 := " ${ENCLUSTRA_UBOOT_COMMON_FILE_LIST}"
+SRC_URI:append:me-mp1-250-si-d3en := " ${ENCLUSTRA_UBOOT_COMMON_FILE_LIST}"
+SRC_URI:append:me-mp1-250-si-d3en-e1 := " ${ENCLUSTRA_UBOOT_COMMON_FILE_LIST}"
+SRC_URI:append:me-mp1-460-1si-d4e := " ${ENCLUSTRA_UBOOT_COMMON_FILE_LIST}"
+SRC_URI:append:me-mp1-460-1si-d4e-e1 := " ${ENCLUSTRA_UBOOT_COMMON_FILE_LIST}"
 
-SRC_URI:append:me-mp1-250-si-d3en-e1 := " \
-    file://enclustra_mercury_mp1_defconfig \
-    file://${UBOOT_ENV_SRC} \
-    file://${HSS_PAYLOAD}.yaml \
-    ${ENCLUSTRA_UBOOT_PATCH_LIST} \
-    ${ENCLUSTRA_UBOOT_DTS_LIST}"
-
-SRC_URI:append:me-mp1-460-1si-d4e := " \
-    file://enclustra_mercury_mp1_defconfig \
-    file://${UBOOT_ENV_SRC} \
-    file://${HSS_PAYLOAD}.yaml \
-    ${ENCLUSTRA_UBOOT_PATCH_LIST} \
-    ${ENCLUSTRA_UBOOT_DTS_LIST}"
-
-SRC_URI:append:me-mp1-460-1si-d4e-e1 := " \
-    file://enclustra_mercury_mp1_defconfig \
-    file://${UBOOT_ENV_SRC} \
-    file://${HSS_PAYLOAD}.yaml \
-    ${ENCLUSTRA_UBOOT_PATCH_LIST} \
-    ${ENCLUSTRA_UBOOT_DTS_LIST}"
+COMPATIBLE_MACHINE:append = " \
+    |me-mp1-250-ees-d3e|me-mp1-250-si-d3en|me-mp1-460-1si-d4e \
+    |me-mp1-250-ees-d3e-e1|me-mp1-250-si-d3en-e1|me-mp1-460-1si-d4e-e1 \
+    "
 
 do_add_enclustra_devicetree() {
     if [ ${MACHINE} = "me-mp1-250-ees-d3e" ] || \

@@ -1,6 +1,6 @@
-From aa68ee11a91ed8cf815f7555b7e4341f7207d683 Mon Sep 17 00:00:00 2001
+From 278ff639df83f1a93ed86933b6357ef8be5284f2 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
-Date: Tue, 27 Sep 2022 18:47:16 +0200
+Date: Tue, 18 Oct 2022 10:10:05 +0200
 Subject: [PATCH] Devicetree for Mercury MP1 added
 
 ---
@@ -8,14 +8,17 @@ Subject: [PATCH] Devicetree for Mercury MP1 added
  1 file changed, 1 insertion(+)
 
 diff --git a/arch/riscv/dts/Makefile b/arch/riscv/dts/Makefile
-index b6e9166767..ddbbb97d69 100644
+index 883d8cc11c..786fda2ee3 100644
 --- a/arch/riscv/dts/Makefile
 +++ b/arch/riscv/dts/Makefile
-@@ -2,6 +2,7 @@
- 
- dtb-$(CONFIG_TARGET_AX25_AE350) += ae350_32.dtb ae350_64.dtb
- dtb-$(CONFIG_TARGET_MICROCHIP_ICICLE) += microchip-mpfs-icicle-kit.dtb
+@@ -5,6 +5,7 @@ dtb-$(CONFIG_TARGET_ARIES_M100PFSEVP) += m100pfsevp.dtb
+ dtb-$(CONFIG_TARGET_MICROCHIP_ICICLE) += microchip-mpfs-icicle-kit.dtb \
+ microchip-mpfs-icicle-kit-amp.dtb microchip-mpfs-icicle-kit-qspi-nor.dtb
+ dtb-$(CONFIG_TARGET_MICROCHIP_SEVKIT) += microchip-mpfs-sev-kit.dtb
 +dtb-$(CONFIG_TARGET_ENCLUSTRA_MERCURY_MP1) += enclustra_mercury_mp1.dtb
  dtb-$(CONFIG_TARGET_QEMU_VIRT) += qemu-virt.dtb
  dtb-$(CONFIG_TARGET_OPENPITON_RISCV64) += openpiton-riscv64.dtb
  dtb-$(CONFIG_TARGET_SIFIVE_UNLEASHED) += hifive-unleashed-a00.dtb
+-- 
+2.25.1
+

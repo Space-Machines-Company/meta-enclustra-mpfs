@@ -1,9 +1,7 @@
-From 4e7bd26d7d11e1189ab3d418a725b3d9f87490b6 Mon Sep 17 00:00:00 2001
+From cc1e7fa8c5c7ec88f48338178304654f4f32d186 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
-Date: Tue, 27 Sep 2022 15:55:38 +0200
+Date: Tue, 18 Oct 2022 10:05:51 +0200
 Subject: [PATCH] Board files for Mercury MP1 added
-
-/From 8e363a382f8dca41ee8f168926abb14ad1274fa1 Mon Sep 17 00:00:00 2001
 
 ---
  arch/riscv/Kconfig                            |   4 +
@@ -20,30 +18,30 @@ Subject: [PATCH] Board files for Mercury MP1 added
  create mode 100644 include/configs/enclustra_mercury_mp1.h
 
 diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-index ba29e70acf..056d5f69ef 100644
+index b239a1a3c7..cf4d64bc75 100644
 --- a/arch/riscv/Kconfig
 +++ b/arch/riscv/Kconfig
-@@ -14,6 +14,9 @@ config TARGET_AX25_AE350
- config TARGET_MICROCHIP_ICICLE
- 	bool "Support Microchip PolarFire-SoC Icicle Board"
+@@ -20,6 +20,9 @@ config TARGET_MICROCHIP_ICICLE
+ config TARGET_MICROCHIP_SEVKIT
+ 	bool "Support Microchip PolarFire-SoC SEV Kit"
  
 +config TARGET_ENCLUSTRA_MERCURY_MP1
-+        bool "Support Enclustra Mercury+ MP1 Board"
++	bool "Support Enclustra Mercury+ MP1 Board"
 +
  config TARGET_QEMU_VIRT
  	bool "Support QEMU Virt Board"
  
-@@ -61,6 +64,7 @@ config SPL_SYS_DCACHE_OFF
- source "board/AndesTech/ax25-ae350/Kconfig"
+@@ -69,6 +72,7 @@ source "board/aries/m100pfsevp/Kconfig"
  source "board/emulation/qemu-riscv/Kconfig"
  source "board/microchip/mpfs_icicle/Kconfig"
+ source "board/microchip/mpfs_sevkit/Kconfig"
 +source "board/enclustra/mercury_mp1/Kconfig"
  source "board/sifive/unleashed/Kconfig"
  source "board/sifive/unmatched/Kconfig"
  source "board/openpiton/riscv64/Kconfig"
 diff --git a/board/enclustra/mercury_mp1/Kconfig b/board/enclustra/mercury_mp1/Kconfig
 new file mode 100644
-index 0000000000..f6a01fff03
+index 0000000000..1dafb90ef9
 --- /dev/null
 +++ b/board/enclustra/mercury_mp1/Kconfig
 @@ -0,0 +1,54 @@
@@ -301,3 +299,6 @@ index 0000000000..a01ba2f7df
 +	BOOTENV
 +
 +#endif /* __CONFIG_H */
+-- 
+2.25.1
+

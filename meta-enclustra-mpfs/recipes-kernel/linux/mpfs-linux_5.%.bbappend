@@ -1,5 +1,7 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
+unset do_assemble_fitimage[depends]
+
 ENCLUSTRA_KERNEL_PATCH_LIST = " \
     file://0002-Devicetree-for-Mercury-MP1-added.patch \
     file://0006-Add-atsha204a-driver-with-support-to-read-OTP-region.patch \
@@ -14,41 +16,18 @@ ENCLUSTRA_KERNEL_DTS_LIST = " \
     file://enclustra_mercury_st1.dtsi \
     "
 
-SRC_URI:append:me-mp1-250-ees-d3e = " \
+ENCLUSTRA_KERNEL_COMMON_FILE_LIST = " \
     ${ENCLUSTRA_KERNEL_PATCH_LIST} \
     ${ENCLUSTRA_KERNEL_DTS_LIST} \
     file://defconfig \
     "
 
-SRC_URI:append:me-mp1-250-ees-d3e-e1 = " \
-    ${ENCLUSTRA_KERNEL_PATCH_LIST} \
-    ${ENCLUSTRA_KERNEL_DTS_LIST} \
-    file://defconfig \
-    "
-
-SRC_URI:append:me-mp1-250-si-d3en = " \
-    ${ENCLUSTRA_KERNEL_PATCH_LIST} \
-    ${ENCLUSTRA_KERNEL_DTS_LIST} \
-    file://defconfig \
-    "
-
-SRC_URI:append:me-mp1-250-si-d3en-e1 = " \
-    ${ENCLUSTRA_KERNEL_PATCH_LIST} \
-    ${ENCLUSTRA_KERNEL_DTS_LIST} \
-    file://defconfig \
-    "
-
-SRC_URI:append:me-mp1-460-1si-d4e = " \
-    ${ENCLUSTRA_KERNEL_PATCH_LIST} \
-    ${ENCLUSTRA_KERNEL_DTS_LIST} \
-    file://defconfig \
-    "
-
-SRC_URI:append:me-mp1-460-1si-d4e-e1 = " \
-    ${ENCLUSTRA_KERNEL_PATCH_LIST} \
-    ${ENCLUSTRA_KERNEL_DTS_LIST} \
-    file://defconfig \
-    "
+SRC_URI:append:me-mp1-250-ees-d3e = " ${ENCLUSTRA_KERNEL_COMMON_FILE_LIST}"
+SRC_URI:append:me-mp1-250-ees-d3e-e1 = " ${ENCLUSTRA_KERNEL_COMMON_FILE_LIST}"
+SRC_URI:append:me-mp1-250-si-d3en = " ${ENCLUSTRA_KERNEL_COMMON_FILE_LIST}"
+SRC_URI:append:me-mp1-250-si-d3en-e1 = " ${ENCLUSTRA_KERNEL_COMMON_FILE_LIST}"
+SRC_URI:append:me-mp1-460-1si-d4e = " ${ENCLUSTRA_KERNEL_COMMON_FILE_LIST}"
+SRC_URI:append:me-mp1-460-1si-d4e-e1 = " ${ENCLUSTRA_KERNEL_COMMON_FILE_LIST}"
 
 COMPATIBLE_MACHINE:append = " \
     |me-mp1-250-ees-d3e|me-mp1-250-si-d3en|me-mp1-460-1si-d4e \
