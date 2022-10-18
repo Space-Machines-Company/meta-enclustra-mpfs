@@ -1,13 +1,13 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 ENCLUSTRA_UBOOT_PATCH_LIST = " \
-    file://0008-Enclustra-MAC-address-readout-from-EEPROM.patch \
-    file://0009-Board-files-for-Mercury-MP1-added.patch \
-    file://0010-Devicetree-for-Mercury-MP1-added.patch \
-    file://0011-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch \
-    file://0012-Bugfix-for-atsha204a-driver.patch \
-    file://0014-Use-only-high-memory-region.patch \
-    file://0015-Rename-mpfs-devicetree.patch \
+    file://0001-Enclustra-MAC-address-readout-from-EEPROM.patch \
+    file://0002-Board-files-for-Mercury-MP1-added.patch \
+    file://0003-Devicetree-for-Mercury-MP1-added.patch \
+    file://0004-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch \
+    file://0005-Bugfix-for-atsha204a-driver.patch \
+    file://0006-Use-only-high-memory-region.patch \
+    file://0007-Rename-mpfs-devicetree.patch \
     "
 
 ENCLUSTRA_UBOOT_DTS_LIST = " \

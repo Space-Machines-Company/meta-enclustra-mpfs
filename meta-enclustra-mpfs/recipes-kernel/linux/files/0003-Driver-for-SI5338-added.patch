@@ -4005,7 +4005,7 @@ index 0000000..da44ab6
 +#endif
 +	for (n = 0; n < 4; n++) {
 +		clk = drvdata->clkout[n].hw.clk;
-+		drvdata->lookup[n] = clkdev_alloc(clk,
++		drvdata->lookup[n] = clkdev_create(clk,
 +						  __clk_get_name(clk),
 +						  NULL);
 +		if (!drvdata->lookup[n]) {
@@ -4019,7 +4019,7 @@ index 0000000..da44ab6
 +				 "Warning: clkdev doesn't support name longer than %zu\n",
 +				 strlen(drvdata->lookup[n]->con_id));
 +		}
-+		clkdev_add(drvdata->lookup[n]);
++
 +	}
 +
 +	return 0;

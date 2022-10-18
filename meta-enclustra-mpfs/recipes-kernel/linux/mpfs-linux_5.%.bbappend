@@ -3,8 +3,9 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 unset do_assemble_fitimage[depends]
 
 ENCLUSTRA_KERNEL_PATCH_LIST = " \
+    file://0001-Add-atsha204a-driver-with-support-to-read-OTP-region.patch \
     file://0002-Devicetree-for-Mercury-MP1-added.patch \
-    file://0006-Add-atsha204a-driver-with-support-to-read-OTP-region.patch \
+    file://0003-Driver-for-SI5338-added.patch \
     "
 
 ENCLUSTRA_KERNEL_DTS_LIST = " \
