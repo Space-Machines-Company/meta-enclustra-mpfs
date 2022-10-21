@@ -8,6 +8,7 @@ ENCLUSTRA_UBOOT_PATCH_LIST = " \
     file://0005-Bugfix-for-atsha204a-driver.patch \
     file://0006-Use-only-high-memory-region.patch \
     file://0007-Rename-mpfs-devicetree.patch \
+    file://0008-SI5338-configuration.patch \
     "
 
 ENCLUSTRA_UBOOT_DTS_LIST = " \
