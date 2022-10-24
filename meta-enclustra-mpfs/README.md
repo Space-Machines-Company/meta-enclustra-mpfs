@@ -21,7 +21,7 @@ URI: https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp<br>
 tag: v2022.09<br>
 revision: 07438a5526dd33226d5341ae3a901c6ee0594dfd
 
-URI git://git.yoctoproject.org/meta-security<br>
+URI https://git.yoctoproject.org/meta-security<br>
 layers: meta-tpm<br>
 revision: 59295103f1f87b207e5c3e154e6ad01291e1f9df
 

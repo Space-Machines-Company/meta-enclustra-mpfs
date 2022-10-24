@@ -20,7 +20,7 @@ See [License](meta-enclustra-mpfs/COPYING.MIT)
 
 This repository contains a Yocto layer to generate Linux reference designs for the [Enclustra Mercury+ MP1 product series](https://www.enclustra.com/en/products/system-on-chip-modules/mercury-mp1/).
 The Yocto layer can be included into an own project or the provided [build.yml](build.yml) can be used to build a design using [kas](https://kas.readthedocs.io/en/latest/#) tool.
-The reference design is based on [meta-polarfire-soc-yocto-bsp](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp) release 2021.11 that uses following versions.
+The reference design is based on [meta-polarfire-soc-yocto-bsp](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp) release 2022.09 that uses following versions.
 
 - Yocto: honister
 - U-Boot: 2022.01
@@ -70,7 +70,7 @@ The product model can be specified as target device (variable: **MACHINE**). Fol
 
 ### Supported Enclustra Base Boards
 
-The Enclustra Base Board can be specified with **ENCLUSTRA_BASEBOARD** variable. Following base boards are supported:
+The Enclustra base board can be specified with **ENCLUSTRA_BASEBOARD** variable. Following base boards are supported:
 
 - pe1 ([Mercury+ PE1](https://www.enclustra.com/en/products/base-boards/mercury-pe1-200-300-400))
 - pe3 ([Mercury+ PE3](https://www.enclustra.com/en/products/base-boards/mercury-pe3))
@@ -159,9 +159,9 @@ Following list show all devicetree include files added by meta-enclustra-mpfs:
 | [enclustra_mercury_mp1_common.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_mp1_common.dtsi)                    | Common definitions that are valid for all Mercury+ MP1 product models |
 | [enclustra_mercury_mp1_fabric.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/me-mp1-250-ees-d3e/enclustra_mercury_mp1_fabric.dtsi) | Devicetree nodes in FPGA fabric |
 | [enclustra_mercury_mp1.dts](meta-enclustra-mpfs/recipes-kernel/linux/files/me-mp1-250-ees-d3e/enclustra_mercury_mp1.dts)                 | Top level devicetree. Contains nodes and properties that are specific to that product model as DDR4 memory size |
-| [enclustra_mercury_baseboard_pe1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_baseboard_pe1.dtsi)              | Mercury+ PE1 base board specific devicetree properties |
-| [enclustra_mercury_baseboard_pe3.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_baseboard_pe3.dtsi)              | Mercury+ PE3 base board specific devicetree properties |
-| [enclustra_mercury_baseboard_st1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_baseboard_st1.dtsi)              | Mercury+ ST1 base board specific devicetree properties |
+| [enclustra_mercury_pe1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe1.dtsi)                                  | Mercury+ PE1 base board specific devicetree properties |
+| [enclustra_mercury_pe3.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe3.dtsi)                                  | Mercury+ PE3 base board specific devicetree properties |
+| [enclustra_mercury_st1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_st1.dtsi)                                  | Mercury+ ST1 base board specific devicetree properties |
 
 ### Modification for eMMC boot
 
@@ -239,24 +239,9 @@ The U-Boot patch [0008-SI5338-configuration.patch](meta-enclustra-mpfs/recipes-b
 
 - Create a configuration with Skyworks ClockBuilder Pro software and export the C code header file.
 - Copy the exported header file to **meta-enclustra-mpfs/recipe_bsp/u-boot/files/** directory and overwrite the example file [Si5338-RevB-Registers.h](meta-enclustra-mpfs/recipes-bsp/u-boot/files/Si5338-RevB-Registers.h)
-- Make following changes to file [meta-enclustra-mpfs/recipes-bsp/u-boot/u-boot-mpfs.bbappend](meta-enclustra-mpfs/recipes-bsp/u-boot/u-boot-mpfs.bbappend):
+- Make following changes to file [meta-enclustra-mpfs/recipes-bsp/u-boot/files/enclustra_mercury_mp1_defconfig](meta-enclustra-mpfs/recipes-bsp/u-boot/files/enclustra_mercury_mp1_defconfig):
 
-```diff
-@@ -8,6 +8,7 @@ ENCLUSTRA_UBOOT_PATCH_LIST = " \
-     file://0005-Bugfix-for-atsha204a-driver.patch \
-     file://0006-Use-only-high-memory-region.patch \
-     file://0007-Rename-mpfs-devicetree.patch \
-+    file://0008-SI5338-configuration.patch \
-     "
- 
- ENCLUSTRA_UBOOT_DTS_LIST = " \
-@@ -21,6 +22,7 @@ ENCLUSTRA_UBOOT_COMMON_FILE_LIST = " \
-     file://${UBOOT_ENV_SRC} \
-     ${ENCLUSTRA_UBOOT_PATCH_LIST} \
-     ${ENCLUSTRA_UBOOT_DTS_LIST} \
-+    file://Si5338-RevB-Registers.h \
-     "
-```
+    CONFIG_SI5338_CONFIGURATION=y
 
 ## Known Issues:
 

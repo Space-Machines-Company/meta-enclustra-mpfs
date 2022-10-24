@@ -37,7 +37,7 @@ repos:
             meta-enclustra-mpfs:
 
     meta-openembedded:
-        url: http://git.openembedded.org/meta-openembedded
+        url: https://git.openembedded.org/meta-openembedded
         refspec: 3ab9736fc6bfcc7f600479fd87dff32219d789e2
         layers:
             meta-oe:
@@ -47,7 +47,7 @@ repos:
             meta-webserver:
 
     meta-security:
-        url: git://git.yoctoproject.org/meta-security
+        url: https://git.yoctoproject.org/meta-security
         refspec: 59295103f1f87b207e5c3e154e6ad01291e1f9df
         layers:
             meta-tpm:
