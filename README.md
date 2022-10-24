@@ -107,7 +107,7 @@ Use following command to specify the bitbake command to be executed. **MACHINE**
 
     kas shell build.yml -c 'MACHINE=me-mp1-250-ees-d3e ENCLUSTRA_BASEBOARD=pe3 bitbake image-minimal-hwtest'
 
-Note that the image [image-minimal-hwtest](meta-enclustra-mpfs/recipes-core/images/image-minimal-hwtest.bb) can be replaced by any available image recipe. Following are a few examples, provided by openembedded-core layer:
+Note that the image [image-minimal-hwtest](meta-enclustra-mpfs/recipes-core/images/image-minimal-hwtest.bb) can be replaced by any available image recipe. Following are a few examples provided by openembedded-core layer:
 - core-image-base
 - core-image-minimal
 - core-image-minimal-dev
@@ -124,7 +124,7 @@ The tool kas can be used to checkout the repositories and setup the build direct
 
 ## Deployment
 
-The OpenEmbedded Image Creator (wic) creates a partitioned image file for SD card/eMMC. The partitions are configured in an OpenEmbedded kickstart file ([mpfs-icicle-kit.wks](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/blob/2021.11/wic/mpfs-icicle-kit.wks)) that is located in the [meta-polarfire-soc-yocto-bsp](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp/tree/2021.11) layer. The image file to be deployed on SD Card/eMMC can be found in **build/tmp-glibc/deploy/images/\<MACHINE\>** directory, e.g. **image-minimal-hwtest-me-mp1-250-ees-d3e.wic**.
+The OpenEmbedded Image Creator (wic) creates a partitioned image file for SD card/eMMC. The partitions are configured in the OpenEmbedded kickstart file ([meta-enclustra-mpfs/wic/enclustra-mercury-mp1.wks](meta-enclustra-mpfs/wic/enclustra-mercury-mp1.wks)). The image file to be deployed on SD card/eMMC can be found in **build/tmp-glibc/deploy/images/\<MACHINE\>** directory, e.g. **image-minimal-hwtest-me-mp1-250-ees-d3e.wic**.
 
 ### Creating a Bootable SD Card
 
@@ -145,7 +145,7 @@ No SD card must be inserted in the SD card slot of the base board. If a SD card 
 
 ## Login on Target
 
-Login with **root** account, no password is set.
+Login with **root** as user name, no password is set.
 
 ## Devicetree
 
@@ -235,7 +235,7 @@ The serial number of the module can be read by following command:
 
 ### Rootfs Partition Size
 
-The size of the rootfs partition is set to 132 Mbyte by default. To change the partition size, the OpenEmbedded kickstart file [meta-enclustra-mpfs/wic/enclustra-mercury-mp1.wks](meta-enclustra-mpfs/wic/enclustra-mercury-mp1.wks) needs to be modified. The partition size is defined by --fixed-size parameter as shown below.
+The size of the rootfs partition is set to 132 Mbyte by default. To change the partition size, the OpenEmbedded kickstart file [meta-enclustra-mpfs/wic/enclustra-mercury-mp1.wks](meta-enclustra-mpfs/wic/enclustra-mercury-mp1.wks) needs to be modified. The partition size is defined by **--fixed-size** parameter as shown below.
 
 ```
 part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label root --align 4096 --fixed-size 131072K
@@ -243,9 +243,9 @@ part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label root --align 4096 
 
 ### Configure SI5338 clock generator on Mercury+ PE1 and Mercury+ ST1 base board
 
-The U-Boot patch [0008-SI5338-configuration.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0008-SI5338-configuration.patch) adds support to configure the clock generator device. To enable the configurator, following changes need to be applied:
+The U-Boot patch [0008-SI5338-configuration.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0008-SI5338-configuration.patch) adds support to configure the clock generator device. To enable the configuration, follow the steps below:
 
-1. Create a configuration with Skyworks ClockBuilder Pro software and export the C code header file.
+1. Create a configuration with Skyworks [ClockBuilder Pro software](https://www.skyworksinc.com/Application-Pages/Clockbuilder-Pro-Software) and export the C code header file.
 2. Copy the exported header file to **meta-enclustra-mpfs/recipe_bsp/u-boot/files/** directory and overwrite the example file [Si5338-RevB-Registers.h](meta-enclustra-mpfs/recipes-bsp/u-boot/files/Si5338-RevB-Registers.h)
 3. Make following changes to file [meta-enclustra-mpfs/recipes-bsp/u-boot/files/enclustra_mercury_mp1_defconfig](meta-enclustra-mpfs/recipes-bsp/u-boot/files/enclustra_mercury_mp1_defconfig):
 
