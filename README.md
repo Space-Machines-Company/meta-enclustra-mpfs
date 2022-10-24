@@ -225,7 +225,7 @@ Following Linux kernel patches are added.
 
 ### Ethernet MAC address configuration
 
-Each Enclustra module is delivered with two unique MAC addresses configured in its EEPROM. These MAC addresses are automatically read by U-Boot and configured.
+Each Enclustra module is delivered with two unique MAC addresses stored in the EEPROM. During the boot process, these MAC addresses are automatically read by U-Boot and configured to be used by U-Boot and Linux.
 
 ### Reading Serial Number of Module
 
@@ -233,15 +233,23 @@ The serial number of the module can be read by following command:
 
     cat /sys/bus/i2c/devices/1-0064/serial
 
+### Rootfs Partition Size
+
+The size of the rootfs partition is set to 132 Mbyte by default. To change the partition size, the OpenEmbedded kickstart file [meta-enclustra-mpfs/wic/enclustra-mercury-mp1.wks](meta-enclustra-mpfs/wic/enclustra-mercury-mp1.wks) needs to be modified. The partition size is defined by --fixed-size parameter as shown below.
+
+```
+part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label root --align 4096 --fixed-size 131072K
+```
+
 ### Configure SI5338 clock generator on Mercury+ PE1 and Mercury+ ST1 base board
 
 The U-Boot patch [0008-SI5338-configuration.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0008-SI5338-configuration.patch) adds support to configure the clock generator device. To enable the configurator, following changes need to be applied:
 
-- Create a configuration with Skyworks ClockBuilder Pro software and export the C code header file.
-- Copy the exported header file to **meta-enclustra-mpfs/recipe_bsp/u-boot/files/** directory and overwrite the example file [Si5338-RevB-Registers.h](meta-enclustra-mpfs/recipes-bsp/u-boot/files/Si5338-RevB-Registers.h)
-- Make following changes to file [meta-enclustra-mpfs/recipes-bsp/u-boot/files/enclustra_mercury_mp1_defconfig](meta-enclustra-mpfs/recipes-bsp/u-boot/files/enclustra_mercury_mp1_defconfig):
+1. Create a configuration with Skyworks ClockBuilder Pro software and export the C code header file.
+2. Copy the exported header file to **meta-enclustra-mpfs/recipe_bsp/u-boot/files/** directory and overwrite the example file [Si5338-RevB-Registers.h](meta-enclustra-mpfs/recipes-bsp/u-boot/files/Si5338-RevB-Registers.h)
+3. Make following changes to file [meta-enclustra-mpfs/recipes-bsp/u-boot/files/enclustra_mercury_mp1_defconfig](meta-enclustra-mpfs/recipes-bsp/u-boot/files/enclustra_mercury_mp1_defconfig):
 
-    CONFIG_SI5338_CONFIGURATION=y
+       CONFIG_SI5338_CONFIGURATION=y
 
 ## Known Issues:
 
