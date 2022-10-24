@@ -1,4 +1,4 @@
-From b5bdeb3011cc18e14b32a963b844e11f006c9cec Mon Sep 17 00:00:00 2001
+From 4b15c280d3f0640db493c388ea8f8f09763127f2 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Tue, 4 Oct 2022 18:27:51 +0200
 Subject: [PATCH] Rename mpfs devicetree to match with updated kernel
@@ -12,6 +12,3 @@ diff --git a/arch/riscv/dts/microchip-mpfs.dtsi b/arch/riscv/dts/mpfs.dtsi
 similarity index 100%
 rename from arch/riscv/dts/microchip-mpfs.dtsi
 rename to arch/riscv/dts/mpfs.dtsi
--- 
-2.25.1
-

@@ -1,4 +1,4 @@
-From 4d4310077632db66083a9add29053fb731791a4b Mon Sep 17 00:00:00 2001
+From 1a339e938bbc6be39360280fd7239b2458297f8c Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Tue, 18 Oct 2022 10:21:47 +0200
 Subject: [PATCH] Use only high memory region
@@ -22,6 +22,3 @@ index ea720900e1..7dfe318cc5 100644
  	/*
  	 * Ensure that we run from first 4GB so that all
  	 * addresses used by U-Boot are 32bit addresses.
--- 
-2.25.1
-

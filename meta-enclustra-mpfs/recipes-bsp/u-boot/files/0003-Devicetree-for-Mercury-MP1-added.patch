@@ -1,4 +1,4 @@
-From 278ff639df83f1a93ed86933b6357ef8be5284f2 Mon Sep 17 00:00:00 2001
+From 13c15f933a0bd48f7f89166bced83944e47cf501 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Tue, 18 Oct 2022 10:10:05 +0200
 Subject: [PATCH] Devicetree for Mercury MP1 added
@@ -19,6 +19,3 @@ index 883d8cc11c..786fda2ee3 100644
  dtb-$(CONFIG_TARGET_QEMU_VIRT) += qemu-virt.dtb
  dtb-$(CONFIG_TARGET_OPENPITON_RISCV64) += openpiton-riscv64.dtb
  dtb-$(CONFIG_TARGET_SIFIVE_UNLEASHED) += hifive-unleashed-a00.dtb
--- 
-2.25.1
-

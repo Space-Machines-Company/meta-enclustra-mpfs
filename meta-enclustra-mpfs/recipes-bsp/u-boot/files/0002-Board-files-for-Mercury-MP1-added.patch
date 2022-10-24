@@ -1,4 +1,4 @@
-From cc1e7fa8c5c7ec88f48338178304654f4f32d186 Mon Sep 17 00:00:00 2001
+From 12be22e3d2e7f0e128dbf0edda624338370eadf8 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Tue, 18 Oct 2022 10:05:51 +0200
 Subject: [PATCH] Board files for Mercury MP1 added
@@ -9,8 +9,8 @@ Subject: [PATCH] Board files for Mercury MP1 added
  board/enclustra/mercury_mp1/MAINTAINERS       |   6 +
  board/enclustra/mercury_mp1/Makefile          |   7 +
  .../mercury_mp1/enclustra_mercury_mp1.c       | 123 ++++++++++++++++++
- include/configs/enclustra_mercury_mp1.h       |  40 ++++++
- 6 files changed, 234 insertions(+)
+ include/configs/enclustra_mercury_mp1.h       |  34 +++++
+ 6 files changed, 228 insertions(+)
  create mode 100644 board/enclustra/mercury_mp1/Kconfig
  create mode 100644 board/enclustra/mercury_mp1/MAINTAINERS
  create mode 100644 board/enclustra/mercury_mp1/Makefile
@@ -255,7 +255,7 @@ index 0000000000..7ddba65a82
 +}
 diff --git a/include/configs/enclustra_mercury_mp1.h b/include/configs/enclustra_mercury_mp1.h
 new file mode 100644
-index 0000000000..af004f6eda
+index 0000000000..30422450ff
 --- /dev/null
 +++ b/include/configs/enclustra_mercury_mp1.h
 @@ -0,0 +1,34 @@
@@ -293,5 +293,3 @@ index 0000000000..af004f6eda
 +       BOOTENV
 +
 +#endif /* __CONFIG_H */
---
-2.25.1

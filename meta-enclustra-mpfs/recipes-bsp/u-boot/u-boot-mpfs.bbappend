@@ -22,6 +22,7 @@ ENCLUSTRA_UBOOT_COMMON_FILE_LIST = " \
     file://${UBOOT_ENV_SRC} \
     ${ENCLUSTRA_UBOOT_PATCH_LIST} \
     ${ENCLUSTRA_UBOOT_DTS_LIST} \
+    file://Si5338-RevB-Registers.h \
     "
 
 # Remove unwanted files added by meta-polarfire-soc-yocto-bsp
@@ -58,4 +59,12 @@ do_add_enclustra_devicetree() {
     fi
 }
 
+do_add_clockgen_config() {
+    if test -f "${WORKDIR}/Si5338-RevB-Registers.h"; then
+        mkdir -p ${S}/board/enclustra/mercury_mp1
+        cp ${WORKDIR}/Si5338-RevB-Registers.h ${S}/board/enclustra/mercury_mp1/
+    fi
+}
+
 addtask do_add_enclustra_devicetree after do_patch before do_configure
+addtask do_add_clockgen_config after do_unpack before do_patch

@@ -10,9 +10,11 @@ See [License](meta-enclustra-mpfs/COPYING.MIT)
 
 ## Changelog
 
-| Date       | Version | Comment             |
-|------------|---------|---------------------|
-| 07.10.2022 | 1.0     | First release       |
+| Date       | Version | Comment                                                                         |
+|------------|---------|---------------------------------------------------------------------------------|
+| 07.10.2022 | 1.0     | First version with meta-polarfire-soc-yocto-bsp 2021.11 used for MP1 validation |
+| 24.10.2022 | 1.1     | Update to meta-polarfire-soc-yocto-bsp 2022.09                                  |
+
 
 ## Description
 
@@ -21,8 +23,8 @@ The Yocto layer can be included into an own project or the provided [build.yml](
 The reference design is based on [meta-polarfire-soc-yocto-bsp](https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp) release 2021.11 that uses following versions.
 
 - Yocto: honister
-- U-Boot: 2021.07
-- Linux:  kernel 5.12.19
+- U-Boot: 2022.01
+- Linux:  kernel 5.15.68
 
 ## FPGA Reference Designs for Microchip Libero
 
@@ -43,7 +45,6 @@ The HSS software with support for Mercury+ MP1 can be found in following reposit
 This reference design was tested on following operating systems:
 
 - Ubuntu 20.04
-- Ubuntu 21.04
 
 ### Required Packages
 
@@ -71,9 +72,9 @@ The product model can be specified as target device (variable: **MACHINE**). Fol
 
 The Enclustra Base Board can be specified with **ENCLUSTRA_BASEBOARD** variable. Following base boards are supported:
 
-- [pe1](https://www.enclustra.com/en/products/base-boards/mercury-pe1-200-300-400)
-- [pe3](https://www.enclustra.com/en/products/base-boards/mercury-pe3)
-- [st1](https://www.enclustra.com/en/products/base-boards/mercury-st1)
+- pe1 ([Mercury+ PE1](https://www.enclustra.com/en/products/base-boards/mercury-pe1-200-300-400))
+- pe3 ([Mercury+ PE3](https://www.enclustra.com/en/products/base-boards/mercury-pe3))
+- st1 ([Mercury+ ST1](https://www.enclustra.com/en/products/base-boards/mercury-st1))
 
 ### Accelerate Build
 
@@ -188,11 +189,11 @@ And following settings need to be added or the existing comments removed:
 
 If the **ENCLUSTRA_BASEBOARD** variable is set to an Enclustra Base Board, a devicetree include file is added for the Linux kernel which contains base-board specific configuration settings:
  
-| ENCLUSTRA_BASEBOARD | Included devicetree file | Added peripherals |
-|---------------------|--------------------------|-------------------|
-| pe1                 | [enclustra_mercury_pe1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe1.dtsi) | - 24AA128 I2C EEPROM<br>- LM96080 voltage/current monitor<br>- SI5338 clock generator | 
-| pe3                 | [enclustra_mercury_pe3.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe3.dtsi) | - 24AA128 I2C EEPROM<br>- LM96080 voltage/current monitor<br>- PCAl6416 I2C IO expander |
-| st1                 | [enclustra_mercury_st1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_st1.dtsi) | - SI5338 clock generator |
+| Base board   | Value of variable<br>ENCLUSTRA_BASEBOARD | Included devicetree file                                                                                | Added peripherals |
+|--------------|------------------------------------------|---------------------------------------------------------------------------------------------------------|-------------------|
+| Mercury+ PE1 | pe1                                      | [enclustra_mercury_pe1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe1.dtsi) | - 24AA128 I2C EEPROM<br>- LM96080 voltage/current monitor | 
+| Mercury+ PE3 | pe3                                      | [enclustra_mercury_pe3.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_pe3.dtsi) | - 24AA128 I2C EEPROM<br>- LM96080 voltage/current monitor<br>- PCAl6416 I2C IO expander |
+| Mercury+ ST1 | st1                                      | [enclustra_mercury_st1.dtsi](meta-enclustra-mpfs/recipes-kernel/linux/files/enclustra_mercury_st1.dtsi) |  |
 
 ## Patches
 
@@ -202,12 +203,14 @@ Following U-Boot patches are added.
 
 | Patch Name                                                                                                                                                                      | Description |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| [0008-Enclustra-MAC-address-readout-from-EEPROM.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0008-Enclustra-MAC-address-readout-from-EEPROM.patch)                       | Add a feature to read and configure the MAC address from atsha204a EEPROM |
-| [0009-Board-files-for-Mercury-MP1-added.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0009-Board-files-for-Mercury-MP1-added.patch)                                       | Add support for Mercury+ MP1 product series |
-| [0010-Devicetree-for-Mercury-MP1-added.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0010-Devicetree-for-Mercury-MP1-added.patch)                                         | Add MP1 devicetree to Makefile |
-| [0011-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0011-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch) | Remove check in Microchip I2C driver to allow wakeup of atsha204a by transmitting only 1 byte |
-| [0012-Bugfix-for-atsha204a-driver.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0012-Bugfix-for-atsha204a-driver.patch)                                                   | Fix wakeup sequence in atsha204a driver |
-| [0013-Add-Microchip-Polarfire-SoC-QSPI-driver.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0013-Add-Microchip-Polarfire-SoC-QSPI-driver.patch)                           | Add driver for QSPI flash |
+| [0001-Enclustra-MAC-address-readout-from-EEPROM.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0001-Enclustra-MAC-address-readout-from-EEPROM.patch)                       | Add a feature to read and configure the MAC address from atsha204a EEPROM |
+| [0002-Board-files-for-Mercury-MP1-added.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0002-Board-files-for-Mercury-MP1-added.patch)                                       | Add support for Mercury+ MP1 product series |
+| [0003-Devicetree-for-Mercury-MP1-added.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0003-Devicetree-for-Mercury-MP1-added.patch)                                         | Add MP1 devicetree to Makefile |
+| [0004-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0004-PolarFire-SoC-I2C-driver-modification-for-zero-sized.patch) | Remove check in Microchip I2C driver to allow wakeup of atsha204a by transmitting only 1 byte |
+| [0005-Bugfix-for-atsha204a-driver.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0005-Bugfix-for-atsha204a-driver.patch)                                                   | Fix wakeup sequence in atsha204a driver |
+| [0006-Use-only-high-memory-region.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0006-Use-only-high-memory-region.patch)                                                   | Modifications to allow booting from address > 4Gbyte |
+| [0007-Rename-mpfs-devicetree.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0007-Rename-mpfs-devicetree.patch)                                                             | Rename microchip-mpfs.dtsi to mpfs.dtsi to be able to reuse the devicetree from Linux kernel |
+| [0008-SI5338-configuration.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0008-SI5338-configuration.patch)                                                                 | Add configuration of SI5338 clock generator in U-Boot. Not enabled by default. |
 
 ### Linux Kernel
 
@@ -215,16 +218,45 @@ Following Linux kernel patches are added.
 
 | Patch Name                                                                                                                                                                        | Description |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| [0001-Driver-for-SI5338-added.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0001-Driver-for-SI5338-added.patch)                                                           | Add driver for clock generator on Enclustra base boards |
+| [0001-Add-atsha204a-driver-with-support-to-read-OTP-region.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0001-Add-atsha204a-driver-with-support-to-read-OTP-region.patch) | Add driver to read serial number from EEPROM |
 | [0002-Devicetree-for-Mercury-MP1-added.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0002-Devicetree-for-Mercury-MP1-added.patch)                                         | Add MP1 devicetree to Makefile |
-| [0003-Remove-devicetree-include-from-icicle-kit.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0003-Remove-devicetree-include-from-icicle-kit.patch)                       | Remove icicle-kit specific settings from microchip-mpfs.dtsi |
-| [0004-gpio-microsemi-gpio-get-base-dynamically.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0004-gpio-microsemi-gpio-get-base-dynamically.patch)                         | Bugfix to allow more than one GPIO |
-| [0005-Remove-USB-host-dependency.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0005-Remove-USB-host-dependency.patch)                                                     | Allow USB device mode configuration |
-| [0006-Add-atsha204a-driver-with-support-to-read-OTP-region.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0006-Add-atsha204a-driver-with-support-to-read-OTP-region.patch) | Add driver to read serial number from EEPROM |
-| [0007-replace-microchip-i2c-driver-with-newer-version.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0007-replace-microchip-i2c-driver-with-newer-version.patch)           | Update I2C driver to newer version |
-| [0008-Fix-I2C-driver-read-extra-byte.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0008-Fix-I2C-driver-read-extra-byte.patch)                                             | Bugfix in I2C driver to fix issue with reading one byte more than requested |
-| [0009-musb-glue-layer-update.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0009-musb-glue-layer-update.patch)                                                             | Update USB driver to newer version |
-| [0010-SPI-driver-update.patch](meta-enclustra-mpfs/recipes-kernel/linux/files/0010-SPI-driver-update.patch)                                                                       | Update SPI driver to newer version |
+
+## Additional Information
+
+### Ethernet MAC address configuration
+
+Each Enclustra module is delivered with two unique MAC addresses configured in its EEPROM. These MAC addresses are automatically read by U-Boot and configured.
+
+### Reading Serial Number of Module
+
+The serial number of the module can be read by following command:
+
+    cat /sys/bus/i2c/devices/1-0064/serial
+
+### Configure SI5338 clock generator on Mercury+ PE1 and Mercury+ ST1 base board
+
+The U-Boot patch [0008-SI5338-configuration.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0008-SI5338-configuration.patch) adds support to configure the clock generator device. To enable the configurator, following changes need to be applied:
+
+- Create a configuration with Skyworks ClockBuilder Pro software and export the C code header file.
+- Copy the exported header file to **meta-enclustra-mpfs/recipe_bsp/u-boot/files/** directory and overwrite the example file [Si5338-RevB-Registers.h](meta-enclustra-mpfs/recipes-bsp/u-boot/files/Si5338-RevB-Registers.h)
+- Make following changes to file [meta-enclustra-mpfs/recipes-bsp/u-boot/u-boot-mpfs.bbappend](meta-enclustra-mpfs/recipes-bsp/u-boot/u-boot-mpfs.bbappend):
+
+```diff
+@@ -8,6 +8,7 @@ ENCLUSTRA_UBOOT_PATCH_LIST = " \
+     file://0005-Bugfix-for-atsha204a-driver.patch \
+     file://0006-Use-only-high-memory-region.patch \
+     file://0007-Rename-mpfs-devicetree.patch \
++    file://0008-SI5338-configuration.patch \
+     "
+ 
+ ENCLUSTRA_UBOOT_DTS_LIST = " \
+@@ -21,6 +22,7 @@ ENCLUSTRA_UBOOT_COMMON_FILE_LIST = " \
+     file://${UBOOT_ENV_SRC} \
+     ${ENCLUSTRA_UBOOT_PATCH_LIST} \
+     ${ENCLUSTRA_UBOOT_DTS_LIST} \
++    file://Si5338-RevB-Registers.h \
+     "
+```
 
 ## Known Issues:
 
@@ -237,6 +269,6 @@ The clock frequency of the I2C bus is derived from the MSS AHB/APB bus clock. Th
 
 Currently no Linux driver for the MSS QSPI flash controller is available. The QSPI flash can only be used in U-Boot.
 
-#### Software reboot
+#### Software Reboot in U-Boot
 
-Rebooting the hardware in U-Boot or Linux is currently not supported.
+Rebooting the hardware in U-Boot by **reset** command is currently not supported.

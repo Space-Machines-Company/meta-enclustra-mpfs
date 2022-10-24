@@ -10,18 +10,20 @@ https://www.enclustra.com/en/products/system-on-chip-modules/
 
 This Yocto layer depends on:
 
-URI: https://git.openembedded.org/openembedded-core<br/>
-layers: meta<br/>
-tag: 2021-10.1-honister<br/>
-revision: 70384dd958c57d1da924a66cffa35f80eb60d4b0
+URI: https://git.openembedded.org/openembedded-core<br>
+layers: meta<br>
+revision: f4dbdb9774eb61a71289fe91b017b4caf9c34b16
 
-URI: https://github.com/riscv/meta-riscv<br/>
-branch: honister<br/>
-revision: 9561639c61663a10d8c9c23d26173db499f4c39b
+URI: https://github.com/riscv/meta-riscv<br>
+revision: 18227c1de0a56327a22b94b2594fbeb45c1dfcff
 
-URI: https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp<br/>
-tag: v2021.11<br/>
-revision: 02cb81741a5e1b37f89318d04ebc6b2854bfe736
+URI: https://github.com/polarfire-soc/meta-polarfire-soc-yocto-bsp<br>
+tag: v2022.09<br>
+revision: 07438a5526dd33226d5341ae3a901c6ee0594dfd
+
+URI git://git.yoctoproject.org/meta-security<br>
+layers: meta-tpm<br>
+revision: 59295103f1f87b207e5c3e154e6ad01291e1f9df
 
 # Submit Patches / Reporting Bugs
 
