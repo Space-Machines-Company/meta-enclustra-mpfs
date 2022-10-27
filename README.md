@@ -210,7 +210,7 @@ Following U-Boot patches are added.
 | [0005-Bugfix-for-atsha204a-driver.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0005-Bugfix-for-atsha204a-driver.patch)                                                   | Fix wakeup sequence in atsha204a driver |
 | [0006-Use-only-high-memory-region.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0006-Use-only-high-memory-region.patch)                                                   | Modifications to allow booting from address > 4Gbyte |
 | [0007-Rename-mpfs-devicetree.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0007-Rename-mpfs-devicetree.patch)                                                             | Rename microchip-mpfs.dtsi to mpfs.dtsi to be able to reuse the devicetree from Linux kernel |
-| [0008-SI5338-configuration.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0008-SI5338-configuration.patch)                                                                 | Add configuration of SI5338 clock generator in U-Boot. Not enabled by default. |
+| [0008-SI5338-configuration.patch](meta-enclustra-mpfs/recipes-bsp/u-boot/files/0008-SI5338-configuration.patch)                                                                 | Add configuration of SI5338 clock generator in U-Boot |
 
 ### Linux Kernel
 
