@@ -10,6 +10,7 @@ ENCLUSTRA_KERNEL_PATCH_LIST = " \
 ENCLUSTRA_KERNEL_DTS_LIST = " \
     file://enclustra_mercury_mp1.dts \
     file://enclustra_mercury_mp1_common.dtsi \
+    file://enclustra_mercury_mp1_common_fabric.dtsi \
     file://enclustra_mercury_mp1_fabric.dtsi \
     file://enclustra_mercury_pe1.dtsi \
     file://enclustra_mercury_pe3.dtsi \
@@ -62,10 +63,8 @@ do_add_enclustra_devicetree() {
             cp ${WORKDIR}/enclustra_mercury_st1.dtsi ${S}/arch/riscv/boot/dts/microchip/
         fi
 
-        echo "#include \"enclustra_mercury_mp1_fabric.dtsi\"" \
-            >> ${WORKDIR}/enclustra_mercury_mp1_temp.dts
-
         cp ${WORKDIR}/enclustra_mercury_mp1_common.dtsi ${S}/arch/riscv/boot/dts/microchip/
+        cp ${WORKDIR}/enclustra_mercury_mp1_common_fabric.dtsi ${S}/arch/riscv/boot/dts/microchip/
         cp ${WORKDIR}/enclustra_mercury_mp1_fabric.dtsi ${S}/arch/riscv/boot/dts/microchip/
         cp ${WORKDIR}/enclustra_mercury_mp1_temp.dts ${S}/arch/riscv/boot/dts/microchip/enclustra_mercury_mp1.dts
     fi

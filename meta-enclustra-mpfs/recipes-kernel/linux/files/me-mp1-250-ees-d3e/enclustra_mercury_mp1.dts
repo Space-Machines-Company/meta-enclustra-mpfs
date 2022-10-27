@@ -7,6 +7,7 @@
 /dts-v1/;
 
 #include "enclustra_mercury_mp1_common.dtsi"
+#include "enclustra_mercury_mp1_fabric.dtsi"
 
 / {
 	model = "enclustra,me-mp1-250-ees-d3e";

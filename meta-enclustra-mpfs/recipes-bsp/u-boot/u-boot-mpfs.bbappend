@@ -13,8 +13,10 @@ ENCLUSTRA_UBOOT_PATCH_LIST = " \
 
 ENCLUSTRA_UBOOT_DTS_LIST = " \
     file://enclustra_mercury_mp1_common.dtsi \
+    file://enclustra_mercury_mp1_common_fabric.dtsi \
     file://enclustra_mercury_mp1.dts \
     file://enclustra_mercury_mp1-u-boot.dtsi \
+    file://enclustra_mercury_mp1_fabric.dtsi \
     "
 
 ENCLUSTRA_UBOOT_COMMON_FILE_LIST = " \
@@ -53,8 +55,10 @@ do_add_enclustra_devicetree() {
        [ ${MACHINE} = "me-mp1-460-1si-d4e" ] || \
        [ ${MACHINE} = "me-mp1-460-1si-d4e-e1" ]; then
         cp ${WORKDIR}/enclustra_mercury_mp1_common.dtsi ${S}/arch/riscv/dts/
+        cp ${WORKDIR}/enclustra_mercury_mp1_common_fabric.dtsi ${S}/arch/riscv/dts/
         cp ${WORKDIR}/enclustra_mercury_mp1.dts ${S}/arch/riscv/dts/
         cp ${WORKDIR}/enclustra_mercury_mp1-u-boot.dtsi ${S}/arch/riscv/dts/
+        cp ${WORKDIR}/enclustra_mercury_mp1_fabric.dtsi ${S}/arch/riscv/dts/
         cp ${WORKDIR}/enclustra_mercury_mp1_defconfig ${S}/configs/
     fi
 }

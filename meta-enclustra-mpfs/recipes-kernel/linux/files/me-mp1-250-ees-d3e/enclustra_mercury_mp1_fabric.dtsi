@@ -4,65 +4,37 @@
  * <info@enclustra.com>
  */
 
-/ {
-	/* Clock for FIC0  */
-	fabric_clk1: fabric-clk1 {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <166500000>;
+#include "enclustra_mercury_mp1_common_fabric.dtsi"
+
+&fic3_512m {
+	gpio_led@0 {
+		compatible = "generic-uio";
+		linux,uio-name = "fic3-gpio-led";
+		status = "okay";
+		reg = <0x0 0x1000000>;
 	};
 
-	/* Clock for FIC3 */
-	fabric_clk3: fabric-clk3 {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <100000000>;
+	sdio_sel@1000000 {
+		compatible = "generic-uio";
+		linux,uio-name = "fic3-sdio-sel";
+		status = "okay";
+		reg = <0x1000000 0x1000000>;
 	};
 
-	/* FIC0 (AXI) at address 0x6000_0000 - 0x7FFF_FFFF */
-	fic0-512m@60000000 {
-		#address-cells = <1>;
-		#size-cells = <1>;
-		compatible = "simple-bus";
-		ranges = <0x0 0x0 0x60000000 0x20000000>;
+	uart_sel@2000000 {
+		compatible = "generic-uio";
+		linux,uio-name = "fic3-uart-sel";
+		status = "okay";
+		reg = <0x2000000 0x1000000>;
 	};
+};
 
-	/* FIC0 (AXI) at address 0x20_0000_0000 - 0x2F_FFFF_FFFF */
-	fic0-64g@2000000000 {
-		#address-cells = <2>;
-		#size-cells = <2>;
-		compatible = "simple-bus";
-		ranges = <0x0 0x0 0x20 0x00 0x10 0x00>;
-
-		/* 2 Gbyte DDR4 memory */
-		fabric_memory: memory@0 {
-			device_type = "memory";
-			reg = <0x0 0x0 0x0 0x80000000>;
-			status = "okay";
-		};
-	};
-
-	/* FIC1 (AXI) at address 0xE000_0000 - 0xFFFF_FFFF */
-	fic1-512m@e0000000 {
-		#address-cells = <1>;
-		#size-cells = <1>;
-		compatible = "simple-bus";
-		ranges = <0x0 0x0 0xe0000000 0x20000000>;
-	};
-
-	/* FIC1 (AXI) at address 0x30_0000_0000 - 0x3F_FFFF_FFFF */
-	fic1-64g@3000000000 {
-		#address-cells = <2>;
-		#size-cells = <2>;
-		compatible = "simple-bus";
-		ranges = <0x0 0x0 0x30 0x00 0x10 0x00>;
-	};
-
-	/* FIC3 (APB) at address 0x40000000 - 0x5FFFFFFF */
-	fic3-512m@40000000 {
-		#address-cells = <1>;
-		#size-cells = <1>;
-		compatible = "simple-bus";
-		ranges = <0x0 0x0 0x40000000 0x20000000>;
+&fic0_64g {
+	/* 4 Gbyte DDR4 memory */
+	fabric_ddr@0 {
+		compatible = "generic-uio";
+		linux,uio-name = "fic0-fabric-ddr";
+		status = "okay";
+		reg = <0x0 0x0 0x1 0x0>;
 	};
 };
