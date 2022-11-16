@@ -12,9 +12,8 @@ See [License](meta-enclustra-mpfs/COPYING.MIT)
 
 | Date       | Version | Comment                                                                         |
 |------------|---------|---------------------------------------------------------------------------------|
-| 07.10.2022 | 1.0     | First version with meta-polarfire-soc-yocto-bsp 2021.11 used for MP1 validation |
-| 24.10.2022 | 1.1     | Update to meta-polarfire-soc-yocto-bsp 2022.09                                  |
-
+| 07.10.2022 | 2021.11 | First version with meta-polarfire-soc-yocto-bsp 2021.11 used for MP1 validation |
+| 24.10.2022 | 2022.09 | Update to meta-polarfire-soc-yocto-bsp 2022.09                                  |
 
 ## Description
 
