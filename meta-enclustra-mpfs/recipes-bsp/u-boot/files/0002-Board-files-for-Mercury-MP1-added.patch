@@ -1,16 +1,16 @@
-From 12be22e3d2e7f0e128dbf0edda624338370eadf8 Mon Sep 17 00:00:00 2001
+From 81db7a3a3866ecd978dd4bc9873d793dc9f92629 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
-Date: Tue, 18 Oct 2022 10:05:51 +0200
+Date: Fri, 18 Nov 2022 14:30:02 +0100
 Subject: [PATCH] Board files for Mercury MP1 added
 
 ---
  arch/riscv/Kconfig                            |   4 +
- board/enclustra/mercury_mp1/Kconfig           |  54 ++++++++
+ board/enclustra/mercury_mp1/Kconfig           |  53 ++++++++
  board/enclustra/mercury_mp1/MAINTAINERS       |   6 +
  board/enclustra/mercury_mp1/Makefile          |   7 +
  .../mercury_mp1/enclustra_mercury_mp1.c       | 123 ++++++++++++++++++
  include/configs/enclustra_mercury_mp1.h       |  34 +++++
- 6 files changed, 228 insertions(+)
+ 6 files changed, 227 insertions(+)
  create mode 100644 board/enclustra/mercury_mp1/Kconfig
  create mode 100644 board/enclustra/mercury_mp1/MAINTAINERS
  create mode 100644 board/enclustra/mercury_mp1/Makefile
@@ -41,10 +41,10 @@ index b239a1a3c7..cf4d64bc75 100644
  source "board/openpiton/riscv64/Kconfig"
 diff --git a/board/enclustra/mercury_mp1/Kconfig b/board/enclustra/mercury_mp1/Kconfig
 new file mode 100644
-index 0000000000..1dafb90ef9
+index 0000000000..058464caa1
 --- /dev/null
 +++ b/board/enclustra/mercury_mp1/Kconfig
-@@ -0,0 +1,54 @@
+@@ -0,0 +1,53 @@
 +if TARGET_ENCLUSTRA_MERCURY_MP1
 +
 +config SYS_BOARD
@@ -93,7 +93,6 @@ index 0000000000..1dafb90ef9
 +	imply MMC_SDHCI
 +	imply MMC_SDHCI_CADENCE
 +	imply MMC_SDHCI_ADMA
-+	imply MMC_HS200_SUPPORT
 +	imply CMD_I2C
 +	imply DM_I2C
 +	imply SYS_I2C_MICROCHIP
