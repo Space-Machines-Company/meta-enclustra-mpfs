@@ -17,13 +17,13 @@ repos:
         refspec: 73fa376d6502ab6f2cccfb25a1193d9b1c3c3bc8
         layers:
             .: excluded
-    
+
     openembedded-core:
         url: "https://git.openembedded.org/openembedded-core"
         refspec: f4dbdb9774eb61a71289fe91b017b4caf9c34b16
         layers:
             meta:
-    
+
     meta-riscv:
         url: "https://github.com/riscv/meta-riscv"
         refspec: 18227c1de0a56327a22b94b2594fbeb45c1dfcff
