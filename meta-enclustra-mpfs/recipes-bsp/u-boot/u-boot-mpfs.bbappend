@@ -43,8 +43,8 @@ SRC_URI:append:me-mp1-460-1si-d4e := " ${ENCLUSTRA_UBOOT_COMMON_FILE_LIST}"
 SRC_URI:append:me-mp1-460-1si-d4e-e1 := " ${ENCLUSTRA_UBOOT_COMMON_FILE_LIST}"
 
 COMPATIBLE_MACHINE:append = " \
-    |me-mp1-250-ees-d3e|me-mp1-250-si-d3en|me-mp1-460-1si-d4e \
-    |me-mp1-250-ees-d3e-e1|me-mp1-250-si-d3en-e1|me-mp1-460-1si-d4e-e1 \
+    |me-mp1-250-ees-d3e|me-mp1-250-si-d3en|me-mp1-460-1si-d4e| \
+    |me-mp1-250-ees-d3e-e1|me-mp1-250-si-d3en-e1|me-mp1-460-1si-d4e-e1| \
     "
 
 do_add_enclustra_devicetree() {
