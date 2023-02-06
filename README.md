@@ -54,7 +54,7 @@ Following packages are required for building this reference design on Ubuntu:
 The packages can be installed with **sudo apt install \<package\>** command.
 See [Yocto System Requirements](https://docs.yoctoproject.org/3.4.2/ref-manual/system-requirements.html?highlight=host) for more details about requirements for Linux distributions other than Ubuntu.
 
-## Build 
+## Build
 
 ### Supported Machine Targets
 
@@ -95,7 +95,7 @@ The recommended build flow is to use kas, which is a Python based tool that prov
 
 #### Usage \#1
 
-Use following command to build the target specified in the build.yml file. A base board can be specified optionally. If ENCLUSTRA_BASEBOARD variable is set, base board dependent devicetree settings are added to the kernel devicetree.
+Use following command to build the target specified in the build.yml file (default = me-mp1-250-ees-d3e). A base board can be specified optionally. If ENCLUSTRA_BASEBOARD variable is set, base board dependent devicetree settings are added to the kernel devicetree.
 
     export ENCLUSTRA_BASEBOARD=pe3
     kas build build.yml
@@ -124,6 +124,8 @@ The tool kas can be used to checkout the repositories and setup the build direct
 ## Deployment
 
 The OpenEmbedded Image Creator (wic) creates a partitioned image file for SD card/eMMC. The partitions are configured in the OpenEmbedded kickstart file ([meta-enclustra-mpfs/wic/enclustra-mercury-mp1.wks](meta-enclustra-mpfs/wic/enclustra-mercury-mp1.wks)). The image file to be deployed on SD card/eMMC can be found in **build/tmp-glibc/deploy/images/\<MACHINE\>** directory, e.g. **image-minimal-hwtest-me-mp1-250-ees-d3e.wic**.
+
+To be able to boot Linux, the SoC must be programmed with the [bitstream](#fpga-reference-designs-for-microchip-libero) and [HSS](#hart-software-services).
 
 ### Creating a Bootable SD Card
 
