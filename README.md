@@ -234,6 +234,35 @@ The serial number of the module can be read by following command:
 
     cat /sys/bus/i2c/devices/1-0064/serial
 
+The serial number is reported as follows:
+
+    248173
+
+### Read OTP region of EEPROM
+
+The one time programmable region of the EEPROM contains the serial number, MAC address and information about the module. A detailed description can be found in the user manual of the module. The entire region can be read by following command:
+
+    cat /sys/bus/i2c/devices/1-0064/otp
+
+The 512 bits of the OTP region are reported as follows:
+
+    00 03 C9 6D
+    03 39 00 01
+    00 88 51 23
+    77 FF FF FF
+    20 B0 F7 07
+    92 DA FF FF
+    FF FF FF FF
+    FF FF FF FF
+    FF FF FF FF
+    FF FF FF FF
+    FF FF FF FF
+    FF FF FF FF
+    FF FF FF FF
+    FF FF FF FF
+    FF FF FF FF
+    FF FF FF FF
+
 ### Rootfs Partition Size
 
 The size of the rootfs partition is set to 132 Mbyte by default. To change the partition size, the OpenEmbedded kickstart file [meta-enclustra-mpfs/wic/enclustra-mercury-mp1.wks](meta-enclustra-mpfs/wic/enclustra-mercury-mp1.wks) needs to be modified. The partition size is defined by **--fixed-size** parameter as shown below.
