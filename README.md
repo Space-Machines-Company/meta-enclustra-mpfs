@@ -29,13 +29,15 @@ The reference design is based on [meta-polarfire-soc-yocto-bsp](https://github.c
 
 The generated binaries are compatible with the FPGA and MSS configuration of following reference designs:
 
-- ***TODO***: add link to all Libero reference designs
+- [Mercury+ MP1 PE1 Reference Design](https://github.com/enclustra/Mercury_MP1_PE1_Reference_Design)
+- [Mercury+ MP1 PE3 Reference Design](https://github.com/enclustra/Mercury_MP1_PE3_Reference_Design)
+- [Mercury+ MP1 ST1 Reference Design](https://github.com/enclustra/Mercury_MP1_ST1_Reference_Design)
 
 ## Hart Software Services
 
 The HSS software with support for Mercury+ MP1 can be found in following repository:
 
-- ***TODO***: add link to public HSS repository
+- [Hart Software Services](https://github.com/enclustra/hart-software-services)
 
 ## Host Requirements
 
