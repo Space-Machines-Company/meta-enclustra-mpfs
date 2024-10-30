@@ -17,9 +17,14 @@
 	};
 
 	/* 2 Gbyte DDR4 memory */
-	mss_memory: memory@1000000000 {
+	mss_memory_low: memory@80000000 {
 		device_type = "memory";
-		reg = <0x10 0x0 0x0 0x80000000>;
+		reg = <0x0 0x80000000 0x0 0x40000000>;
+		status = "okay";
+	};
+	mss_memory_high: memory@1000000000 {
+		device_type = "memory";
+		reg = <0x10 0x0 0x0 0x40000000>;
 		status = "okay";
 	};
 };
