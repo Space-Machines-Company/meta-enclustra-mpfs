@@ -1,14 +1,14 @@
 header:
     version: 8
 
-machine: me-mp1-250-ees-d3e
+machine: me-mp1-250-si-d3en
 
 distro: nodistro
 
 target: image-minimal-hwtest
 
 env:
-    ENCLUSTRA_BASEBOARD: $ENCLUSTRA_BASEBOARD
+    ENCLUSTRA_BASEBOARD: st1
 
 repos:
 
