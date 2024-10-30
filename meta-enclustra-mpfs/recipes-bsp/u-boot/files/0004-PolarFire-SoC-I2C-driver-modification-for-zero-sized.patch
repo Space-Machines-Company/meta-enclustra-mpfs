@@ -1,4 +1,4 @@
-From a09ead1ccb849cb94822d3f34615c0ee717c69fa Mon Sep 17 00:00:00 2001
+From 91e98b00fd121da8d4db424d4b4ac23589893c8a Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Mon, 28 Feb 2022 17:57:51 +0100
 Subject: [PATCH] PolarFire SoC I2C driver modification for zero sized

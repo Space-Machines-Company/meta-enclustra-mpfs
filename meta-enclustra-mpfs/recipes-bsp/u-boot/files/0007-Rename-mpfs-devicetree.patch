@@ -1,4 +1,4 @@
-From 4b15c280d3f0640db493c388ea8f8f09763127f2 Mon Sep 17 00:00:00 2001
+From a49770d8001ee8387c3c1d3d1613afbd7851b241 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Tue, 4 Oct 2022 18:27:51 +0200
 Subject: [PATCH] Rename mpfs devicetree to match with updated kernel

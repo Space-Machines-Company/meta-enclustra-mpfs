@@ -1,4 +1,4 @@
-From 13c15f933a0bd48f7f89166bced83944e47cf501 Mon Sep 17 00:00:00 2001
+From 4f8c60f8c68c0568cee64be18ad05231993efae9 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Tue, 18 Oct 2022 10:10:05 +0200
 Subject: [PATCH] Devicetree for Mercury MP1 added
@@ -8,10 +8,10 @@ Subject: [PATCH] Devicetree for Mercury MP1 added
  1 file changed, 1 insertion(+)
 
 diff --git a/arch/riscv/dts/Makefile b/arch/riscv/dts/Makefile
-index 883d8cc11c..786fda2ee3 100644
+index abdc9a658c..247500ca61 100644
 --- a/arch/riscv/dts/Makefile
 +++ b/arch/riscv/dts/Makefile
-@@ -5,6 +5,7 @@ dtb-$(CONFIG_TARGET_ARIES_M100PFSEVP) += m100pfsevp.dtb
+@@ -6,6 +6,7 @@ dtb-$(CONFIG_TARGET_ARIES_M100PFSEVP) += mpfs-m100pfsevp.dtb
  dtb-$(CONFIG_TARGET_MICROCHIP_ICICLE) += microchip-mpfs-icicle-kit.dtb \
  microchip-mpfs-icicle-kit-amp.dtb microchip-mpfs-icicle-kit-qspi-nor.dtb
  dtb-$(CONFIG_TARGET_MICROCHIP_SEVKIT) += microchip-mpfs-sev-kit.dtb
