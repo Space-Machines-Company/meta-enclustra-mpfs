@@ -1,0 +1,7 @@
+bitbake/
+build/
+meta-openembedded/
+meta-polarfire-soc-yocto-bsp/
+meta-riscv/
+meta-security/
+openembedded-core/
