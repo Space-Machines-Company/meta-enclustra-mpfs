@@ -11,10 +11,10 @@ diff --git a/arch/riscv/dts/Makefile b/arch/riscv/dts/Makefile
 index abdc9a658c..247500ca61 100644
 --- a/arch/riscv/dts/Makefile
 +++ b/arch/riscv/dts/Makefile
-@@ -6,6 +6,7 @@ dtb-$(CONFIG_TARGET_ARIES_M100PFSEVP) += mpfs-m100pfsevp.dtb
+@@ -6,6 +6,7 @@ dtb-$(CONFIG_TARGET_ARIES_M100PFSEVP) += m100pfsevp.dtb
  dtb-$(CONFIG_TARGET_MICROCHIP_ICICLE) += microchip-mpfs-icicle-kit.dtb \
  microchip-mpfs-icicle-kit-amp.dtb microchip-mpfs-icicle-kit-qspi-nor.dtb
- dtb-$(CONFIG_TARGET_MICROCHIP_SEVKIT) += microchip-mpfs-sev-kit.dtb
+ dtb-$(CONFIG_TARGET_MICROCHIP_VIDEOKIT) += microchip-mpfs-video-kit.dtb
 +dtb-$(CONFIG_TARGET_ENCLUSTRA_MERCURY_MP1) += enclustra_mercury_mp1.dtb
  dtb-$(CONFIG_TARGET_QEMU_VIRT) += qemu-virt.dtb
  dtb-$(CONFIG_TARGET_OPENPITON_RISCV64) += openpiton-riscv64.dtb
